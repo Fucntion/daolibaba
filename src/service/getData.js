@@ -63,13 +63,7 @@ export const group = (catid,size,paginate,page) => fetch('/api/v1/group', emptyO
 	page:page
 }),'POST');
 
-export const mall = (catid,size,field,paginate,page) => fetch('/api/v1/mall', emptyObject({
-	catid:catid,
-	size:size,
-	field:field,
-	paginate:paginate,
-	page:page
-}),'POST');
+export const mall = (post) => fetch('/api/v1/mall', emptyObject(post),'POST');
 
 export const info = (catid,size,field,order,paginate,page) => fetch('/api/v1/info', emptyObject({
 	catid:catid,

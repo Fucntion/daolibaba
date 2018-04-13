@@ -70,7 +70,10 @@ export default {
 
   methods: {
     getMall(){
-      let mise = mall(null,20,null,true)
+      let mise = mall({
+        size:20,
+        paginate:true,
+      })
       mise.then((res) => {
           let body = res.body;
           if (body.code === 1) {

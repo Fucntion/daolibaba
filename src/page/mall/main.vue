@@ -112,7 +112,14 @@ export default {
       })
     },
     getMall(){
-      let mise = mall(19,20,null,true)
+      let mise = mall({
+        catid:null,
+        size:20,
+        field:null,
+        order:null,
+        paginate:true,
+        page:null
+      })
       mise.then((res) => {
           let body = res.body;
           if (body.code === 1) {
