@@ -14,7 +14,6 @@ export default {
         Vue.prototype.mint = mint;
         Vue.prototype.utils = utils;
         Vue.prototype.wx = wx;
-        
         Vue.http.interceptors.push(interceptorsConfig);
         Vue.http.options.emulateJSON = true;
         Vue.http.options.emulateHTTP = true;

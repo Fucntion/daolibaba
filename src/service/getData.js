@@ -12,6 +12,17 @@ function emptyObject(obj){
 
 
 /**
+ * @desc 公共参数介绍,省的后面自己忘记了
+ * @param {商家id} itemid 
+ * @param {列表数量} size 
+ * @param {指定返回的字段} field 
+ * @param {排序} order 
+ * @param {分页} paginate 
+ * @param {指定页面} page 
+ */
+
+
+/**
  * 获取广告位
  * @param {广告位id} pid 
  */
@@ -45,11 +56,70 @@ export const kill = (catid,size,paginate,page) => fetch('/api/v1/kill', emptyObj
 	page:page
 }),'POST');
 
-export const mall = (catid,size,paginate,page) => fetch('/api/v1/mall', emptyObject({
+export const group = (catid,size,paginate,page) => fetch('/api/v1/group', emptyObject({
 	catid:catid,
 	size:size,
 	paginate:paginate,
 	page:page
+}),'POST');
+
+export const mall = (catid,size,field,paginate,page) => fetch('/api/v1/mall', emptyObject({
+	catid:catid,
+	size:size,
+	field:field,
+	paginate:paginate,
+	page:page
+}),'POST');
+
+export const info = (catid,size,field,order,paginate,page) => fetch('/api/v1/info', emptyObject({
+	catid:catid,
+	size:size,
+	field:field,
+	order:order,
+	paginate:paginate,
+	page:page
+}),'POST');
+
+export const club = (areaid,catid,itemid,size,field,order,paginate,page) => fetch('/api/v1/club', emptyObject({
+	areaid:areaid,
+	catid:catid,
+	itemid:itemid,
+	size:size,
+	field:field,
+	order:order,
+	paginate:paginate,
+	page:page
+}),'POST');
+
+export const area = (parentid,itemid,size,field,order,paginate,page) => fetch('/api/v1/area', emptyObject({
+	parentid:parentid,
+	itemid:itemid,
+	size:size,
+	field:field,
+	order:order,
+	paginate:paginate,
+	page:page
+}),'POST');
+
+/**
+ * 
+ * @param {商家id} itemid 
+ * @param {列表数量} size 
+ * @param {指定返回的字段} field 
+ * @param {排序} order 
+ * @param {分页} paginate 
+ * @param {指定页面} page 
+ * @param {每个商铺返回的商品数量} mallSize 
+ */
+export const company = (areaid,id,size,field,order,paginate,page,mallSize) => fetch('/api/v1/company', emptyObject({
+	areaid:areaid,
+	id:id,
+	size:size,
+	field:field,
+	order:order,
+	paginate:paginate,
+	page:page,
+	mallSize:mallSize
 }),'POST');
 
 

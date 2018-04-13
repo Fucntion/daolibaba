@@ -26,8 +26,8 @@ body{
 .block{
     
     .head{
-      padding: 0;
-      height: 26px;
+    //   padding: 0;
+      height: 0.628rem;
       display: flex;
       justify-content: space-between;//让左侧、中间、右边区分开来
       //左侧的提示
@@ -73,7 +73,7 @@ body{
       //最复杂的是这里
       .list{
         //width:100%;
-        height: 100px;
+        height: 2.4155rem;
         white-space: nowrap;
         overflow-y: hidden;
         overflow-x: scroll;
@@ -81,7 +81,7 @@ body{
         -webkit-overflow-scrolling: touch;
   
         .item{
-          width: 2.8986rem;
+          width: 2.4155rem;
           display: inline-block;
           text-align: center;
           border-right: 1px solid @defaultBorderColor;
@@ -154,53 +154,6 @@ body{
   }
   
   
-  //幻灯片
-  .swiper{
-  
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-    list-style: none;
-    padding: 0;
-    z-index: 1;
-  
-    .swiper-wrapper{
-      .swiper-slide {
-        text-align: center;
-        font-size: 18px;
-        background: #fff;
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-      }
-    }
-  
-    .swiper-pagination{
-      position: absolute;
-      text-align: center;
-      transition: .3s opacity;
-      transform: translate3d(0,0,0);
-      z-index: 10;
-      bottom: 10px;
-      left: 0;
-      width: 100%;
-    }
-    .swiper-pagination-bullet-active{
-      background: #ffffff;
-    }
-  
-  }
-  
 
 
   //商品列表
@@ -258,157 +211,6 @@ body{
     }
   }
   
-  //推荐的商家
-  .top-company-list{
-  
-    .company{
-      padding: 10px 0;
-      border-bottom: 1px solid #e7e7e7;
-      &:last-child{
-        border-bottom: none;
-      }
-      .info{
-        .rest;
-        display: flex;
-        justify-content: space-between;
-        .thumb{
-          width: 66px;
-          height: 66px;
-  
-        }
-        .base{
-          width: 100%;
-          padding: 0 10px;
-  
-          .name{
-            margin-bottom: 6px;
-            .font14;
-            color: #333333;
-  
-          }
-          .business{
-            .font12;
-            margin-bottom: 6px;
-          }
-          .star-list{
-  
-          }
-        }
-        .link{
-          width: 80px;
-          a{
-            display: inline-block;
-            .font12;
-            border: 1px solid @activeColor;
-            width: 60px;
-            line-height: 24px;
-            text-align: center;
-            border-radius: 4px;
-          }
-        }
-      }
-      .mall-list{
-        margin-top: 6px;
-        height: 100px;
-        white-space: nowrap;
-        overflow-y: hidden;
-        overflow-x: scroll;
-        -webkit-overflow-scrolling: touch;
-        .mall{
-          width: 90px;
-          height: 100px;
-          text-align: center;
-          .thumb{
-  
-            width: 72px;
-            height: 72px;
-          }
-          .price{
-            display: block;
-            text-align: center;
-            line-height: 28px;
-            color: @activeColor;
-          }
-        }
-      }
-    }
-  }
-  
-  /**
-  同城首页
-   */
-  .o2o-hot-list{
-    .item{
-      padding: 10px 0;
-      border-bottom: 1px solid #e7e7e7;
-      .editor{
-        display: flex;
-        justify-content: space-between;
-        .headimg{
-          margin: 0 6px;
-            width: 36px;
-          height: 36px;
-        }
-        .name{
-  
-        }
-        .detail-btn{
-  
-          .detail-icon{
-  
-          }
-        }
-  
-      }
-      .info{
-        .rest;
-        display: block;
-        .title{
-          .rest;
-          margin-top: 10px;
-  
-          font-size: 16px;
-          font-weight: bold;
-        }
-        .pic-box{
-          margin: 10px 0;
-          .pic{
-            display: inline-block;
-            width: 25%;
-            height: 0;
-            padding-top: 25%;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-          }
-  
-        }
-        .desc{
-  
-          .content{
-            color: #666666;
-          }
-          .inputtime{
-  
-          }
-        }
-      }
-    }
-  }
-  
-  
-  .addo2o-btn{
-    width: 46px;
-    height: 46px;
-  
-    opacity: 0.9;
-    position: fixed;
-    z-index: 10;
-    right: 10px;
-    bottom: 60px;
-  
-  
-  }
   
   
   //滑动的tab栏

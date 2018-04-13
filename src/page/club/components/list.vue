@@ -1,24 +1,23 @@
 <!--  -->
 <template>
-  <div></div>
+<div>
+    
+</div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-    };
+  data() {
+    return {};
   },
-
+    props:['lists'],
   components: {},
 
   computed: {},
 
-  mounted: {},
-
   methods: {}
-}
-
+};
 </script>
 <style lang='less' scoped>
+
 </style>

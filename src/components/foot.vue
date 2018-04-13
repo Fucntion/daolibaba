@@ -3,27 +3,27 @@
   <div>
       <div style="height:1.3043rem"></div>
       <section id="footer">
-      <section @click="navigatetor('/')" class="item">
-          <i class="iconfont icon-shouye"></i>
-          <span>批发</span>
-      </section>
-      <section @click="navigatetor('/')" class="item">
-          <i class="iconfont icon-tongchengzhisong"></i>
-          <span>同城资讯</span>
-      </section>
-      <section @click="navigatetor('/')" class="item">
-          <i class="iconfont icon-shangquanxiao"></i>
-          <span>同城导购</span>
-      </section>
-      <section @click="navigatetor('/')" class="item">
-          <i class="iconfont icon-tubiaolunkuo-"></i>
-          <span>购物车</span>
-      </section>
-      <section @click="navigatetor('/')" class="item">
-          <i class="iconfont icon-gerenzhongxin"></i>
-          <span>个人中心</span>
-      </section>
-  </section>
+        <section v-bind:class="[active=='home'?'active':'']" @click="navigatetor('/')" class="item">
+            <i class="iconfont icon-shouye"></i>
+            <span>批发</span>
+        </section>
+        <section v-bind:class="[active=='info'?'active':'']" @click="navigatetor('/info')" class="item">
+            <i class="iconfont icon-tongchengzhisong"></i>
+            <span>同城资讯</span>
+        </section>
+        <section v-bind:class="[active=='club'?'active':'']" @click="navigatetor('/club')" class="item">
+            <i class="iconfont icon-shangquanxiao"></i>
+            <span>同城导购</span>
+        </section>
+        <section v-bind:class="[active=='cart'?'active':'']" @click="navigatetor('/cart')" class="item">
+            <i class="iconfont icon-tubiaolunkuo-"></i>
+            <span>购物车</span>
+        </section>
+        <section v-bind:class="[active=='my'?'active':'']" @click="navigatetor('/my')" class="item">
+            <i class="iconfont icon-gerenzhongxin"></i>
+            <span>个人中心</span>
+        </section>
+    </section>
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
     return {
     };
   },
-
+    props:['active'],
   components: {},
 
   computed: {},
@@ -67,6 +67,9 @@ export default {
         }
         span{
             display: block;
+        }
+        &.active{
+            color: red;
         }
     }
 }

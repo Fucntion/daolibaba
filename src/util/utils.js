@@ -270,6 +270,8 @@ export default {
     // removeStore:removeStore,
     // setStore:setStore,
     // getStore:getStore,
+    defaultProvienceId:22,
+    defaultCityId:266,//数据库里面海南的名字
     emptyObject(obj){
         for (var prop in obj) {
             if (obj[prop] === '' || obj[prop] === undefined || obj[prop] === null || obj[prop] === 'undefined') {

@@ -1,6 +1,8 @@
 <!--  -->
 <template>
-  <header id='head_top'>
+  <div>
+      <div v-if="fixed" style="height: 0.9662rem;"></div>
+      <header id='head_top' v-bind:class="[fixed?'fixed':'']">
         <slot name='logo'></slot>
         <slot name='search'></slot>
         <section class="head_goback" v-if="goBack" @click="$router.go(-1)">
@@ -13,11 +15,12 @@
             <span class="login_span" v-else>登录|注册</span>
         </router-link>
         <section class="title_head ellipsis" v-if="headTitle">
-            <span class="title_text">岛里巴巴-{{headTitle}}</span>
+            <span class="title_text font16">{{headTitle}}</span>
         </section>
         <slot name="edit"></slot>
         <slot name="changecity"></slot>
     </header>
+  </div>
 </template>
  
 <script>
@@ -26,7 +29,7 @@ export default {
     return {
     };
   },
-  props: ['signinUp', 'headTitle', 'goBack'],
+  props: ['signinUp', 'headTitle', 'goBack','fixed'],
 
   components: {},
 
@@ -40,19 +43,31 @@ export default {
 </script>
 <style lang='less' scoped>
 #head_top{
+    background: white;
     position: relative;
-    height: 0.9662rem;
+    height: 1.0628rem;
     font-size: 0.3382rem;
     padding: 0 0.2415rem;
-    line-height: 0.9662rem;
+    line-height: 1.0628rem;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #e7e7e7;
+    .icon-fanhui{
+        font-size: 0.4831rem;
+    }
     .title_head{
         position: absolute;
-        height: 0.9662rem;
+        height: 1.0628rem;
         left: 0;
         right: 0;
         text-align: center;
+    }
+    &.fixed{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        box-sizing: border-box;
+        z-index: 9;
     }
 }
 </style>

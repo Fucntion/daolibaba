@@ -1,7 +1,7 @@
 <!--  -->
 <template>
 <div>
-    <div id="main" class="full-list flex">
+    <div  class="full-list flex">
         <div class="item" v-for="item in lists" :key="item.itemid">
             <div class="thumb-box" >
                 <img :src="item.thumb" class="thumb" />

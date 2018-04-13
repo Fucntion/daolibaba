@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div>
-      <mt-swipe class="ad-box" :auto="4000">
+      <mt-swipe class="ad-box" v-bind:style="{'height':h+'px'}" :auto="5000">
         <mt-swipe-item class="ad" v-for="ad in ads" :key="ad.aid">
 
           <a class="link" :href="ad.image_url"><img  :src="ad.image_src" /></a>
@@ -17,7 +17,7 @@ export default {
 
     };
   },
-  props:['ads'],
+  props:['ads','h'],
 
   components: {},
 
