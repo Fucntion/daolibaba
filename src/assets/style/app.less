@@ -1,0 +1,438 @@
+@import './base.less';
+
+html{
+    min-height: 100%;
+    background: #f2f2f2;
+}
+body{
+    .rest;
+    min-height: 100%;
+    
+
+}
+#wrap{
+    .font16;
+    
+}
+.iconfont{
+    font-size: 0.628rem;
+}
+
+
+
+
+
+
+.block{
+    
+    .head{
+      padding: 0;
+      height: 26px;
+      display: flex;
+      justify-content: space-between;//让左侧、中间、右边区分开来
+      //左侧的提示
+      .tip{
+        line-height: 26px;
+        font-size: 16px;
+        color: #333333;
+      }
+      //可能名称会在中间,666
+      .title{
+
+        .rest;
+        width: 100%;
+        font-size: 16px !important;
+        line-height: 26px !important;
+        text-align: center;
+        &:before{
+          content: url(../img/after.png);
+        }
+        &:after{
+          content: url(../img/after.png);
+        }
+      }
+      //右侧可能有更多的图标或者文字
+      .more{
+        line-height: 26px;
+        font-size: 14px;
+        color: @activeColor;
+      }
+      .more-text{
+        font-size: 14px;
+        line-height: 26px;
+      }
+      .more-right{
+  
+      }
+    }
+    //容器这里最恶心,高度根据情况写吧。先写死145px
+    .content{
+      .rest;
+      padding-top: 0.2415rem;
+      line-height: 1;
+      //最复杂的是这里
+      .list{
+        //width:100%;
+        height: 100px;
+        white-space: nowrap;
+        overflow-y: hidden;
+        overflow-x: scroll;
+  
+        -webkit-overflow-scrolling: touch;
+  
+        .item{
+          width: 2.8986rem;
+          display: inline-block;
+          text-align: center;
+          border-right: 1px solid @defaultBorderColor;
+          //缩略图是重点
+          .thumb{
+            margin: 0 auto;
+            display: block;
+            background-position:center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 2px;
+            width: 1.9324rem;
+            height: 1.9324rem;
+          }
+          //可能就一排
+          .info{
+            margin-top: 0.1449rem;
+            display: flex;
+            justify-content: center;
+            border: 0;
+            font-size: 0.2899rem;
+            color: #666666;
+            .price{
+              color:@activeColor;
+              padding: 0 2px;
+              vertical-align: middle;
+            }
+            .initial_price{
+              text-decoration: line-through;
+              padding: 0 2px;
+              vertical-align: middle;
+            }
+          }
+        }
+      }
+  
+      .row{
+        display: flex;
+        border-top: 1px solid #e7e7e7;
+        .item{
+          padding: 6px;
+          border-right: 1px solid #e7e7e7;
+          border-bottom: 1px solid #e7e7e7;
+          flex: 1;
+          text-align: center;
+          .name{
+            .rest;
+            font-size: 14px;
+            color: #333333;
+            text-align: center;
+  
+          }
+          .small{
+            font-size: 12px;
+            padding: 6px 0;
+            color:#666666;
+          }
+          .thumb{
+  
+          }
+          &:last-child{
+            border-right: 0;
+          }
+        }
+  
+      }
+  
+  
+    }
+  }
+  
+  
+  //幻灯片
+  .swiper{
+  
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    z-index: 1;
+  
+    .swiper-wrapper{
+      .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+    }
+  
+    .swiper-pagination{
+      position: absolute;
+      text-align: center;
+      transition: .3s opacity;
+      transform: translate3d(0,0,0);
+      z-index: 10;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
+    }
+    .swiper-pagination-bullet-active{
+      background: #ffffff;
+    }
+  
+  }
+  
+
+
+  //商品列表
+  .full-list{
+      background: white;
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid #e7e7e7;
+    .item{
+      width: 50%;
+      box-sizing: border-box;
+      border-bottom: 1px solid #e7e7e7;
+      &:nth-child(odd){
+        border-right: 1px solid #e7e7e7;
+      }
+        .thumb-box{
+          display: block;
+          margin: 0 auto;
+          text-align: center;
+          img{
+            width: 90%;
+            height: 90%;
+          }
+        }
+      .info{
+        .rest;
+        .font12;
+        padding: 4px 10px;
+        text-align: left;
+        dd{
+          .rest;
+        }
+        .name{
+            .font14;
+        }
+        .price{
+          color: @activeColor;
+
+        }
+        .count{
+          display: flex;
+          justify-content: space-between;
+          text-align: center;
+          .comments{
+  
+            .count-comment{
+  
+            }
+          }
+          .count-order{
+  
+          }
+        }
+      }
+    }
+  }
+  
+  //推荐的商家
+  .top-company-list{
+  
+    .company{
+      padding: 10px 0;
+      border-bottom: 1px solid #e7e7e7;
+      &:last-child{
+        border-bottom: none;
+      }
+      .info{
+        .rest;
+        display: flex;
+        justify-content: space-between;
+        .thumb{
+          width: 66px;
+          height: 66px;
+  
+        }
+        .base{
+          width: 100%;
+          padding: 0 10px;
+  
+          .name{
+            margin-bottom: 6px;
+            .font14;
+            color: #333333;
+  
+          }
+          .business{
+            .font12;
+            margin-bottom: 6px;
+          }
+          .star-list{
+  
+          }
+        }
+        .link{
+          width: 80px;
+          a{
+            display: inline-block;
+            .font12;
+            border: 1px solid @activeColor;
+            width: 60px;
+            line-height: 24px;
+            text-align: center;
+            border-radius: 4px;
+          }
+        }
+      }
+      .mall-list{
+        margin-top: 6px;
+        height: 100px;
+        white-space: nowrap;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        .mall{
+          width: 90px;
+          height: 100px;
+          text-align: center;
+          .thumb{
+  
+            width: 72px;
+            height: 72px;
+          }
+          .price{
+            display: block;
+            text-align: center;
+            line-height: 28px;
+            color: @activeColor;
+          }
+        }
+      }
+    }
+  }
+  
+  /**
+  同城首页
+   */
+  .o2o-hot-list{
+    .item{
+      padding: 10px 0;
+      border-bottom: 1px solid #e7e7e7;
+      .editor{
+        display: flex;
+        justify-content: space-between;
+        .headimg{
+          margin: 0 6px;
+            width: 36px;
+          height: 36px;
+        }
+        .name{
+  
+        }
+        .detail-btn{
+  
+          .detail-icon{
+  
+          }
+        }
+  
+      }
+      .info{
+        .rest;
+        display: block;
+        .title{
+          .rest;
+          margin-top: 10px;
+  
+          font-size: 16px;
+          font-weight: bold;
+        }
+        .pic-box{
+          margin: 10px 0;
+          .pic{
+            display: inline-block;
+            width: 25%;
+            height: 0;
+            padding-top: 25%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+          }
+  
+        }
+        .desc{
+  
+          .content{
+            color: #666666;
+          }
+          .inputtime{
+  
+          }
+        }
+      }
+    }
+  }
+  
+  
+  .addo2o-btn{
+    width: 46px;
+    height: 46px;
+  
+    opacity: 0.9;
+    position: fixed;
+    z-index: 10;
+    right: 10px;
+    bottom: 60px;
+  
+  
+  }
+  
+  
+  //滑动的tab栏
+  
+  .nav-box{
+    width: 100%;
+    overflow-x: hidden;
+ 
+    .nav{
+      float: left;
+      overflow-x: scroll ;
+      overflow-y: hidden;
+      white-space: nowrap;
+      li{
+        width: 80px;
+        display: inline-block;
+        a{
+ 
+        }
+        span{
+ 
+        }
+      }
+ 
+    }
+ 
+  }
