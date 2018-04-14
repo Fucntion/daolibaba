@@ -7,6 +7,7 @@ import Mint from 'mint-ui';
 import commConfig from './util/index';
 import VueResource from 'vue-resource';
 
+import store from './store/';
 
 
 Vue.config.productionTip = true
@@ -18,6 +19,7 @@ Vue.use(commConfig);
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

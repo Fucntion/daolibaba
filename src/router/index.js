@@ -19,6 +19,8 @@ const clubList = r => require.ensure([], () => r(require('../page/club/list')))
 const clubDetail = r => require.ensure([], () => r(require('../page/club/detail')))
 
 const my = r => require.ensure([], () => r(require('../page/user/my')))
+const reg = r => require.ensure([], () => r(require('../page/user/register')))
+const login = r => require.ensure([], () => r(require('../page/user/login')))
 
 export default new Router({
   routes: [
@@ -82,6 +84,15 @@ export default new Router({
     {
       path:'/my',
       component:my,
+      children:[{
+          path:'register',
+          component:reg
+        },
+        {
+          path:'login',
+          component:login
+        }
+      ]
     },
   ]
 })

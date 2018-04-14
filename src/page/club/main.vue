@@ -232,15 +232,7 @@
                     }
                 });
             },
-            getMall() {
-                let mise = mall(null, 20,null,"sales desc");
-                mise.then(res => {
-                    let body = res.body;
-                    if (body.code === 1) {
-                        this.topMalls = res.body.data;
-                    }
-                });
-            },
+           
             async getArea() {
                 let mise = area(null, this.$root.utils.defaultCityId);
                 mise.then(res => {
