@@ -1,7 +1,7 @@
 /**
  * 存储localStorage
  */
-const setStore = (name, content) => {
+export const setStore = (name, content) => {
 	if (!name) return;
 	if (typeof content !== 'string') {
 		content = JSON.stringify(content);
@@ -12,7 +12,7 @@ const setStore = (name, content) => {
 /**
  * 获取localStorage
  */
-const getStore = name => {
+export const getStore = name => {
 	if (!name) return;
 	return window.localStorage.getItem(name);
 }
@@ -20,7 +20,7 @@ const getStore = name => {
 /**
  * 删除localStorage
  */
-const removeStore = name => {
+export const removeStore = name => {
 	if (!name) return;
 	window.localStorage.removeItem(name);
 }
@@ -33,7 +33,7 @@ const removeStore = name => {
 /**
  * 页面到达底部，加载更多
  */
-const loadMore = (element, callback) => {
+export const loadMore = (element, callback) => {
 	let windowHeight = window.screen.height;
 	let height;
 	let setTop;
@@ -89,7 +89,7 @@ const loadMore = (element, callback) => {
 /**
  * 显示返回顶部按钮，开始、结束、运动 三个过程中调用函数判断是否达到目标点
  */
-const showBack = callback => {
+export const showBack = callback => {
     let requestFram;
     let oldScrollTop;
 
@@ -140,7 +140,7 @@ const showBack = callback => {
  * @param {string}      mode      运动模式，可选
  * @param {function}    callback  可选，回调函数，链式动画
  */
-const animate = (element, target, duration = 400, mode = 'ease-out', callback) => {
+export const animate = (element, target, duration = 400, mode = 'ease-out', callback) => {
     clearInterval(element.timer);
 
     //判断不同参数的情况
@@ -274,7 +274,7 @@ const   emptyObject = obj => {
     return obj;
 }
 
-export {
+export default {
     animate,
     showBack,
     loadMore,

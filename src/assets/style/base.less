@@ -9,9 +9,13 @@
 /*
 *rest
 */
-a:hover {
-    text-decoration: none;
-}
+a:hover{color:@defaultFontColor;text-decoration:none}
+a{color:@defaultFontColor;text-decoration:none}
+
+
+
+
+
 
 //base
 .rest{
@@ -31,9 +35,32 @@ a:hover {
     font-size: 0.2415rem;
 }
 .block{
-    // margin: 0.2415rem 0 ;
+
     background: white;
 }
+
+.padding4{
+    padding: 0.0966rem;
+}
+.padding4-r{
+    padding: 0.0966rem 0;
+}
+
+.padding4-c{
+    padding: 0 0.0966rem;
+}
+
+.margin4{
+    margin: 0.0966rem;
+}
+
+.margin4-r{
+    margin: 0.0966rem 0;
+}
+.margin4-c{
+    margin: 0 0.0966rem;
+}
+
 
 .padding10{
     padding: 0.2415rem;
@@ -83,6 +110,19 @@ a:hover {
 .border{
     border:1px solid @defaultBorderColor;
 }
+ 
+.border-t{
+    border-top:1px solid @defaultBorderColor;
+}
+.border-b{
+    border-bottom:1px solid @defaultBorderColor;
+}
+.border-r{
+    border-right:1px solid @defaultBorderColor;
+}
+.border-l{
+    border-left:1px solid @defaultBorderColor;
+}
 
 //ad
 .mint-swipe{
@@ -91,6 +131,26 @@ a:hover {
      
 }
 
+.initial_price{
+    color: @grayFontColor;
+}
+.price{
+    color: @activeColor;
+}
+.info-line{
+    margin-top: 4px;
+}
+
+
+
+// 购物相关的公共样式
+.goods-content-box{
+    img{
+        width: 100%;
+        max-width: 100%;
+        vertical-align: top;
+    }
+}
 
 
 

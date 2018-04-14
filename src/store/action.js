@@ -1,6 +1,5 @@
 import {
-	getUser,
-	getAddressList
+	getUser
 } from '../service/getData'
 import {
 	GET_USERINFO,
@@ -21,8 +20,8 @@ export default {
 		state
 	}) {
 
-		if(state.removeAddress.length > 0) return;
-		let addres = await getAddressList(state.userInfo.user_id);
-		commit(saveAddress, addres);	
+		// if(state.removeAddress.length > 0) return;
+		// let addres = await getAddressList(state.userInfo.user_id);
+		// commit(saveAddress, addres);	
 	},
 }

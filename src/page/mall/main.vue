@@ -48,7 +48,7 @@ import adBox from '@/components/ad'
 import navBox from '@/components/nav'
 import slipBox from '@/components/slip'
 import {ad,category,kill,mall,group} from '@/service/getData'
-import mallList from './components/list'
+import mallList from './common/list'
 
 export default {
   data () {

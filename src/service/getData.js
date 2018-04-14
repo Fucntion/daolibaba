@@ -141,7 +141,7 @@ export const login = (post) => fetch('/v1/member/login',emptyObject(post),'POST'
  * @params code, mobile, validate_token
  */
 
-var sendLogin = (post) => fetch('v1/login/app_mobile', {}, 'POST');
+export const sendLogin = (post) => fetch('v1/login/app_mobile', {}, 'POST');
 
 
 // /**

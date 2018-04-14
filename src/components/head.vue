@@ -14,6 +14,7 @@
             </svg>
             <span class="login_span" v-else>登录|注册</span>
         </router-link>
+        <slot name='tab'></slot>
         <section class="title_head ellipsis" v-if="headTitle">
             <span class="title_text font16">{{headTitle}}</span>
         </section>

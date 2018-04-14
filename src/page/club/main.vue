@@ -168,8 +168,7 @@
     import adBox from "@/components/ad";
     import navBox from "@/components/nav";
     import slipBox from "@/components/slip";
-
-    import companyBox from "@/page/mall/components/company";
+    import companyBox from "@/page/mall/common/company";
     import { ad, kill, mall, area, club,company } from "@/service/getData";
 
     export default {

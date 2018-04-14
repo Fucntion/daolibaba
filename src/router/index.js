@@ -2,25 +2,33 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 
-const home = r => require.ensure([], () => r(require('../page/home')),'home')
 
-const mallMain = r => require.ensure([], () => r(require('../page/mall/main')),'mallMain')
-const mallList = r => require.ensure([], () => r(require('../page/mall/list')),'mallList')
-const mallDetail = r => require.ensure([], () => r(require('../page/mall/detail')),'mallDetail')
-const cart = r => require.ensure([], () => r(require('../page/mall/cart')),'cart')
+const home = r => require.ensure([], () => r(require('../page/home')))
 
-const infoMain = r => require.ensure([], () => r(require('../page/info/main')),'infoMain')
-const infoList = r => require.ensure([], () => r(require('../page/info/list')),'infoList')
-const infoDetail = r => require.ensure([], () => r(require('../page/info/detail')),'infoDetail')
-const infoPost = r => require.ensure([], () => r(require('../page/info/post')),'infoPost')
+const mall = r => require.ensure([], () => r(require('../page/mall/index')))
+const mallMain = r => require.ensure([], () => r(require('../page/mall/main')))
+const mallList = r => require.ensure([], () => r(require('../page/mall/list')))
+const mallDetail = r => require.ensure([], () => r(require('../page/mall/detail')))
+const mallDetailShow = r => require.ensure([], () => r(require('../page/mall/detail/show')))
+const mallDetailInfo = r => require.ensure([], () => r(require('../page/mall/detail/info')))
+const mallDetailComment = r => require.ensure([], () => r(require('../page/mall/detail/comment')))
 
-const clubMain = r => require.ensure([], () => r(require('../page/club/main')),'clubMain')
-const clubList = r => require.ensure([], () => r(require('../page/club/list')),'clubList')
-const clubDetail = r => require.ensure([], () => r(require('../page/club/detail')),'clubDetail')
 
-const my = r => require.ensure([], () => r(require('../page/user/my')),'my')
-const reg = r => require.ensure([], () => r(require('../page/user/register')),'reg')
-const login = r => require.ensure([], () => r(require('../page/user/login')),'login')
+const cart = r => require.ensure([], () => r(require('../page/mall/cart')))
+
+const info = r => require.ensure([], () => r(require('../page/info/index')))
+const infoMain = r => require.ensure([], () => r(require('../page/info/main')))
+const infoList = r => require.ensure([], () => r(require('../page/info/list')))
+const infoDetail = r => require.ensure([], () => r(require('../page/info/detail')))
+const infoPost = r => require.ensure([], () => r(require('../page/info/post')))
+
+const clubMain = r => require.ensure([], () => r(require('../page/club/main')))
+const clubList = r => require.ensure([], () => r(require('../page/club/list')))
+const clubDetail = r => require.ensure([], () => r(require('../page/club/detail')))
+
+const my = r => require.ensure([], () => r(require('../page/user/my')))
+const reg = r => require.ensure([], () => r(require('../page/user/register')))
+const login = r => require.ensure([], () => r(require('../page/user/login')))
 
 export default new Router({
   routes: [
@@ -35,32 +43,62 @@ export default new Router({
     },
     {
       path: '/mall',
-      component: mallMain,
-      children: [{
-          path: 'detial',
+      component: mall,
+      children: [
+        {
+          path:'',
+          component:mallMain
+        },
+     
+        {
+            path: 'list',
+            component: mallList,
+        },
+        {
+          path: 'detail/:id',
           component: mallDetail,
+          children:[
+            {
+              path:'',
+              redirect:'show'
+            },
+            {
+              path:'show',
+              component:mallDetailShow
+            },
+            {
+              path:'info',
+              component:mallDetailInfo,
+            },
+            {
+              path:'comment',
+              component:mallDetailComment
+            },
+
+          ]
       }, 
-      {
-          path: 'list',
-          component: mallList,
-      },
-    ]
+      ]
     },
     {
       path: '/info',
-      component: infoMain,
-      children: [{
-          path: 'detial',
+      component:info,
+      children: [
+        {
+          path:'',
+          component:infoMain
+        },
+        {
+          path: 'detail/:id',
           component: infoDetail,
-      }, 
-      {
-          path: 'list',
-          component: infoList,
-      },
-      {
-        path: 'post',
-        component: infoPost,
-      }
+        }, 
+        {
+            path: 'list',
+            component: infoList,
+        },
+        {
+          path: 'post',
+          component: infoPost,
+        }
     ]
     },
 
@@ -68,7 +106,7 @@ export default new Router({
       path: '/club',
       component: clubMain,
       children: [{
-          path: 'detial',
+          path: 'detail',
           component: clubDetail,
       }, 
       {

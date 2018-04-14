@@ -41,7 +41,7 @@ export default [
                 rt =str.substr(index)
                
             }
-            console.log(str,rt)
+            
             return rt
            
         }

@@ -56,7 +56,7 @@ import headBox from "@/components/head";
 import footBox from "@/components/foot";
 import slipBox from "@/components/slip";
 import { mall } from "@/service/getData";
-import mallList from "../mall/components/list";
+import mallList from "../mall/common/list";
 
 export default {
   data() {

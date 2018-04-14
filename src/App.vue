@@ -3,14 +3,33 @@
     <transition name="router-fade" mode="out-in">
 			<router-view></router-view>
 		</transition>
+		<div class="mask" v-show="mask" :style="{index:maskzIndex}"></div>
   </div>
 </template>
 
 <script>
-
+import {mapState, mapMutations} from 'vuex'
 export default {
-  name: 'App'
+	name: 'App',
+  data () {
+    return {
+			index:null,
+			mask:false
+    };
+  },
+
+  components: {},
+
+  computed: {
+		...mapState([
+				'maksk','maskzIndex'
+		]),
+	},
+
+
+  methods: {}
 }
+
 </script>
 
 <style lang="less">
