@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div>
-      <head-box head-title="岛里巴巴">
+      <head-box head-title="岛里巴巴" signinUp="true">
         <span slot='logo' class="head_logo" ><i class="iconfont icon-sousuo"></i></span>
       </head-box>
       <ad-box :ads="ads" :h="200"></ad-box>
@@ -34,7 +34,10 @@
               <mall-list :lists="malls"></mall-list>
           </div>
       </slip-box>
+
       <foot-box active="home"></foot-box>
+
+     
   </div>
 </template>
 
@@ -150,5 +153,13 @@ export default {
     background-size: cover;
     background-position: center;
 }
-
+.router-slid-enter-active,
+.router-slid-leave-active {
+  transition: all 0.4s;
+}
+.router-slid-enter,
+.router-slid-leave-active {
+  transform: translate3d(2rem, 0, 0);
+  opacity: 0;
+}
 </style>

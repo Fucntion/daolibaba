@@ -263,21 +263,22 @@ const animate = (element, target, duration = 400, mode = 'ease-out', callback) =
     }, 20);
 }
 
-export default {
-    // animate:animate,
-    // showBack:showBack,
-    // loadMore:loadMore,
-    // removeStore:removeStore,
-    // setStore:setStore,
-    // getStore:getStore,
-    defaultProvienceId:22,
-    defaultCityId:266,//数据库里面海南的名字
-    emptyObject(obj){
-        for (var prop in obj) {
-            if (obj[prop] === '' || obj[prop] === undefined || obj[prop] === null || obj[prop] === 'undefined') {
-                delete obj[prop];
-            }
+const defaultProvienceId = 22;
+const   defaultCityId = 266;//数据库里面海南的名字
+const   emptyObject = obj => {
+    for (var prop in obj) {
+        if (obj[prop] === '' || obj[prop] === undefined || obj[prop] === null || obj[prop] === 'undefined') {
+            delete obj[prop];
         }
-        return obj;
     }
+    return obj;
+}
+
+export {
+    animate,
+    showBack,
+    loadMore,
+    removeStore,
+    setStore,
+    getStore, 
 }

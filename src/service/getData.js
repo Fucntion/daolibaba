@@ -26,7 +26,7 @@ function emptyObject(obj){
  * 获取广告位
  * @param {广告位id} pid 
  */
-export const ad = (pid) => fetch('/api/v1/ad', {
+export const ad = (pid) => fetch('v1/ad', {
 	pid: pid
 },'POST');
 
@@ -35,7 +35,7 @@ export const ad = (pid) => fetch('/api/v1/ad', {
  * @param {模块id} moduleid 
  * @param {父级id} parentid 
  */
-export const category = (moduleid,parentid) => fetch('/api/v1/category', emptyObject({
+export const category = (moduleid,parentid) => fetch('v1/category', emptyObject({
 	moduleid:moduleid,
 	parentid:parentid,
 	size:10
@@ -49,23 +49,23 @@ export const category = (moduleid,parentid) => fetch('/api/v1/category', emptyOb
  * @param {是否分页} paginate 
  * @param {指定页数} page 
  */
-export const kill = (catid,size,paginate,page) => fetch('/api/v1/kill', emptyObject({
+export const kill = (catid,size,paginate,page) => fetch('v1/kill', emptyObject({
 	catid:catid,
 	size:size,
 	paginate:paginate,
 	page:page
 }),'POST');
 
-export const group = (catid,size,paginate,page) => fetch('/api/v1/group', emptyObject({
+export const group = (catid,size,paginate,page) => fetch('v1/group', emptyObject({
 	catid:catid,
 	size:size,
 	paginate:paginate,
 	page:page
 }),'POST');
 
-export const mall = (post) => fetch('/api/v1/mall', emptyObject(post),'POST');
+export const mall = (post) => fetch('v1/mall', emptyObject(post),'POST');
 
-export const info = (catid,size,field,order,paginate,page) => fetch('/api/v1/info', emptyObject({
+export const info = (catid,size,field,order,paginate,page) => fetch('v1/info', emptyObject({
 	catid:catid,
 	size:size,
 	field:field,
@@ -74,7 +74,7 @@ export const info = (catid,size,field,order,paginate,page) => fetch('/api/v1/inf
 	page:page
 }),'POST');
 
-export const club = (areaid,catid,itemid,size,field,order,paginate,page) => fetch('/api/v1/club', emptyObject({
+export const club = (areaid,catid,itemid,size,field,order,paginate,page) => fetch('v1/club', emptyObject({
 	areaid:areaid,
 	catid:catid,
 	itemid:itemid,
@@ -85,7 +85,7 @@ export const club = (areaid,catid,itemid,size,field,order,paginate,page) => fetc
 	page:page
 }),'POST');
 
-export const area = (parentid,itemid,size,field,order,paginate,page) => fetch('/api/v1/area', emptyObject({
+export const area = (parentid,itemid,size,field,order,paginate,page) => fetch('v1/area', emptyObject({
 	parentid:parentid,
 	itemid:itemid,
 	size:size,
@@ -105,7 +105,7 @@ export const area = (parentid,itemid,size,field,order,paginate,page) => fetch('/
  * @param {指定页面} page 
  * @param {每个商铺返回的商品数量} mallSize 
  */
-export const company = (areaid,id,size,field,order,paginate,page,mallSize) => fetch('/api/v1/company', emptyObject({
+export const company = (areaid,id,size,field,order,paginate,page,mallSize) => fetch('v1/company', emptyObject({
 	areaid:areaid,
 	id:id,
 	size:size,
@@ -115,6 +115,33 @@ export const company = (areaid,id,size,field,order,paginate,page,mallSize) => fe
 	page:page,
 	mallSize:mallSize
 }),'POST');
+
+/**
+ * 获取用户信息
+ */
+
+export const getUser = () => fetch('v1/user');
+
+/**
+ * 注册
+ */
+export const register = (post) => fetch('/v1/member/register',emptyObject(post),'POST');
+
+
+/**
+ * 登录
+ */
+export const login = (post) => fetch('/v1/member/login',emptyObject(post),'POST');
+
+
+
+
+/**
+ * 手机号登录
+ * @params code, mobile, validate_token
+ */
+
+var sendLogin = (post) => fetch('v1/login/app_mobile', {}, 'POST');
 
 
 // /**

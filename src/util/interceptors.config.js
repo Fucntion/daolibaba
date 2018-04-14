@@ -20,8 +20,9 @@ export default function (request, next) {
                 case 1:
                     break;
                 case 20005:
-                    localStorage.setItem('forward', window.location.href);
-                    // window.location.href = '/login.html';
+                    sessionStorage.setItem('forward', window.location.href);
+                    mint.alertMsg('需要登录');
+                    location.href = '/#/login'
                     break;
                 default:
                     mint.alertMsg(response.body.msg);
