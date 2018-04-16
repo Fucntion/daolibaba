@@ -47,30 +47,8 @@
 <script>
 export default {
   data() {
-    return {
-    num:1,
-    specs: [
-        {
-          label: "颜色",
-          skus: [
-            {name:"红色",sku_id:666},
-            {name:"蓝色",sku_id:666},
-            {name:"白色",sku_id:666},
-            {name:"蓝色",sku_id:666},
-            {name:"红色",sku_id:666},
-            {name:"蓝色",sku_id:666},
-            {name:"白色",sku_id:666},
-            {name:"蓝色",sku_id:666},
-            {name:"青色",sku_id:666},
-            {name:"紫色",sku_id:666}
-          ]
-        },
-        {
-          label: "尺码",
-          skus: [170, 175, 180, 190, 165]
-        }
-      ]
-    };
+    return {}
+   
   },
   props: ["mall"],
   components: {},

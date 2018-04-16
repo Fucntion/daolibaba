@@ -63,7 +63,7 @@ export const group = (catid,size,paginate,page) => fetch('v1/group', emptyObject
 	page:page
 }),'POST');
 
-export const mall = (post) => fetch('v1/mall', emptyObject(post),'POST');
+export const mall = (post) => fetch('v1/goods', emptyObject(post),'POST');
 
 export const info = (catid,size,field,order,paginate,page) => fetch('v1/info', emptyObject({
 	catid:catid,
