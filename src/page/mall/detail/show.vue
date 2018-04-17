@@ -1,11 +1,14 @@
 
 <template>
-  <div>
+  <div v-if="mall">
       <!-- 幻灯片 -->
        <mt-swipe id="picbox" :auto="5000">
-        <mt-swipe-item  v-for="pic in mall.pic" :key="pic.id">
-          <img class="thumb" :src="pic.url" />
-        </mt-swipe-item>
+        <mt-swipe-item v-if="mall.thumb"><img class="thumb" :src="mall.thumb" /></mt-swipe-item>
+        <mt-swipe-item v-if="mall.pic1"><img class="thumb" :src="mall.pic1" /></mt-swipe-item>
+        <mt-swipe-item v-if="mall.pic2"><img class="thumb" :src="mall.pic2" /></mt-swipe-item>
+        <mt-swipe-item v-if="mall.pic3"><img class="thumb" :src="mall.pic3" /></mt-swipe-item>
+        <mt-swipe-item v-if="mall.pic4"><img class="thumb" :src="mall.pic4" /></mt-swipe-item>
+
       </mt-swipe>
       <!-- 基础信息 -->
       <div class="baseinfo ">
@@ -66,14 +69,12 @@
             <div class="tip">产品详情</div>
             
         </div>
-        <div class="content goods-content-box">
-            <img src="https://static.qingclouds.cn/con1.jpg"/>
-            <img src="https://static.qingclouds.cn/con2.jpg"/>
-            <img src="https://static.qingclouds.cn/con3.jpg"/>
+        <div v-if="mall.content" v-html="mall.content.content" class="content goods-content-box">
+           
         </div>
     </div>
 
-    <spec-box :mall="mall"></spec-box>
+    <spec-box v-show="selectBox" v-if="mall" :mall="mall"></spec-box>
 
     <div style="height:1.2077rem;"></div>
     <div class="fixBar">
@@ -101,10 +102,11 @@ import { mall } from "../../../service/getData";
 import specBox from './spec';
 // v-bind:style="{'height':200+'px'}"
 export default {
-  name: "base",
+  name: "show",
   data() {
     return {
-      mall: {}
+      mall: {},
+      selectBox:false
     };
   },
 
@@ -127,8 +129,7 @@ export default {
     getInfo() {
       let mise = mall({
         id: this.$route.params.id,
-        with: "pic",
-        field: "id,title,price,marketprice,thumb"
+        field: "id,title,price,marketprice,thumb,pic1,pic2,pic3,pic4,unit,fare_id,user_id"
       });
 
       mise.then(res => {
