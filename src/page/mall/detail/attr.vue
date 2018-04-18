@@ -3,7 +3,10 @@
       <div class="head padding10-c">
       </div>
       <div  class="attrs padding10">
-          
+          <div class="info-line" v-for="(attr,idx1) in mall.attr" :key="idx1">
+              <div class="label font14">{{attr.title}}</div>
+              <div class="btns">{{attr.val}}</div>
+          </div>
       </div>
       
   </div>

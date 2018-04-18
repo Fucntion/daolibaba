@@ -29,6 +29,7 @@
               </div>
           </div>
       </slip-box>
+      <ad-box :ads="ads" :h="123"></ad-box>
       <slip-box class="margin10-r"  title="猜你喜欢">
           <div slot="list">
               <mall-list :lists="malls"></mall-list>

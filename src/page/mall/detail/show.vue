@@ -1,6 +1,6 @@
 
 <template>
-  <div v-if="mall">
+  <div v-show="mall.id">
       <!-- 幻灯片 -->
        <mt-swipe id="picbox" :auto="5000">
         <mt-swipe-item v-if="mall.thumb"><img class="thumb" :src="mall.thumb" /></mt-swipe-item>
@@ -11,7 +11,7 @@
 
       </mt-swipe>
       <!-- 基础信息 -->
-      <div class="baseinfo ">
+      <div class="baseinfo">
           <div class="info-line padding10-c title">{{mall.title}}</div>
           <div class="info-line padding10-c pricebox">
               <span class="price">￥<em>{{mall.price|cutPrice(0)}}</em>{{mall.price|cutPrice(1)}}</span>
@@ -24,14 +24,14 @@
           </div>
       </div>
         <!-- 规格信息 -->
-      <div class="spceinfo padding10 block">
+      <div @click="openSpecBox()" class="spceinfo padding10 block">
         <div class="head padding10-c">
             <div class="tip">选择产品规格</div>
             <div  class="more"><i class="iconfont icon-more"></i></div>
         </div>
     </div>
      <!-- 产品参数 -->
-     <div class="info padding10 margin15-r block">
+     <div @click="openAttrBox()" class="info padding10 margin15-r block">
         <div class="head padding10-c">
             <div class="tip">产品参数</div>
             <div  class="more"><i class="iconfont icon-more"></i></div>
@@ -74,7 +74,12 @@
         </div>
     </div>
 
-    <spec-box v-show="selectBox" v-if="mall" :mall="mall"></spec-box>
+    
+    <attr-box v-show="showAttrBox" v-if="mall.id" @close="closeAttrBox" :mall="mall"></attr-box>
+    <spec-box v-show="showSpecBox" v-if="mall.id" @close="closeSpecBox" :mall="mall"></spec-box>
+
+    <comm-mask @upup="closeMask" :mask="mask" v-show="mask.open"></comm-mask>
+
 
     <div style="height:1.2077rem;"></div>
     <div class="fixBar">
@@ -99,20 +104,32 @@
 
 <script>
 import { mall } from "../../../service/getData";
-import specBox from './spec';
+import SpecBox from './spec';
+import AttrBox from './attr';
+import CommMask from '../../../components/CommMask';
 // v-bind:style="{'height':200+'px'}"
 export default {
   name: "show",
   data() {
     return {
       mall: {},
-      selectBox:false
+      showSpecBox:false,
+      showAttrBox:false,
+      num:0
     };
   },
 
-  components: {specBox},
+  components: {SpecBox,AttrBox,CommMask},
 
-  computed: {},
+  computed: {
+    mask(oval,nval){
+      return {
+        open : this.showSpecBox||this.showAttrBox,
+          zIndex : 99,
+          call : this.showSpecBox?'closeSpecBox':'closeAttrBox'
+      }
+    }
+  },
   mounted() {
     this.$nextTick(function() {
       var box = document.getElementById("picbox"),
@@ -126,6 +143,25 @@ export default {
     this.getInfo();
   },
   methods: {
+    closeMask(){
+      console.log(22222)
+        if(this.showAttrBox)this.showAttrBox = false
+        if(this.showSpecBox)this.showSpecBox = false
+    },
+    closeAttrBox:function(){
+     
+        this.showAttrBox = false
+      },
+    openAttrBox:function(){
+      this.showAttrBox = true
+    },
+    closeSpecBox:function(){
+     
+        this.showSpecBox = false
+      },
+    openSpecBox:function(){
+      this.showSpecBox = true
+    },
     getInfo() {
       let mise = mall({
         id: this.$route.params.id,
@@ -333,6 +369,57 @@ export default {
     .logo {
       width: 60px;
       height: 60px;
+    }
+  }
+}
+
+.minus_plus {
+    margin-left: 6px;
+  .num_wrap {
+    position: relative;
+    display: block;
+    width: 2.5845rem;
+    border-radius: 0.0966rem;
+    overflow: hidden;
+    background-color: #f7f7f7;
+    input,
+    span {
+      position: relative;
+      float: left;
+      width: 0.7246rem;
+      height: 0.7246rem;
+      line-height: 0.7246rem;
+      text-align: center;
+    }
+    span {
+      text-align: center;
+      display: block;
+      i {
+        color: #999999;
+      }
+    }
+  }
+  .minus {
+    &.disabled {
+      color: #d8d8d8;
+    }
+  }
+  .plus {
+  }
+  .input_wrap {
+    float: left;
+    position: relative;
+    border-left: 0.0242rem solid #fff;
+    border-right: 0.0242rem solid #fff;
+    .num {
+      font-size: 0.2899rem;
+      color: #999;
+      flex: 1;
+      min-width: 0;
+      background: none;
+      border: none;
+      width: 1.087rem;
+      text-align: center;
     }
   }
 }

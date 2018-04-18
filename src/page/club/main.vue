@@ -8,6 +8,8 @@
                 <i class="iconfont icon-sousuo"></i>
             </span>
         </head-box>
+        
+        <ad-box :ads="ads" :h="123"></ad-box>
         <section class="nav">
             <section v-for="nav in navs" :key="nav.id" @click="navigatetor(nav.id)" class="item">
                 <img :src="nav.thumb||'http://placehold.it/100/ccc'" />
@@ -15,7 +17,6 @@
             </section>
 
         </section>
-        <ad-box :ads="ads" :h="123"></ad-box>
         <slip-box title="秒杀" morelink="#">
             <div slot="list" class="list">
                 <div v-for="kill in kills" class="slip-item item">
@@ -143,7 +144,7 @@
                 </div>
             </div>
         </div>
-
+        <ad-box :ads="ads" :h="123"></ad-box>
 
         <div class="block padding10 margin10-r">
             <div class="head">

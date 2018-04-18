@@ -1,19 +1,28 @@
 <template>
-  <div class="specbox padding10-r">
+  <div   class="specbox padding10-r">
       <div class="head padding10-c">
           <img :src="mall.thumb" class="thumb" />
           <div class="info">
               <div class="info-line padding10-c title font14">{{mall.title}}</div>
-               <span class="price">￥<em>{{mall.price|cutPrice(0)}}</em>{{mall.price|cutPrice(1)}}</span>
+              <div class="info-line padding10-c title font14">库存{{stockTotal||mall.stockTotal}}件</div>
+              
+              <span v-if="selectMall.price" class="price">￥<em>{{selectMall.price|cutPrice(0)}}</em>{{selectMall.price|cutPrice(1)}}</span>
+              <span v-else class="price">￥<em>{{mall.price|cutPrice(0)}}</em>{{mall.price|cutPrice(1)}}</span>
           </div>
-          <i class="iconfont icon-close"></i>
+          <i class="iconfont icon-close" @click="closeSpecBox"></i>
       </div>
       <div  class="specs padding10">
-          <div class="info-line" v-for="(spec,idx1) in specs" :key="idx1">
-              <div class="label font14">{{spec.label}}</div>
+          <div class="info-line" v-for="(options,idx1) in selectConf" :key="idx1">
+              <div class="label font14">{{options[0].title}}</div>
               <div class="btns">
                    <!-- selected -->
-                  <mt-button v-for="(sku,idx2) in spec.skus" :key="idx2" @onclick="select(idx,idx2)" class="select font12" size="small" plain>{{sku}}</mt-button>
+                  <mt-button 
+                    class="select font12"
+                    v-for="(sku,idx2) in options" 
+                    :key="idx1+'-'+idx2" 
+                    @click="select(idx1,idx2)"
+                    :class="{'selected':sku.isA,'disabled':sku.isD}" 
+                    size="small" plain>{{sku.val}}</mt-button>
                   
               </div>
               
@@ -47,34 +56,133 @@
 <script>
 export default {
   data() {
-    return {}
-   
+    return {
+      num: 0,
+      activeS: {},
+      selectSpecs: [],
+      mallInfo: null,
+      stockTotal: 0,
+      selectMall:{},
+      malls: [] //还是用自己局部的会比较好
+    };
   },
   props: ["mall"],
   components: {},
 
-  computed: {},
+  computed: {
+    accordMall() {},
+    selectConf() {
+      var selectConf = JSON.parse(JSON.stringify(this.mall.specOptions));
+      for (var key in selectConf) {
+        selectConf[key].map(function(spec) {
+          spec.isA = false;
+          spec.isD = false;
+          spec.isS = false;
+        });
+      }
+      return selectConf
+    },
+  },
 
+  watch: {
+    
+  },
+
+  mounted() {
+
+    this.malls = JSON.parse(JSON.stringify(this.mall.mall));
+  },
   methods: {
-      select:function(){
+    selectSku:function() {
+      var _self = this,
+        tempArr = [],
+        curVaL = this.selectSpecs
 
-      },
-      add: function() {
+      this.malls.map(function(mall) {
+        //遍历已经有的规则
+        var accord = true
+        curVaL.map(function(selectSpec) {
+
+          mall.specs.map(function(specs) {
+            // console.log(specs.title == selectSpec.title && specs.val != selectSpec.val)
+            // 意味着这个商品是符合的
+            if(specs.title == selectSpec.title && specs.val != selectSpec.val) {
+                accord = false
+            }
+          });
+
+        });
+        if(accord){
+          tempArr.push(mall)
+        }
+      });
+
+      //计算库存
+       _self.stockTotal = 0;
+      tempArr.map(function(e){
+        _self.stockTotal +=e.stock
+      })
+
+
+      //只剩最后一个了,修改价格
+      if(tempArr.length==1){
+          this.selectMall = tempArr[0]
+      }
+    },
+    closeSpecBox: function() {
+      this.$emit("close");
+    },
+    
+    select: function(idx1, idx2) {
+      console.log(idx1,idx2)
+
+      var selectSpec = this.selectConf[idx1][idx2];
+      this.selectConf[idx1].map(function(e) {
+        if(e.val!=selectSpec.val)e.isA = false
+        
+      }); 
+
+      selectSpec.isA = true; //修改active
+      selectSpec.isS = true; //修改选中状态
+
+
+      let isHasTitle = false;
+      for (var i = 0; i < this.selectSpecs.length; i++) {
+        if (this.selectSpecs[i].title == selectSpec.title) {
+          isHasTitle = true;
+          this.selectSpecs[i] = selectSpec;
+        }
+      }
+
+      if (!isHasTitle) {
+        this.selectSpecs.push(selectSpec);
+      }
+
+      this.selectSku()
+
+      // this.selectSpecs.push(selectSpec)
+      //把已经选择的spec放在一起
+      // let tempStr = selectSpec.title+'---'+selectSpec.val
+      // if(this.selectSpecs.join('').indexOf(tempStr.title)<0){
+      //   this.selectSpecs.push(tempStr)
+      // }
+    },
+
+    add: function() {
       this.num++;
     },
     subtract: function() {
-
-      if (this.num >0) {
-        this.num--
+      if (this.num > 0) {
+        this.num--;
       }
-    },
+    }
   }
 };
 </script>
 <style lang='less' scoped>
 @import "../../../assets/style/base.less";
 .minus_plus {
-    margin-left: 6px;
+  margin-left: 6px;
   .num_wrap {
     position: relative;
     display: block;
@@ -124,28 +232,28 @@ export default {
   }
 }
 
-
 .specs {
   .info-line {
-    display: flex;
-
     .label {
-      width: 40px;
       margin-bottom: 4px;
-      line-height: 30px;
+
       color: @grayFontColor;
-      text-align: center;
+
+      display: block;
     }
     .btns {
       flex: 1;
-      line-height: 30px;
       .select {
         height: 24px;
-        margin-left: 6px;
+        margin-right: 6px;
         border: 1px solid #999999;
         &.selected {
-            border-color: @activeColor;
-            color: @activeColor;
+          border-color: @activeColor;
+          color: @activeColor;
+        }
+        &.disabled {
+          color: #d8d8d8;
+          background: gray;
         }
       }
     }

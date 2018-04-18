@@ -9,11 +9,11 @@
         </section>
         <section v-bind:class="[active=='info'?'active':'']" @click="navigatetor('/info')" class="item">
             <i class="iconfont icon-tongchengzhisong"></i>
-            <span>同城资讯</span>
+            <span>岛里资讯</span>
         </section>
         <section v-bind:class="[active=='club'?'active':'']" @click="navigatetor('/club')" class="item">
             <i class="iconfont icon-shangquanxiao"></i>
-            <span>同城导购</span>
+            <span>同城购物</span>
         </section>
         <section v-bind:class="[active=='cart'?'active':'']" @click="navigatetor('/cart')" class="item">
             <i class="iconfont icon-tubiaolunkuo-"></i>

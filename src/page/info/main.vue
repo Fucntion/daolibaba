@@ -16,6 +16,7 @@
             </ul>
         </div>
       </slip-box>
+      <ad-box :ads="ads" :h="123"></ad-box>
       <slip-box   class="margin10-r"  title="热门资讯" morelink="#">
         <div slot="list" >
             <ul class="o2o-hot-list padding10-c">

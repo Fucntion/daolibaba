@@ -42,6 +42,8 @@ export default {
 
   methods: {
     sub(){
+
+      
       let mise = login({
         phone:this.phone,
         password:this.password
@@ -52,10 +54,15 @@ export default {
             let token = res.body.data;
             this.$root.mint.alertMsg('登录成功');
             setStore('access-token',token.access_token);
-
             let forward = getStore('forward');
+
+            console.log(forward)
             if(forward){
               location.href = forward;
+            }else{
+              this.$router.push({
+                path:'/'
+              })
             }
           }
       })
