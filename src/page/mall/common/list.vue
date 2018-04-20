@@ -7,11 +7,11 @@
                 <img :src="item.thumb" class="thumb" />
             </div>
             <dl class="info">
-                <dd class="name"><span ><strong>{{item.title}}</strong></span></dd>
-                <dd class="price">￥{{item.price}}</dd>
-                <dd class="count"><span class="count-order">总共成交{{item.sales}}笔</span><span class="count-comment">{{item.comments}}条评价</span></dd>
+                <dd class="name info-line"><span ><strong>{{item.title}}</strong></span></dd>
+                <dd class="price info-line">￥{{item.price}}</dd>
+                <dd class="count info-line"><span class="count-order">总共成交{{item.sales}}笔</span><span class="count-comment">{{item.comments}}条评价</span></dd>
                 <dd><span>{{item.company}}</span></dd>
-            </dl> 
+            </dl>
         </router-link>
     </div>
 </div>
@@ -31,5 +31,7 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-
+.info-line{
+  margin-bottom: 4px !important;
+}
 </style>

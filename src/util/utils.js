@@ -1,3 +1,7 @@
+import {pay,getJsSign} from '../service/getData';
+import wx from 'weixin-js-sdk';
+import Vue from 'vue'
+
 /**
  * 存储localStorage
  */
@@ -41,12 +45,6 @@ export const cloneObj = obj => {
     }
     return newobj;
 };
-
-
-
-
-
-
 
 /**
  * 页面到达底部，加载更多
@@ -281,7 +279,7 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
     }, 20);
 }
 
-const defaultProvienceId = 22;
+const   defaultProvienceId = 22;
 const   defaultCityId = 266;//数据库里面海南的名字
 const   emptyObject = obj => {
     for (var prop in obj) {
@@ -292,6 +290,80 @@ const   emptyObject = obj => {
     return obj;
 }
 
+/**
+ * 
+ * @param {合并支付订单号} out_trade_no 一个合并支付订单号和多个真实订单对应，用来和第三方支付对接。支付状态和这个关联，支付成功后回调修改各个子订单状态即可
+ * @param {支付渠道} channel 支付渠道 wx_pub  union wx_mini ali wx_app
+ */
+export const unifiedPay = function(out_trade_no,channel='wx_pub'){
+
+    console.log(out_trade_no,channel)
+
+    let post = {channel:channel,out_trade_no:out_trade_no} ;
+    
+    let ag = navigator.userAgent,
+    ua = ag.toLowerCase();
+    let isWX = (ua.indexOf('micromessenger') !== -1);
+
+    if (isWX) {
+        let openid = localStorage.getItem("wx_pub_openid");
+        if(!openid){
+            alert('openid缺失');
+        }
+        post.openid = openid;
+    }
+
+    let mise = pay(post);
+    mise.then(res=>{
+
+        let body = res.body;
+        if (body.code === 1) {
+            //下单成功
+            let payInfo = res.body.data;
+
+            wx.chooseWXPay({
+                timestamp: payInfo.timeStamp,  // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                nonceStr: payInfo.nonceStr,    // 支付签名随机串，不长于 32 位
+                package: payInfo.package,      // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                signType: payInfo.signType,    // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                paySign: payInfo.paySign,      // 支付签名
+                success: function (res) {
+                    
+                }
+                // complete: function () {
+                //     _this.mint.confim('支付成功').then(action => {
+                //         _this.$router.push({ name: 'orderRouter' });
+                //     });
+                // }
+            });
+        }
+
+    })
+    
+}
+
+export const getWxConfig = () => {
+    
+    let mise = getJsSign({
+        url: location.href.split('#')[0]
+    });
+    
+    mise.then((res) => {
+
+        if (res.body.code === 1) {
+            res.body.data.debug = process.env.NODE_ENV === 'production' ? false : true;
+            res.body.data.jsApiList = ['chooseImage','previewImage','uploadImage', 'openLocation',
+                'getLocation', 'chooseWXPay'];
+            wx.config(res.body.data);
+        }
+    })
+}
+
+
+export const getUrlValueByKey = (name) => {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
+}
+
 export default {
     animate,
     showBack,
@@ -299,5 +371,8 @@ export default {
     removeStore,
     setStore,
     getStore,
-    cloneObj 
+    cloneObj,
+    unifiedPay,
+    getWxConfig,
+    getUrlValueByKey
 }

@@ -3,11 +3,19 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store/';
 import Mint from 'mint-ui';
 import commConfig from './util/index';
 import VueResource from 'vue-resource';
 
-import store from './store/';
+
+let ag = navigator.userAgent,
+    ua = ag.toLowerCase();
+let ios = /(iPhone|iPad|iPod|iOS)/i;
+let android = /(Android)/i;
+ios.test(ag) && (Vue.prototype.isIos = true);
+android.test(ag) && (Vue.prototype.isAndroid = true);
+Vue.prototype.isWX = (ua.indexOf('micromessenger') !== -1);
 
 
 Vue.config.productionTip = true

@@ -5,7 +5,6 @@
           <div class="info">
               <div class="info-line padding10-c title font14">{{mall.title}}</div>
               <div class="info-line padding10-c title font14">库存{{stockTotal||mall.stockTotal}}件</div>
-              
               <span v-if="selectMall.price" class="price">￥<em>{{selectMall.price|cutPrice(0)}}</em>{{selectMall.price|cutPrice(1)}}</span>
               <span v-else class="price">￥<em>{{mall.price|cutPrice(0)}}</em>{{mall.price|cutPrice(1)}}</span>
           </div>
@@ -16,48 +15,53 @@
               <div class="label font14">{{options[0].title}}</div>
               <div class="btns">
                    <!-- selected -->
-                  <mt-button 
+                  <mt-button
                     class="select font12"
-                    v-for="(sku,idx2) in options" 
-                    :key="idx1+'-'+idx2" 
+                    v-for="(sku,idx2) in options"
+                    :key="idx1+'-'+idx2"
                     @click="select(idx1,idx2)"
-                    :class="{'selected':sku.isA,'disabled':sku.isD}" 
+                    :class="{'selected':sku.isA,'disabled':sku.isD}"
                     size="small" plain>{{sku.val}}</mt-button>
-                  
+
               </div>
-              
+
           </div>
           <div class="info-line">
               <div class="label font14">数量</div>
               <div class="btns">
                   <div class="minus_plus">
-                        <div class="num_wrap">  
+                        <div class="num_wrap">
                                    <span class="minus disabled" @click="subtract()">
-                            <i class="iconfont icon-yidiandiantubiao11"></i>    
-                            </span>                                      
+                            <i class="iconfont icon-yidiandiantubiao11"></i>
+                            </span>
                             <div class="input_wrap">
                                 <input class="num" type="tel" v-model="num">
-                            </div>    
+                            </div>
                              <span class="plus" @click="add()">
-                                <i class="iconfont icon-plus"></i>      
-                            </span>                         
-                            
-                        </div>                     
-                    </div>    
+                                <i class="iconfont icon-plus"></i>
+                            </span>
+
+                        </div>
+                    </div>
               </div>
-              
+
           </div>
 
-          
+
       </div>
-      <div class="foot">确认</div>
+      <div @click="confirm()" class="foot">确认</div>
   </div>
 </template>
 <script>
+import {mapState, mapMutations} from 'vuex'
+import {postOrder} from '../../../service/getData';
+import cart from '../../../service/shopCart';
+import {setStore,getStore} from "../../../util/utils";
+
 export default {
   data() {
     return {
-      num: 0,
+      num: 1,
       activeS: {},
       selectSpecs: [],
       mallInfo: null,
@@ -66,7 +70,7 @@ export default {
       malls: [] //还是用自己局部的会比较好
     };
   },
-  props: ["mall"],
+  props: ["mall",'type'],
   components: {},
 
   computed: {
@@ -85,7 +89,7 @@ export default {
   },
 
   watch: {
-    
+
   },
 
   mounted() {
@@ -93,6 +97,134 @@ export default {
     this.malls = JSON.parse(JSON.stringify(this.mall.mall));
   },
   methods: {
+    //add给购物车用的，SET给立即购买用的
+    ...mapMutations([
+          'ADD_ORDERINFO', 'SET_ORDERINFO'
+      ]),
+      confirm(){
+          if(this.type=='buy'){
+            this.toConfirmOrder()//单个商品订单
+          }else{
+            this.addToCard()//加入购物车
+            this.closeSpecBox()
+          }
+
+      },
+    addToCard(){
+
+      if(!this.selectMall.id){
+        this.$root.mint.alertMsg('请选择规格')
+        return
+      }
+
+      if(this.num<1){
+        this.$root.mint.alertMsg('请选择商品数量')
+        return
+      }
+      let amount = this.num*this.selectMall.price
+      if(isNaN(amount)||amount<0){
+        this.$root.mint.alertMsg('商品总价计算错误')
+        return
+      }
+
+      let mall = {
+        mallid:this.selectMall.id,
+        goodsid:this.mall.id,
+        title:this.mall.title,
+        price:this.selectMall.price,
+        thumb:this.mall.thumb,
+        number:this.num,
+        stock:this.selectMall.stock,
+        specInfo:this.getMallSpecs(),
+        fare:this.mall.fare,
+        company:{
+          company:this.mall.company.company,
+          id:this.mall.company.user_id
+        },
+      };
+
+      cart.addProduct(mall);
+
+
+    },
+    getMallSpecs(){
+      var str = '';
+      this.selectSpecs.map((spec)=>{
+        str += spec.title+':'+spec.val+' ';
+      })
+      return str;
+    },
+
+    //立即购买,其实就是模拟多个订单一样额。。不过是一个店铺一个店家而已。
+    toConfirmOrder(){
+
+      if(this.selectSpecs.length<1||this.num<1){
+        this.$root.mint.messagesBox('必须选择规格',true);
+        return;
+      }
+
+      this.closeSpecBox()
+
+      let orderCompany = [];
+
+      //把选中的放进去了
+      let tempObj = {company:this.mall.company.company,id:this.mall.company.id,malls:[]};
+
+      let mall = {
+        mallid:this.selectMall.id,
+        goodsid:this.mall.id,
+        title:this.mall.title,
+        price:this.selectMall.price,
+        thumb:this.mall.thumb,
+        number:this.num,
+        stock:this.selectMall.stock,
+        specInfo:this.getMallSpecs(),
+        fare:this.mall.fare,
+        company:{
+          company:this.mall.company.company,
+          id:this.mall.company.user_id
+        },
+      };
+
+
+      tempObj.malls.push(mall)
+
+      if(tempObj.malls.length>0){
+        orderCompany.push(tempObj)
+      }else{
+        this.$root.mint.alertMsg('请选择商品');
+        return ;
+      }
+
+      //会清空之前的支付页面的数据，不过没关系。购物车的不影响就是了
+      setStore("ConfirmOrder","'"+JSON.stringify(orderCompany));
+      this.$router.push({
+        path:'/confirmOrder'
+      })
+
+
+
+      //存到vuex
+      //这里传的是一个单数组
+      this.selectMall['selectSpec'] = this.selectSpecs;//给商品加规格信息
+      this.selectMall['number'] = this.num
+
+      //公司名和id   产品数组=》【产品信息（商品价格，运费模板id，规格信息'，货品信息（id，缩略图，名字）】
+      this.SET_ORDERINFO({
+        company:this.goods.company,
+          goods:this.goods,
+          malls:[this.selectMall]
+        })
+
+
+      this.$router.push({
+        path:'/confirmOrder'
+      })
+
+
+
+
+    },
     selectSku:function() {
       var _self = this,
         tempArr = [],
@@ -123,7 +255,6 @@ export default {
         _self.stockTotal +=e.stock
       })
 
-
       //只剩最后一个了,修改价格
       if(tempArr.length==1){
           this.selectMall = tempArr[0]
@@ -132,15 +263,15 @@ export default {
     closeSpecBox: function() {
       this.$emit("close");
     },
-    
+
     select: function(idx1, idx2) {
       console.log(idx1,idx2)
 
       var selectSpec = this.selectConf[idx1][idx2];
       this.selectConf[idx1].map(function(e) {
         if(e.val!=selectSpec.val)e.isA = false
-        
-      }); 
+
+      });
 
       selectSpec.isA = true; //修改active
       selectSpec.isS = true; //修改选中状态
@@ -169,9 +300,21 @@ export default {
     },
 
     add: function() {
-      this.num++;
+      if(!this.selectMall.id){
+        this.$root.mint.alertMsg('请选择规格')
+        return
+      }
+
+      if(this.num<this.selectMall.stock){
+          this.num++;
+      }
+
     },
     subtract: function() {
+      if(!this.selectMall.id){
+        this.$root.mint.alertMsg('请选择规格')
+        return
+      }
       if (this.num > 0) {
         this.num--;
       }

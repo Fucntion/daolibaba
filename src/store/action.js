@@ -1,27 +1,20 @@
-import {
-	getUser
-} from '../service/getData'
-import {
-	GET_USERINFO,
-	SAVE_ADDRESS
-} from './mutation-types.js'
+import {getUser} from '../service/getData';
+import {SET_USERINFO,SAVE_ADDRESS} from './mutation-types.js'
 
 export default {
 
 	async getUserInfo({
-		commit,
+		commit, 
 		state
-	}) {
-		let res = await getUser();
-		commit(GET_USERINFO, res)
-	},
-	async saveAddress({
-		commit,
-		state
-	}) {
+	}){
+		
+		let mise = getUser();
+		mise.then(res =>{
+			let body = res.body;
+			if(body.code === 1) {
+				commit(SET_USERINFO,res.body.data);
+			}
+		});
 
-		// if(state.removeAddress.length > 0) return;
-		// let addres = await getAddressList(state.userInfo.user_id);
-		// commit(saveAddress, addres);	
 	},
 }

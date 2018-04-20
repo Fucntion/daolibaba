@@ -10,8 +10,8 @@ export default {
     messagesBox(msg, success) {
         Toast({
             message: msg,
-            duration: 3000,
-            iconClass: !success ? ' this-icon mintui-success' : ''
+            duration: 33000,
+            iconClass: !success ? 'iconfont icon-tipssuccess' : 'iconfont icon-cuowuhttp'
         });
     },
     loading(msg) {
@@ -24,7 +24,7 @@ export default {
         Indicator.close();
 
     },
-    confim(msg) {
+    confirm(msg) {
         return MessageBox.confirm(msg);
     }
 }

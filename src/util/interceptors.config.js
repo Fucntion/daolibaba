@@ -1,20 +1,24 @@
 
 /**
  * http interceptors
- * 
+ *
  * @export
- * @param {any} request 
- * @param {any} next 
+ * @param {any} request
+ * @param {any} next
  */
+import store from '../store/';
 import mint from './mint.config';
 export default function (request, next) {
 
     mint.loading();
+    store.commit('SHOW_MASK',999999999);
     request.headers.set('access-token', localStorage.getItem('access-token'));
     // ENV !== 'production' && console.log(request);
-
     next(function (response) {
         mint.close();
+        setTimeout(function(){
+            store.commit('CLOSE_MASK')
+        },100)
         if (response.status === 200) {
             switch (+response.body.code) {
                 case 1:

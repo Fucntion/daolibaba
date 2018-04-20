@@ -5,14 +5,19 @@
         <span slot='search'><i class="iconfont icon-sousuo"></i></span>
         <span slot='edit' class="edit" >发布<i class="iconfont icon-fabu"></i></span>
       </head-box>
-      <nav-box :navs="navs"></nav-box>
+      <nav-box :navs="navs">
+        <router-link slot="all" to="'/info/category'" class="item">
+          <i class="iconfont icon-suoyou"></i>
+          <span>所有分类</span>
+        </router-link>
+      </nav-box>
       <ad-box :ads="ads" :h="123"></ad-box>
     <slip-box   title="最新资讯" morelink="#">
         <div slot="list" >
             <ul class="new-info-list padding10-c">
                 <li v-for="info in newInfo" :key="info.itemid" class="item padding10-r font14" >
                     <span class="title">{{info.title}}</span><span class="inputtime">{{info.create_time}}</span>
-                </li> 
+                </li>
             </ul>
         </div>
       </slip-box>
@@ -22,10 +27,10 @@
             <ul class="o2o-hot-list padding10-c">
                 <li v-for="info in hotInfo" :key="info.itemid" class="item padding10-r  font14">
                     <div class="editor">
-                        
+
                             <img class="headimg" src="http://o2o.qingclouds.cn/api/avatar/show.php?username=admin&amp;size=large">
                             <span class="name">admin</span>
-                        
+
                     </div>
                     <div class="info" >
                         <h4 class="title">{{info.title}}</h4>
@@ -43,7 +48,7 @@
             </ul>
         </div>
       </slip-box>
-      
+
       <foot-box  active="info"></foot-box>
   </div>
 </template>
@@ -64,7 +69,7 @@ export default {
       navs:[],
       newInfo:[],
       hotInfo:[]
-    }; 
+    };
   },
 
   components: {
@@ -76,7 +81,7 @@ export default {
 
   methods: {
     getAd(){
-      
+
       let mise = ad(14)
       mise.then((res) => {
           let body = res.body;
@@ -87,7 +92,11 @@ export default {
 
     },
     getNav(){
-      let mise = category(2,0)
+      let mise = category({
+        moduleid:2,
+        parentid:0,
+        size:9
+      })
       mise.then((res) => {
           let body = res.body;
           if (body.code === 1) {
@@ -100,7 +109,7 @@ export default {
         newMise.then((res) => {
             let body = res.body;
             if (body.code === 1) {
-            
+
                 this.newInfo = res.body.data
             }
         })
@@ -114,8 +123,8 @@ export default {
         })
 
    }
-      
-       
+
+
   },
   created(){
     this.getAd()
@@ -136,12 +145,15 @@ export default {
 }
 
 .new-info-list{
-    
+
     .item{
 
         border-bottom: 1px solid #e7e7e7;
         display: flex;
         justify-content: space-between;
+      &:last-child{
+        border-bottom: none;
+      }
     }
 }
 
@@ -150,8 +162,10 @@ export default {
 */
 .o2o-hot-list{
 .item{
-
     border-bottom: 1px solid #e7e7e7;
+    &:last-child{
+      border-bottom: none;
+    }
     .editor{
     display: flex;
     justify-content: space-between;
@@ -207,6 +221,16 @@ export default {
     }
     }
 }
+}
+
+.icon-suoyou{
+  display: inline-block;
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 26px;
 }
 
 </style>

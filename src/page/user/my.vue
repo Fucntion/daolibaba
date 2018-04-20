@@ -1,38 +1,40 @@
 <!--  -->
 <template>
   <div>
-      
-      <head-box head-title="个人中心" goBack="true">
+      <head-box head-title="个人中心" noquick="true" goBack="true">
         <i slot="edit" class="iconfont icon-more"></i>
       </head-box>
         <div class="header-wrap padding10">
-            <div class="my-header">
-                <div class="userinfo">
-                    <div class="avatar">
-                        <img src="http://o2o.qingclouds.cn/file/upload/201804/06/094500621.jpg" class="avatar-img" />
+            <div class="my-header" >
+                <div class="userinfo" v-if="userInfo">
+                    <div class="avatar" >
+                        <img :src="userInfo.headimgurl||'http://o2o.qingclouds.cn/file/upload/201804/06/094500621.jpg'" class="avatar-img" />
                     </div>
                     <div class="info">
-                        <div class="line nickname">function0917</div>
-                        <div class="line account">通信证: 159qaz951zaq</div>
-                        <div class="line point">积分6666</div>
+                        <div class="line nickname">昵称:{{userInfo.nickname}}</div>
+                        <div class="line account">通信证: {{userInfo.phone}}</div>
+                        <div class="line point">积分0</div>
                     </div>
                 </div>
-                <div class="edit-btn">编辑<i class="iconfont icon-fabu"></i></div>
+                <router-link v-if="userInfo" :to="'/my/profile'" class="edit-btn">编辑<i class="iconfont icon-fabu"></i></router-link>
+                <router-link v-if="!userInfo" :to="'/login'" class="login">
+                  <mt-button size="small" plain>登录/注册</mt-button>
+                </router-link>
             </div>
         </div>
-        <div class="my-order margin15-r">
+        <div class="my-order margin15-r"  v-if="userInfo" >
             <div class="order"><i class="iconfont icon-fukuan"></i><span class="key">待付款</span></div>
             <div class="order"><i class="iconfont icon-ziyuan"></i><span class="key">待收货</span></div>
             <div class="order"><i class="iconfont icon-daipingjia20"></i><span class="key">待评价</span></div>
             <div class="order"><i class="iconfont icon-icondd2"></i><span class="key">所有订单</span></div>
         </div>
-        <div class="my-assets ">
+        <div class="my-assets " v-if="userInfo" >
             <div class="assets"><span class="value">342</span><span class="key">可用余额</span></div>
             <div class="assets"><span class="value">342</span><span class="key">冻结余额</span></div>
             <div class="assets"><span class="value">342</span><span class="key">积分</span></div>
             <div class="assets"><i class="iconfont icon-zhanghuzichan"></i><span>我的财富</span></div>
         </div>
-        <div class="my-lnks margin15-r">
+        <div class="my-lnks margin15-r" v-if="userInfo" >
             <div class="lnks"><span class="value">342</span><span class="key">我的评论</span></div>
             <div class="lnks"><span class="value">342</span><span class="key">关注的店铺</span></div>
             <div class="lnks"><span class="value">342</span><span class="key">收藏的商品</span></div>
@@ -45,9 +47,9 @@
       </slip-box>
       
       <foot-box active="my"></foot-box>
-      <transition name="router-slid" mode="out-in">
+      <!-- <transition name="router-slid" mode="out-in">
             <router-view></router-view>
-        </transition>
+        </transition> -->
   </div>
 </template>
 
@@ -57,6 +59,8 @@ import footBox from "@/components/foot";
 import slipBox from "@/components/slip";
 import { mall } from "@/service/getData";
 import mallList from "../mall/common/list";
+
+import { mapState, mapActions } from "vuex";
 
 export default {
   data() {
@@ -72,9 +76,12 @@ export default {
     slipBox
   },
 
-  computed: {},
+  computed: {
+    ...mapState(["userInfo"])
+  },
 
   methods: {
+    ...mapActions(["getUserInfo"]),
     getMall() {
       let mise = mall({
         size: 20,
@@ -213,6 +220,17 @@ export default {
     .icon-fabu {
       font-size: 16px;
     }
+  }
+}
+
+.login{
+  display: block;
+  text-align: center;
+  padding: 20px;
+
+  button{
+    color:white;
+    border-color: white;
   }
 }
 

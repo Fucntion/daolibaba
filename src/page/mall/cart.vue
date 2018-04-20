@@ -1,113 +1,76 @@
 <!--  -->
 <template>
   <div>
-      <head-box head-title="购物车"></head-box>
-      
-      <div class="cartbox">
-            <div class="section" v-for="(cart,index) in carts">
-                <div class="head">
-                    <i class="iconfont icon-select icon-select active"></i>
+      <head-box :goBack="true"  head-title="购物车"></head-box>
+
+      <div class="cartbox" v-if="total.totalNumber>1||selectAll">
+            <div class="control"><mt-button size="small" @click="delMall('all')" >全部删除</mt-button></div>
+            <div class="section" v-for="(company,index) in companyList" :key="index">
+                <div  class="head">
+                    <i class="iconfont icon-select icon-select" :class="{'active':company.select}" @click="selectCompany(company)"></i>
                     <i class="iconfont icon-shangjia"></i>
-                    <span class="company">{{cart.popInfo.company}}</span>
+                    <router-link :to="'/compay/'+company.id"  class="company">{{company.title}}</router-link>
                     <i class="iconfont icon-previewright"></i>
                 </div>
-                <div class="mall selected" v-for="(mall,idx) in cart.products">
-                    <i class="iconfont icon-select icon-select"></i>
+                <div class="mall selected" v-for="(mall,idx) in company.malls">
+                    <i class="iconfont icon-select icon-select" :class="{'active':mall.select}" @click="selectMall(mall,company)"></i>
                     <img class="thumb" :src="mall.thumb" />
-                    <div class="info" >                 
-                        <div class="name">                                                                                    
-                            <span class="font14" >{{mall.title}}</span>          
-                        </div>                                  
-                        <div class="info_line">                                          
-                            <p class="price"><span class="priceJs" >¥ <em class="int">{{mall.price|cutPrice(0)}}</em>{{mall.price|cutPrice(1)}}</span></p>              
+                    <div class="info" >
+                        <div class="name">
+                            <span class="font14" >{{mall.title}}</span>
+                        </div>
+                        <div class="info_line specinfo">
+                           <span class="font12">已选:{{mall.specInfo}}</span>
+                        </div>
+                        <div class="info_line specinfo">
+                           <span class="font12">库存{{mall.stock}}</span>
+                        </div>
+                        <div class="info_line">
+                            <p class="price"><span class="priceJs" >¥ <em class="int">{{mall.price|cutPrice(0)}}</em>{{mall.price|cutPrice(1)}}</span></p>
                             <div class="minus_plus">
-                                <div class="num_wrap">  
-                                    <span class="plus" @click="add(index,idx)">
-                                        <i class="iconfont icon-yidiandiantubiao11"></i>      
-                                    </span>                            
-                                                              
+                                <div class="num_wrap">
+                                    <span class="plus" @click="subtract(mall)">
+                                        <i class="iconfont icon-yidiandiantubiao11"></i>
+                                    </span>
                                     <div class="input_wrap">
-                                        <input class="num" type="tel" v-model="mall.quantity">
-                                    </div>                           
-                                    <span class="minus disabled" @click="subtract(index,idx)">
-                                    <i class="iconfont icon-plus"></i>    
-                                    </span> 
-                                </div>                     
-                            </div>                                      
-                        </div>                                      
-                        <div class="info_sub_line">                      
-                            <div class="m_action">                                    
-                                <span class="m_action_item font12"  issuit="">删除</span>                         
-                            </div>                     
-                        </div>                                                       
-                                                  
+                                        <input class="num" type="tel" v-model="mall.number">
+                                    </div>
+                                    <span class="minus" @click="add(mall)">
+                                    <i class="iconfont icon-plus"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info_sub_line">
+                            <div class="m_action">
+                                <span @click="delMall(mall.mallid)" class="m_action_item font12"  issuit="">删除</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            
+
       </div>
-      <div style="height:1.2077rem;"></div>
-        <div class="fixBar">
-            <i class="iconfont icon-select active">全选</i>
-            <div class="total">
-                <p>总计：
-                    <strong id="totalPrice">¥6587.78</strong>
-                    <small><span id="totalBackMoney">总额¥6767.30 立减¥179.52</span></small>
-                </p>
-                <div class="buy buyJs" >去结算
-                    <em  id="totalNum" totalnum="39">(39件)</em>
-                </div>
-            </div>
-            
-        </div>
+      <div  style="height:1.2077rem;"></div>
+      <div v-if="total.totalNumber>0||selectAll" class="fixBar">
+          <!-- <i class="iconfont icon-select" @click="selectMall('all')" :class="{'active':selectAll}">全选</i> -->
+          <div class="total">
+              <p>总计：
+                  <strong id="totalPrice">¥{{total.totalAmount}}</strong>
+                  <small><span id="totalBackMoney">总额¥{{total.totalAmount}}元 立减¥0元 </span></small>
+                  <!-- 立减¥179.52 -->
+              </p>
+              <div @click="toOrder()" class="buy buyJs" >去结算
+                  <em  id="totalNum">({{total.totalNumber}}件)</em>
+              </div>
+          </div>
 
-      <!-- <div class="container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>产品编号</th>
-                    <th>产品名字</th>
-                    <th>购买数量</th>
-                    <th>产品单价</th>
-                    <th>产品总价</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item , index) in message">
-                    <td @click="jia(index)">{{item.id}}</td>
-                    <td>{{item.name}}</td>
-                    <td>
-                        <button type="button" class="btn tn-primary" @click="subtract(index)">-</button>
-                        <input type="text" v-model="item.quantity">
-                        <button type="button" class="btn tn-primary" @click="add(index)">+</button>
-                    </td>
-                    <td>{{item.price | filtermoney}}</td>
-                    <td>{{item.price*item.quantity | filtermoney}}</td>
-                    <td>
-                        <button type="button" class="btn btn-danger" @click="remove(index)">移除</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>总购买价            
-                    </td>
-                    <td>
-                        {{animatenum | filtermoney}}
-                    </td>
-                    <td>总购买数量
-                    </td>
-                    <td>
-
-                    </td>
-                    <td colspan="2">
-                        <button type="button" class="btn btn-danger" @click="empty()">清空购物车</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p v-if="message.length===0">购物车空空如也，去逛逛吧~</p>
-    </div> -->
+      </div>
+      <router-link :to="'/'" class="empty" v-if="total.totalNumber<1&&!selectAll" >
+        <i class="iconfont icon-meiyoudingdan-01"></i>
+        <div class="title">购物车饿扁了,快去选购吧</div>
+      </router-link>
 
       <foot-box active="cart"></foot-box>
   </div>
@@ -116,7 +79,8 @@
 <script>
 import headBox from "@/components/head";
 import footBox from "@/components/foot";
-
+import cart from '../../service/shopCart';
+import {setStore,getStore} from '../../util/utils';
 import { ad, category, kill, mall, group } from "@/service/getData";
 
 export default {
@@ -124,87 +88,11 @@ export default {
     return {
       totalPrice: 0,
       animatenum: 0,
-      carts: [
-        {
-          popInfo: {
-            id: "18226",
-            company: "11111111有限公司"
-          },
-          products: [
-            {
-              id: 7758,
-              title:
-                "墙彩 中国风上善若水贴纸花卉荷花墙纸温馨客厅墙上贴花房间装饰品卧室壁纸自粘",
-              thumb:
-                "http://o2o.qingclouds.cn/file/upload/201804/06/094500621.jpg",
-              quantity: 4,
-              price: 700.01
-            },
-            {
-              id: 2017,
-              title:
-                "墙彩 中国风上善若水贴纸花卉荷花墙纸温馨客厅墙上贴花房间装饰品卧室壁纸自粘",
-              thumb:
-                "http://o2o.qingclouds.cn/file/upload/201804/06/094500621.jpg",
-              quantity: 5,
-              price: 600
-            }
-          ]
-        },
-        {
-          popInfo: {
-            id: "18226",
-            company: "222222222有限公司"
-          },
-          products: [
-            {
-              id: 7,
-              title:
-                "墙彩 中国风上善若水贴纸花卉荷花墙纸温馨客厅墙上贴花房间装饰品卧室壁纸自粘",
-              thumb:
-                "http://o2o.qingclouds.cn/file/upload/201804/06/094500621.jpg",
-              quantity: 3,
-              price: 400
-            },
-            {
-              id: 1340,
-              title:
-                "墙彩 中国风上善若水贴纸花卉荷花墙纸温馨客厅墙上贴花房间装饰品卧室壁纸自粘",
-              thumb:
-                "http://o2o.qingclouds.cn/file/upload/201804/06/094500621.jpg",
-              quantity: 9,
-              price: 300
-            }
-          ]
-        },
+      control:false,
+      base:cart.orderdetail,
+      companyList:[],
+      compute:false
 
-        {
-          popInfo: {
-            id: "182226",
-            company: "333333333有限公司"
-          },
-          products: [
-            {
-              id: 23211,
-              title:
-                "墙彩 中国风上善若水贴纸花卉荷花墙纸温馨客厅墙上贴花房间装饰品卧室壁纸自粘",
-              thumb:
-                "http://o2o.qingclouds.cn/file/upload/201804/06/094500621.jpg",
-              quantity: 3,
-              price: 400
-            },
-            {
-              id: 231231,
-              title:
-                "墙彩 中国风上善若水贴纸花卉荷花墙纸温馨客厅墙上贴花房间装饰品卧室壁纸自粘",
-              thumb:
-                "http://o2o.qingclouds.cn/file/upload/201804/06/094500621.jpg",
-              quantity: 9,
-              price: 300
-            }
-          ]
-        }
-      ]
     };
   },
 
@@ -214,6 +102,39 @@ export default {
   },
 
   computed: {
+
+    selectAll:function(){
+      if(this.companyList.length<1){
+        return false;
+      }
+
+      let rt =true,temp =this.companyList[0].malls[0].select
+
+      this.companyList.map(function(company){
+
+          company.malls.map(mall=>{
+            if(mall.select!=temp){
+             rt = false
+            }
+          })
+        })
+        return rt
+    },
+    total:function(){
+
+        let totalNumber = 0,totalAmount = 0;
+        this.companyList.map(function(company){
+          company.malls.map(mall=>{
+            if(mall.select){
+              totalNumber+=mall.number;
+              totalAmount+=parseInt(mall.number)*parseFloat(mall.price);
+            }
+          })
+        })
+
+        return {totalNumber:totalNumber,totalAmount:parseInt(totalAmount*100)/100}
+
+    },
     //计算总金额
     toComput2: function() {
       var vm = this;
@@ -226,29 +147,108 @@ export default {
     }
   },
   mounted: function() {
-    this.tween("97000", "0");
+    // this.tween("97000", "0");
+  },
+  created(){
+    this.INIT()
   },
   methods: {
-    //计算总数的方法为什么写在methods里面就不行？
-    toComput: function() {
-      var vm = this;
-      vm.message.forEach(function(mess) {
-        vm.totalPrice += parseInt(mess.price * mess.quantity);
-      });
-      return vm.totalPrice;
+
+    toOrder:function(){
+        let orderCompany = [];
+        //把选中的放进去了
+        this.companyList.map(function(company){
+          let tempObj = {company:company.title,id:company.id,malls:[]}
+          company.malls.map(function(mall){
+            if(mall.select){
+              tempObj.malls.push(mall)
+            }
+          })
+          if(tempObj.malls.length>0){
+            orderCompany.push(tempObj)
+          }
+        })
+
+        //存起来哦
+        setStore("ConfirmOrder","'"+JSON.stringify(orderCompany));
+        this.$router.push({
+          path:'/confirmOrder'
+        })
     },
-    add: function(index) {
-      var vm = this;
-      vm.message[index].quantity++;
+    INIT(){
+      this.companyList = cart.getProductList()||[]
     },
-    subtract: function(index) {
-      var vm = this;
-      vm.message[index].quantity--;
-      if (vm.message[index].quantity <= 0) {
-        if (confirm("你确定移除该商品？")) {
-          vm.message.splice(index, 1);
-        }
+    delMall(mallid){
+      if(mallid=='all')mallid=null
+      cart.clearProduct(mallid)
+      this.INIT()//存在localstorage里面没法监听改变，只能手动init了
+    },
+    selectCompany(company){
+      let _self = this;
+      company.select = !company.select
+
+      company.malls.map(function(mall){
+        _self.selectMall(mall,company,company.select)
+      })
+    },
+    selectMall(mall,company,status){
+
+      if(mall=='all'){
+
+        let rt = this.selectAll
+        this.companyList.map(function(company){
+          company.select = !rt
+          company.malls.map(mall=>{
+            mall.select =!rt
+          })
+        })
+        this.control = !this.control
+        return
       }
+
+
+      mall.select = status?status:!mall.select
+
+      let allMallSelect = true
+      company.malls.map(function(mall){
+          if(!mall.select)allMallSelect=false
+      })
+      if(!allMallSelect){
+        company.select = false
+      }else{
+        company.select = true
+      }
+
+
+    },
+
+    add: function(mall) {
+      if(mall.number<mall.stock)mall.number++
+
+      //把加减情况同步到本地啊
+      cart.updateProductNum(mall.mallid,mall.number)
+    },
+    subtract: function(mall) {
+      if(mall.number>1){
+        mall.number--;
+         //把加减情况同步到本地啊
+        cart.updateProductNum(mall.mallid,mall.number)
+        return ;
+      };
+      if(mall.number==1){
+        this.$root.mint.confirm('是否要移除该商品?').then(action => {
+          cart.clearProduct(mall.mallid)
+        }).catch(action=>{});
+        return;
+      }
+
+      // var vm = this;
+      // vm.message[index].quantity--;
+      // if (vm.message[index].quantity <= 0) {
+      //   if (confirm("你确定移除该商品？")) {
+      //     vm.message.splice(index, 1);
+      //   }
+      // }
     },
     remove: function(index) {
       var vm = this;
@@ -285,6 +285,24 @@ export default {
 <style lang='less' scoped>
 @import "../../assets/style/base.less";
 .cartbox {
+  position: relative;
+  .control{
+    padding: 0 10px;
+   background: white;
+   border-bottom: 1px solid #e7e7e7;
+    box-sizing: border-box;
+    height: 44px;
+    z-index: 2;
+    text-align: right;
+    line-height: 44px;
+
+    button{
+      font-size: 12px;
+      height: 26px;
+      background: none;
+      border:1px solid @activeColor;
+    }
+  }
   .section {
     position: relative;
     margin-bottom: 0.2415rem;
@@ -376,6 +394,9 @@ export default {
     .info_line {
       display: flex;
       margin-top: 0.2415rem;
+      &.specinfo{
+        color: #666666;
+      }
       .price {
         flex: 1;
         .font10;
@@ -512,6 +533,21 @@ export default {
         font-family: none;
       }
     }
+  }
+}
+
+
+.empty{
+  text-align: center;
+  display: block;
+  color: #666666;
+  .iconfont{
+    font-size: 44px;
+
+  }
+  .title{
+    padding: 20px 0;
+
   }
 }
 </style>

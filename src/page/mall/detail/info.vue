@@ -1,24 +1,22 @@
 <template>
-  <div   class="attrbox padding10-r">
-      <div class="head padding10-c">
-      </div>
-      <div  class="attrs padding10">
-          
-      </div>
-      
+  <div>
+    <div id="infobox"  v-html="content"></div>
   </div>
 </template>
 <script>
+import { mall } from "../../../service/getData";
 export default {
   data() {
     return {
-
+        content:null
     }
    
   },
-  props: ["mall"],
   components: {},
 
+  created(){
+    this.getInfo()
+  },
   computed: {},
 
   methods: {
@@ -27,53 +25,33 @@ export default {
         
         this.$emit('close');
       },
+      getInfo() {
+      let mise = mall({
+        id: this.$route.params.id,easy:1
+      });
+
+      mise.then(res => {
+        let body = res.body;
+        if (body.code === 1) {
+          this.content = res.body.data.content.content;
+        }
+      });
+    }
       
   }
 };
 </script>
-<style lang='less' scoped>
+<style lang='less'>
 @import "../../../assets/style/base.less";
-
-.attrbox {
-  background: white;
-  position: fixed;
+#infobox{
   width: 100%;
-  box-sizing: border-box;
-  bottom: 0;
-  z-index: 100;
-  height: 70%;
-  overflow-y: scroll;
-
-  
-.attrs{
-
-  .info-line {
-    display: flex;
-
-    .label {
-      width: 70px;
-      margin-right: 10ox;
-      margin-bottom: 4px;
-      line-height: 30px;
-      color: @grayFontColor;
-      text-align: left;
-
-    }
-    .btns {
-      flex: 1;
-      line-height: 30px;
-      .select {
-        height: 24px;
-        margin-left: 6px;
-        border: 1px solid #999999;
-        &.selected {
-            border-color: @activeColor;
-            color: @activeColor;
-        }
-      }
-    }
+  overflow-x: hidden;
+  img{
+    width: 100%; 
   }
-}
+ 
+} 
 
-}
+
+
 </style>

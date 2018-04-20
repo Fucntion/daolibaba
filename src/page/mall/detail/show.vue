@@ -1,6 +1,6 @@
 
 <template>
-  <div v-show="mall.id">
+  <div>
       <!-- 幻灯片 -->
        <mt-swipe id="picbox" :auto="5000">
         <mt-swipe-item v-if="mall.thumb"><img class="thumb" :src="mall.thumb" /></mt-swipe-item>
@@ -8,19 +8,18 @@
         <mt-swipe-item v-if="mall.pic2"><img class="thumb" :src="mall.pic2" /></mt-swipe-item>
         <mt-swipe-item v-if="mall.pic3"><img class="thumb" :src="mall.pic3" /></mt-swipe-item>
         <mt-swipe-item v-if="mall.pic4"><img class="thumb" :src="mall.pic4" /></mt-swipe-item>
-
       </mt-swipe>
       <!-- 基础信息 -->
-      <div class="baseinfo">
+      <div v-if="mall.id" class="baseinfo">
           <div class="info-line padding10-c title">{{mall.title}}</div>
           <div class="info-line padding10-c pricebox">
               <span class="price">￥<em>{{mall.price|cutPrice(0)}}</em>{{mall.price|cutPrice(1)}}</span>
               <span class="initial_price">￥<em>{{mall.price|cutPrice(0)}}</em>{{mall.price|cutPrice(1)}}</span>
             </div>
           <div class="info-line ext">
-              <span>总销量:6666</span>
-              <span>月销量:666</span>
-              <span>发货地:海口</span>
+              <span>发货地:{{mall.city.name||'海口'}}</span>
+              <span>总销量:{{mall.sales}}</span>
+              <span>总评论:{{mall.comments}}</span>
           </div>
       </div>
         <!-- 规格信息 -->
@@ -41,15 +40,14 @@
 
 
         <!-- 公司信息 -->
-      <div class="companyinfo block">
+      <div v-if="mall.company" class="companyinfo block">
           <div class="base padding10-c">
               <img class="logo" src="http://placehold.it/100/ccc"/>
               <div class="company padding10-c">
-                    <span class="title font16">三颗松鼠旗舰店三颗松鼠旗舰店</span>
+                    <span class="title font16">{{mall.company.company}}</span>
                     <div class="validate font12">
-                        <span><i class="iconfont icon-renzhengguanli active"></i>资质验证</span>
-                        <span><i class="iconfont icon-renzhengguanli active"></i>企业认证</span>
-                        <span><i class="iconfont icon-renzhengguanli"></i>同城导购</span>
+                        <span><i class="iconfont icon-renzhengguanli" :class="{'active':mall.company.validated}"></i>企业认证</span>
+                        <span><i class="iconfont icon-renzhengguanli" :class="{'active':mall.company.is_club}"></i>同城导购</span>
                     </div>
               </div>
               <div class="go">
@@ -57,9 +55,9 @@
               </div>
           </div>
           <div class="score">
-              <span>产品描述<em>4.1</em></span>
-              <span>服务态度<em>4.1</em></span>
-              <span>物流服务<em>4.1</em></span>
+              <span>产品描述<em>{{mall.company.score1}}</em></span>
+              <span>服务态度<em>{{mall.company.score2}}</em></span>
+              <span>物流服务<em>{{mall.company.score3}}</em></span>
           </div>
       </div>
 
@@ -76,7 +74,7 @@
 
     
     <attr-box v-show="showAttrBox" v-if="mall.id" @close="closeAttrBox" :mall="mall"></attr-box>
-    <spec-box v-show="showSpecBox" v-if="mall.id" @close="closeSpecBox" :mall="mall"></spec-box>
+    <spec-box v-show="showSpecBox" :type="specType" v-if="mall.id" @close="closeSpecBox" :mall="mall"></spec-box>
 
     <comm-mask @upup="closeMask" :mask="mask" v-show="mask.open"></comm-mask>
 
@@ -93,8 +91,8 @@
         </div>
         <div class="action">
             
-            <div class="btn buy buyJs" >立即购买</div>
-            <div class="btn tocart buyJs" >加入购物车</div>
+            <div @click="openSpecBox()" class="btn buy buyJs" >立即购买</div>
+            <div @click="openSpecBox('cart')" class="btn tocart buyJs" >加入购物车</div>
         </div>
         
     </div>
@@ -115,7 +113,8 @@ export default {
       mall: {},
       showSpecBox:false,
       showAttrBox:false,
-      num:0
+      num:0,
+      specType:null
     };
   },
 
@@ -156,16 +155,16 @@ export default {
       this.showAttrBox = true
     },
     closeSpecBox:function(){
-     
         this.showSpecBox = false
       },
-    openSpecBox:function(){
+    openSpecBox:function(type){
       this.showSpecBox = true
+      this.specType = type?type:'buy'
     },
     getInfo() {
       let mise = mall({
         id: this.$route.params.id,
-        field: "id,title,price,marketprice,thumb,pic1,pic2,pic3,pic4,unit,fare_id,user_id"
+        field: "id,title,price,marketprice,thumb,pic1,pic2,pic3,pic4,sales,comments,unit,fare_id,user_id,city_id"
       });
 
       mise.then(res => {

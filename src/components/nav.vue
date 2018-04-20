@@ -3,9 +3,11 @@
   <section class="nav">
       <section  v-for="nav in navs" :key="nav.catid" @click="navigatetor(nav.catid)" class="item">
           <img :src="nav.thumb||'http://placehold.it/100/ccc'" />
-          <span>{{nav.catname}}</span>
+          <span>{{nav.title}}</span>
       </section>
-      
+      <slot name='all'></slot>
+
+
   </section>
 </template>
 
@@ -29,7 +31,7 @@ export default {
   }
 }
 </script>
-<style lang='less' scoped>
+<style lang='less'>
 .nav{
     padding: 0.2415rem;
     display: flex;

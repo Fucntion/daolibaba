@@ -5,7 +5,12 @@
         <span slot='logo' class="head_logo" ><i class="iconfont icon-sousuo"></i></span>
       </head-box>
       <ad-box :ads="ads" :h="200"></ad-box>
-      <nav-box :navs="navs"></nav-box>
+      <nav-box :navs="navs" >
+        <router-link slot="all" to="/mall/category" class="item">
+          <i class="iconfont icon-suoyou"></i>
+          <span>所有分类</span>
+        </router-link>
+      </nav-box>
       <div class="margin10-r banner-all-huoyuan"></div>
       <slip-box title="秒杀" morelink="#">
           <div slot="list"  class="list">
@@ -35,20 +40,19 @@
               <mall-list :lists="malls"></mall-list>
           </div>
       </slip-box>
-
       <foot-box active="home"></foot-box>
 
-     
+
   </div>
 </template>
 
 <script>
-import headBox from '@/components/head'
+import headBox from '../../components/head'
 import footBox from '@/components/foot'
 import adBox from '@/components/ad'
-import navBox from '@/components/nav'
+import navBox from '../../components/nav'
 import slipBox from '@/components/slip'
-import {ad,category,kill,mall,group} from '@/service/getData'
+import {ad,category,kill,mall,group} from '../../service/getData'
 import mallList from './common/list'
 
 export default {
@@ -59,7 +63,7 @@ export default {
       kills:[],
       malls:[],
       groups:[]
-    }; 
+    };
   },
 
   components: {
@@ -71,7 +75,7 @@ export default {
 
   methods: {
     getAd(){
-      
+
       let mise = ad(14)
       mise.then((res) => {
           let body = res.body;
@@ -82,7 +86,11 @@ export default {
 
     },
     getNav(){
-      let mise = category(1,0)
+      let mise = category({
+        moduleid:1,
+        parentid:0,
+        size:9
+      })
       mise.then((res) => {
           let body = res.body;
           if (body.code === 1) {
@@ -93,10 +101,10 @@ export default {
     getKill(){
       /**
        * 获取秒杀列表
-       * @param {栏目id} catid 
-       * @param {数量} size 
-       * @param {是否分页} paginate 
-       * @param {指定页数} page 
+       * @param {栏目id} catid
+       * @param {数量} size
+       * @param {是否分页} paginate
+       * @param {指定页数} page
        */
       let mise = kill(null,10)
       mise.then((res) => {
@@ -131,9 +139,9 @@ export default {
           }
       })
     }
-      
-      
-      
+
+
+
   },
   created(){
     this.getAd()
@@ -163,4 +171,13 @@ export default {
   transform: translate3d(2rem, 0, 0);
   opacity: 0;
 }
+  .icon-suoyou{
+    display: inline-block;
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 26px;
+  }
 </style>

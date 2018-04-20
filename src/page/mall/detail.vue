@@ -1,20 +1,20 @@
 
 <template>
   <div>
-      <head-box :goBack="true"  >
-        <div class="share" slot="edit"><i class="iconfont icon-share"></i></div>
+      <head-box :goBack="true" quick="true"  >
+         <!--<div class="share" slot="edit"><i class="iconfont icon-share"></i></div>-->
         <div slot="tab" class="tab">
-          <router-link :to="'show'" class="tab-item active">简介</router-link>
-          <router-link :to="'info'" class="tab-item">详情</router-link>
-          <router-link :to="'comment'" class="tab-item">评论</router-link>
+          <router-link :to="'show'" class="tab-item" :class="{'active':activeIndx=='show'}">简介</router-link>
+          <router-link :to="'info'" class="tab-item" :class="{'active':activeIndx=='info'}">详情</router-link>
+          <!-- <router-link :to="'comment'" class="tab-item" :class="{'active':activeIndx=='comment'}">评论</router-link> -->
         </div>
       </head-box>
     <transition name="router-fade" mode="out-in">
 			<router-view></router-view>
 		</transition>
 
-    
-      
+
+
   </div>
 </template>
 
@@ -33,7 +33,16 @@ export default {
     headBox
   },
 
-  computed: {},
+  computed: {
+    activeIndx(){
+      var path = this.$route.path,rt='show';
+      if(path.indexOf('info')>-1)rt='info'
+      if(path.indexOf('comment')>-1)rt='comment'
+
+      return rt
+
+    }
+  },
   mounted() {
     this.$nextTick(function() {});
   },

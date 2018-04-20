@@ -12,8 +12,8 @@ import filter from './filter';
 export default {
     install(Vue, options) {
         Vue.prototype.mint = mint;
-        Vue.prototype.utils = utils;
         Vue.prototype.wx = wx;
+        Vue.prototype.utils = utils;
         Vue.http.interceptors.push(interceptorsConfig);
         Vue.http.options.emulateJSON = true;
         Vue.http.options.emulateHTTP = true;

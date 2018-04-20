@@ -8,13 +8,18 @@
                 <i class="iconfont icon-sousuo"></i>
             </span>
         </head-box>
-        
+
         <ad-box :ads="ads" :h="123"></ad-box>
         <section class="nav">
             <section v-for="nav in navs" :key="nav.id" @click="navigatetor(nav.id)" class="item">
                 <img :src="nav.thumb||'http://placehold.it/100/ccc'" />
                 <span>{{nav.title}}</span>
             </section>
+
+          <router-link slot="all" to="'/info/category'" class="item">
+            <i class="iconfont icon-suoyou"></i>
+            <span>所有分类</span>
+          </router-link>
 
         </section>
         <slip-box title="秒杀" morelink="#">
@@ -39,7 +44,7 @@
                 </div>
             </div>
         </slip-box>
-        
+
         <div class="block">
             <div class="head">
                 <div class="title">必逛</div>
@@ -149,7 +154,7 @@
         <div class="block padding10 margin10-r">
             <div class="head">
                 <div class="tip">推荐商铺</div>
-                
+
             </div>
             <div class="content">
                 <div class="top-company-list">
@@ -159,7 +164,7 @@
         </div>
 
         <foot-box active="club"></foot-box>
-        
+
     </div>
 </template>
 
@@ -170,7 +175,7 @@
     import navBox from "@/components/nav";
     import slipBox from "@/components/slip";
     import companyBox from "@/page/mall/common/company";
-    import { ad, kill, mall, area, club,company } from "@/service/getData";
+    import { ad, kill, mall, area, club,company } from "../../service/getData";
 
     export default {
         data() {
@@ -224,7 +229,7 @@
                 });
             },
             getNav() {
-                let mise = club(this.city.id, null, null, 10);
+                let mise = club(this.city.id, null, null, 9);
                 mise.then(res => {
                     let body = res.body;
                     if (body.code === 1) {
@@ -232,7 +237,7 @@
                     }
                 });
             },
-           
+
             async getArea() {
                 let mise = area(null, this.$root.utils.defaultCityId);
                 mise.then(res => {
@@ -242,9 +247,32 @@
                     }
                 });
             },
+            getMall(){
+            let mise = mall({
+                catid:null,
+                size:20,
+                field:null,
+                order:null,
+                paginate:true,
+                page:null
+            })
+            mise.then((res) => {
+                let body = res.body;
+                if (body.code === 1) {
+                    this.topMalls = res.body.data.data
+                }
+            })
+            },
             getComany(){
                 //获取十个参数
-                let mise = company(this.$root.utils.defaultCityId,null,30,'user_id,company,thumb,business','hits desc',null,null,10);
+                let mise = company({
+                  areaid:this.$root.utils.defaultCityId,
+                  size:10,
+                  field:'user_id,company,thumb,business',
+                  order:'hits desc',//先按照点击吧，后面就可以安排排名了
+                  mallSize:5,//返回五个商品
+                  is_club:1,//同城购
+                });
                 mise.then(res => {
                     let body = res.body;
                     if (body.code === 1) {
@@ -290,5 +318,15 @@
                 font-size: 0.2899rem;
             }
         }
+    }
+
+    .icon-suoyou{
+      display: inline-block;
+      box-sizing: border-box;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      font-size: 26px;
     }
 </style>
