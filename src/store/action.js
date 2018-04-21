@@ -1,13 +1,14 @@
-import {getUser} from '../service/getData';
+import {getUser,city} from '../service/getData';
 import {SET_USERINFO,SAVE_ADDRESS} from './mutation-types.js'
+import {SET_AREA} from "./mutation-types";
 
 export default {
 
 	async getUserInfo({
-		commit, 
+		commit,
 		state
 	}){
-		
+
 		let mise = getUser();
 		mise.then(res =>{
 			let body = res.body;
@@ -17,4 +18,11 @@ export default {
 		});
 
 	},
+  async getCityList({commit,state}){
+	  city({
+      parent_id:state.defaultProvienceId//海南省id，厉害了
+    }).then(res=>{
+      commit(SET_AREA,res.body.data)
+    })
+  }
 }

@@ -2,7 +2,7 @@
 <template>
   <div>
       <div v-if="fixed" style="height: 0.9662rem;"></div>
-      <header id='head_top' v-bind:class="[fixed?'fixed':'']">
+      <header id='head_top' v-bind:class="[fixed?'fixed':'',plain?'plain':'']">
         <slot name='logo'></slot>
         <slot name='search'></slot>
         <section class="head_goback" v-if="goBack" @click="$router.go(-1)">
@@ -42,7 +42,7 @@ export default {
       quickMenu:false
     };
   },
-  props: ["signinUp", "headTitle", "goBack", "fixed",'quick'],
+  props: ["signinUp", "headTitle", "goBack", "fixed",'quick','plain'],
 
   components: {},
   mounted() {
@@ -126,6 +126,10 @@ export default {
     width: 100%;
     box-sizing: border-box;
     z-index: 9;
+  }
+  &.plain{
+    border-bottom: none;
+    background: none;
   }
 }
 </style>

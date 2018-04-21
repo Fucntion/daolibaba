@@ -35,6 +35,7 @@ const infoPost = r => require.ensure([], () => r(require('../page/info/post')))
 
 const club = r => require.ensure([], () => r(require('../page/club/index')))
 const clubMain = r => require.ensure([], () => r(require('../page/club/main')))
+const clubArea = r => require.ensure([], () => r(require('../page/club/child/area')))
 const clubList = r => require.ensure([], () => r(require('../page/club/list')))
 const clubDetail = r => require.ensure([], () => r(require('../page/club/detail')))
 
@@ -199,12 +200,16 @@ export default new Router({
           component: clubMain
         },
         {
-          path: 'detail',
-          component: clubDetail,
+          path: 'area',
+          component: clubArea,
         },
         {
           path: 'list',
           component: clubList,
+        },
+        {
+          path: ':id',
+          component: clubDetail,
         }
       ]
     },

@@ -2,8 +2,11 @@
 <template>
   <div>
     <head-box head-title="同城导购" :fixed="1">
-            <span slot='search' class="font12">
-                <i class="iconfont icon-address"></i>{{city.name}}</span>
+            <router-link
+              to="/club/area"
+              slot='search' class="font12">
+                <i class="iconfont icon-address"></i>{{city.name}}
+            </router-link>
       <span slot='edit' class="search">
                 <i class="iconfont icon-sousuo"></i>
             </span>
@@ -11,14 +14,14 @@
 
     <ad-box :ads="ads" :h="123"></ad-box>
     <section class="nav">
-      <section v-for="nav in navs" :key="nav.id" @click="navigatetor(nav.id)" class="item">
-        <img :src="nav.thumb||'http://placehold.it/100/ccc'"/>
-        <span>{{nav.title}}</span>
-      </section>
+      <router-link :to="'/club/'+club.id" v-for="club in navs" :key="club.id"  class="item">
+        <img :src="club.thumb||'http://placehold.it/100/ccc'"/>
+        <span>{{club.title}}</span>
+      </router-link>
 
-      <router-link slot="all" to="'/info/category'" class="item">
+      <router-link slot="all" :to="{path:'/club/list',query:{city_id:this.city.id}}" class="item">
         <i class="iconfont icon-suoyou"></i>
-        <span>所有分类</span>
+        <span>所有商圈</span>
       </router-link>
 
     </section>
@@ -217,7 +220,6 @@
       ...mapState(["defaultProvienceId","defaultCityId"])
     },
 
-
     methods: {
       getAd() {
         let mise = ad(14);
@@ -245,7 +247,7 @@
           }
         });
       },
-      getNav(cityId) {
+      getClub(cityId) {
         let mise = club({
           city_id:cityId,
           with:'imgs',
@@ -260,16 +262,19 @@
       },
 
       async getCity() {
+        console.log(this.$route.query)
         //size为0代表不限制数量
-        let mise = city({parent_id:this.defaultProvienceId,size:0});
+
+        let cityId = this.$route.query.city_id||this.defaultCityId;
+        let mise = city({id:cityId});
         mise.then(res => {
           let body = res.body;
           if (body.code === 1) {
-            this.city = res.body.data[0];
-            this.citys = res.body.data;
-            return this.city.id
+            this.city = res.body.data;
+            this.getClub(this.city.id);
           }
         });
+
       },
       getMall() {
         let mise = mall({
@@ -309,8 +314,7 @@
       this.getAd();
       this.getKill();
       this.getMall();
-      let cityId = await this.getCity();
-      this.getNav(cityId);
+      this.getCity();
       this.getComany();
     }
   };
@@ -337,6 +341,7 @@
         vertical-align: top;
         width: 0.9662rem;
         height: 0.9662rem;
+        border-radius: 3px;
       }
       span {
         display: block;

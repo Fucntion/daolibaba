@@ -18,7 +18,7 @@ const state = {
 	chooseAddress:{},
 	addressIndex:0,
   defaultProvienceId:22,
-  defaultCityId:266
+  defaultCityId:3145
 }
 
 export default new Vuex.Store({

@@ -38,9 +38,7 @@ export default {
       var path = this.$route.path,rt='show';
       if(path.indexOf('info')>-1)rt='info'
       if(path.indexOf('comment')>-1)rt='comment'
-
       return rt
-
     }
   },
   mounted() {

@@ -6,13 +6,12 @@
                 <div class="base">
                     <div class="name">{{company.company}}</div>
                     <div class="business">主营业务:{{company.business}}</div>
-                    <div class="star-list">3颗星</div>
+                    <!--<div class="star-list font14">3颗星</div>-->
                 </div>
                 <div class="link">
                     <mt-button class="goto font12" type="primary" size="small">进入商铺</mt-button>
                 </div>
             </div>
-
             <div class="mall-list">
 
                 <div class="mall" v-for="mall in company.malls">
@@ -60,8 +59,9 @@ props:['company'],
         display: flex;
         justify-content: space-between;
         .thumb{
-          width: 66px;
-          height: 66px;
+          display: inline-block;
+          width: 44px;
+          height: 44px;
         }
         .base{
           width: 100%;
@@ -95,7 +95,7 @@ props:['company'],
         }
       }
       .mall-list{
-        margin-top: 6px;
+        margin-top: 10px;
         height: 100px;
         white-space: nowrap;
         overflow-y: hidden;

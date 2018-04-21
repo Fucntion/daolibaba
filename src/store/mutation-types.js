@@ -7,3 +7,4 @@ export const CHOOSE_ADDRESS = 'CHOOSE_ADDRESS'
 export const SHOW_MASK = 'SHOW_MASK'
 export const CLOSE_MASK = 'CLOSE_MASK'
 export const SET_AREA = 'SET_AREA'
+

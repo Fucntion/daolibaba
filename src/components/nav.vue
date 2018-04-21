@@ -47,6 +47,8 @@ export default {
             vertical-align: top;
             width: 0.9662rem;
             height: 0.9662rem;
+          border-radius: 3px;
+
         }
         span{
             display: block;
