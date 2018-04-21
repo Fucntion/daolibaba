@@ -107,6 +107,8 @@ export const area = (parentid,itemid,size,field,order,paginate,page) => fetch('v
 export const company = (post) => fetch('v1/company',emptyObject(post),'POST');
 
 
+export const brand = (post) => fetch('v1/brand',emptyObject(post),'POST');
+
 
 export const order = (post) => fetch('v1/order',emptyObject(post),'POST');
 

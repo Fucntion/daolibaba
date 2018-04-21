@@ -16,7 +16,7 @@
         <router-link to="/club/top" class="all-mall" src="@/assets/img/pic/all-mall.jpg" ></router-link>
         <div class="brand2company">
           <router-link to="/store/top" class="company" src="@/assets/img/pic/top-company.jpg" ></router-link>
-          <router-link to="/mall/brand" class="brand" src="@/assets/img/pic/brand.jpg" ></router-link>
+          <router-link to="/brand" class="brand" src="@/assets/img/pic/brand.jpg" ></router-link>
         </div>
       </div>
       <slip-box title="秒杀" morelink="#">

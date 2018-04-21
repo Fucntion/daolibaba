@@ -49,14 +49,14 @@ c.on('ready', function () {
             })
         });
         var tpath = path.resolve(__dirname, '..') + "/daolibaba/dist";
-      console.log(tpath);
+
         walk(tpath, function (err, results) {
             if (err) throw err;
             results.forEach(function (filename) {
                 (function (filename) {
                     'use strict';
                     var spath = filename.replace(/E:\\working\\daolibaba\\dist\\/g, "");
-                    console.log(filename);
+                   
                     c.put(filename, spath, function (err) {
                         if (err) throw err;
                         console.dir("上传文件" + spath);

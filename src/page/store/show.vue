@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="head" v-if="company">
-      <img class="logo" src="@/assets/img/demo/demo_store_top.jpg"/>
+      <img class="logo" src="https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/demo_store_top.jpg"/>
       <div class="title">
         <h4>{{company.company}}</h4>
         <div class="validate font12">
