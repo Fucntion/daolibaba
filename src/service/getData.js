@@ -41,7 +41,6 @@ export const category = (post) => fetch('v1/category', emptyObject(post),'POST')
 export const getFoldList = (post) => fetch('v1/category/getFoldList', emptyObject(post),'POST');
 
 
-
 /**
  * 获取秒杀列表
  * @param {栏目id} catid

@@ -5,9 +5,12 @@
 </template>
 
 <script>
-export default {
+
+
+  export default {
   data () {
     return {
+
     };
   },
 
@@ -15,9 +18,13 @@ export default {
 
   computed: {},
 
+  created(){
 
+  },
 
-  methods: {}
+  methods: {
+
+  }
 }
 
 </script>

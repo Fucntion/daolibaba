@@ -15,12 +15,11 @@ const mallDetailShow = r => require.ensure([], () => r(require('../page/mall/det
 const mallDetailInfo = r => require.ensure([], () => r(require('../page/mall/detail/info')))
 const mallDetailComment = r => require.ensure([], () => r(require('../page/mall/detail/comment')))
 
-//商家手机版
+//店铺
 const store = r => require.ensure([], () => r(require('../page/store/index')))
-const storeHome = r => require.ensure([], () => r(require('../page/store/home')))
-
-//店铺展示
 const storeShow = r => require.ensure([], () => r(require('../page/store/show')))
+const storeTop = r => require.ensure([], () => r(require('../page/store/top')))
+
 
 const cart = r => require.ensure([], () => r(require('../page/mall/cart')))
 
@@ -210,17 +209,14 @@ export default new Router({
       component:store,
       children:[
         {
-          path:'home',
-          redirect:'/store/show',
+          path:'top',
+          component:storeTop,
         },
         {
-          path:'show',
-          component:storeShow
-        },
-        {
-          path:'home',
-          component:storeHome
-        },
+          path:':id',
+          component:storeShow,
+        }
+
       ]
     }
 

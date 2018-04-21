@@ -11,7 +11,14 @@
           <span>所有分类</span>
         </router-link>
       </nav-box>
-      <div class="margin10-r banner-all-huoyuan"></div>
+
+      <div class="margin10-r all-huoyuan">
+        <router-link to="/club/top" class="all-mall" src="@/assets/img/pic/all-mall.jpg" ></router-link>
+        <div class="brand2company">
+          <router-link to="/store/top" class="company" src="@/assets/img/pic/top-company.jpg" ></router-link>
+          <router-link to="/mall/brand" class="brand" src="@/assets/img/pic/brand.jpg" ></router-link>
+        </div>
+      </div>
       <slip-box title="秒杀" morelink="#">
           <div slot="list"  class="list">
               <div v-for="kill in kills" class="slip-item item">
@@ -41,7 +48,6 @@
           </div>
       </slip-box>
       <foot-box active="home"></foot-box>
-
 
   </div>
 </template>
@@ -153,14 +159,38 @@ export default {
 }
 
 </script>
+
 <style lang='less' scoped>
-.banner-all-huoyuan{
-    background-image: url(https://daolibaba.oss-cn-shanghai.aliyuncs.com/static/img/233922F0-B469-457C-B5B8-A4BEEC32C50F.png);
-    width: 100%;
-    height: 0;
-    padding-top: 15%;
+.all-huoyuan{
+   display: flex;
+  .all-mall{
+    flex: 1;
+  }
+  .brand2company{
+    flex: 1;
+  }
+  .all-mall,.company,.brand{
+    display: block;
+    position: relative;
+    background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    height: 0;
+
+  }
+  .all-mall{
+    padding-top: 50%;
+    background-image: url("https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/all-mall.jpg");
+  }
+  .company{
+    padding-top: 50%;
+    background-image: url("https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/top-company.jpg");
+  }
+  .brand{
+    padding-top: 50%;
+    background-image: url("https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/brand.jpg");
+  }
+
+
 }
 .router-slid-enter-active,
 .router-slid-leave-active {

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="company"  v-if="company.malls.length>0">
+      <router-link :to="'/store/'+company.user_id" class="company"  v-if="company.malls.length>0">
             <div class="info">
                 <img class="thumb" :src="company.thumb||'http://placehold.it/100/ccc'" />
                 <div class="base">
@@ -12,18 +12,18 @@
                     <mt-button class="goto font12" type="primary" size="small">进入商铺</mt-button>
                 </div>
             </div>
-            
+
             <div class="mall-list">
-                
-                <div class="mall margin10-c" v-for="mall in company.malls">
+
+                <div class="mall" v-for="mall in company.malls">
                     <img class="thumb" :src="mall.thumb||'http://placehold.it/100/ccc'" />
                     <span class="price font12">{{mall.price}}</span>
                 </div>
-               
-                
+
+
             </div>
-            
-        </div>
+
+        </router-link>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ props:['company'],
 @import "../../../assets/style/base.less";
   //推荐的商家
   .top-company-list{
-  
+
     .company{
       padding: 10px 0;
       border-bottom: 1px solid #e7e7e7;
@@ -62,24 +62,23 @@ props:['company'],
         .thumb{
           width: 66px;
           height: 66px;
-  
         }
         .base{
           width: 100%;
           padding: 0 10px;
-  
+
           .name{
             margin-bottom: 6px;
             .font14;
             color: #333333;
-  
+
           }
           .business{
             .font12;
             margin-bottom: 6px;
           }
           .star-list{
-  
+
           }
         }
         .link{
@@ -92,7 +91,7 @@ props:['company'],
             text-align: center;
             // background: @activityColor;
           }
-          
+
         }
       }
       .mall-list{
@@ -105,11 +104,12 @@ props:['company'],
         .mall{
           width: 72px;
           height: 100px;
+          margin-right: 10px;
 
           display: inline-block;
           text-align: center;
           .thumb{
-  
+
             width: 72px;
             height: 72px;
           }
@@ -123,6 +123,6 @@ props:['company'],
       }
     }
   }
-  
+
 
 </style>
