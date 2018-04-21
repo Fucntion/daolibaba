@@ -73,26 +73,10 @@ export const info = (catid,size,field,order,paginate,page) => fetch('v1/info', e
 	page:page
 }),'POST');
 
-export const club = (areaid,catid,itemid,size,field,order,paginate,page) => fetch('v1/club', emptyObject({
-	areaid:areaid,
-	catid:catid,
-	itemid:itemid,
-	size:size,
-	field:field,
-	order:order,
-	paginate:paginate,
-	page:page
-}),'POST');
 
-export const area = (parentid,itemid,size,field,order,paginate,page) => fetch('v1/area', emptyObject({
-	parentid:parentid,
-	itemid:itemid,
-	size:size,
-	field:field,
-	order:order,
-	paginate:paginate,
-	page:page
-}),'POST');
+export const club = (post) => fetch('v1/club', emptyObject(post),'POST');
+
+export const city = (post) => fetch('v1/city', emptyObject(post),'POST');
 
 /**
  *

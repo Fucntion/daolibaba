@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import {company} from "../../service/getData";
+  import {company} from "../../../service/getData";
 
   export default {
         name: "top",

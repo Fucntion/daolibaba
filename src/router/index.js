@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 Vue.use(Router)
 
 
@@ -32,6 +33,7 @@ const infoList = r => require.ensure([], () => r(require('../page/info/list')))
 const infoDetail = r => require.ensure([], () => r(require('../page/info/detail')))
 const infoPost = r => require.ensure([], () => r(require('../page/info/post')))
 
+const club = r => require.ensure([], () => r(require('../page/club/index')))
 const clubMain = r => require.ensure([], () => r(require('../page/club/main')))
 const clubList = r => require.ensure([], () => r(require('../page/club/list')))
 const clubDetail = r => require.ensure([], () => r(require('../page/club/detail')))
@@ -107,20 +109,20 @@ export default new Router({
       ]
     },
     {
-      path:'/brand',
-      component:brand,
-      children:[
+      path: '/brand',
+      component: brand,
+      children: [
         {
-          path:'',
-          redirect:'/brand/list'
+          path: '',
+          redirect: '/brand/list'
         },
         {
-          path:'list',
-          component:brandList
+          path: 'list',
+          component: brandList
         },
         {
-          path:'type',
-          component:brandType
+          path: 'type',
+          component: brandType
         }
       ]
     },
@@ -133,8 +135,8 @@ export default new Router({
           component: mallMain
         },
         {
-          path:'category',
-          component:mallCategory
+          path: 'category',
+          component: mallCategory
         },
         {
           path: 'list',
@@ -190,15 +192,20 @@ export default new Router({
 
     {
       path: '/club',
-      component: clubMain,
-      children: [{
-        path: 'detail',
-        component: clubDetail,
-      },
-      {
-        path: 'list',
-        component: clubList,
-      }
+      component: club,
+      children: [
+        {
+          path: '',
+          component: clubMain
+        },
+        {
+          path: 'detail',
+          component: clubDetail,
+        },
+        {
+          path: 'list',
+          component: clubList,
+        }
       ]
     },
     {
@@ -210,8 +217,8 @@ export default new Router({
       component: my,
     },
     {
-      path:'/my/profile',
-      component:profile
+      path: '/my/profile',
+      component: profile
     },
     {
       path: '/register',
@@ -226,16 +233,16 @@ export default new Router({
       component: bindPhone
     },
     {
-      path:'/store',
-      component:store,
-      children:[
+      path: '/store',
+      component: store,
+      children: [
         {
-          path:'top',
-          component:storeTop,
+          path: 'top',
+          component: storeTop,
         },
         {
-          path:':id',
-          component:storeShow,
+          path: ':id',
+          component: storeShow,
         }
 
       ]
