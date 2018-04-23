@@ -30,6 +30,9 @@
                         <div class="info_line specinfo">
                            <span class="font12">已选:{{mall.specInfo}}</span>
                         </div>
+                      <div class="info_line specinfo" v-if="mall.group">
+                        <span class="font12">团购:每人限购{{mall.group.limit}}件</span>
+                      </div>
                         <div class="info_line specinfo">
                            <span class="font12">运费{{mall.fee}}</span>
                         </div>

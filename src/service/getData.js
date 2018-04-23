@@ -55,12 +55,7 @@ export const kill = (catid,size,paginate,page) => fetch('v1/kill', emptyObject({
 	page:page
 }),'POST');
 
-export const group = (catid,size,paginate,page) => fetch('v1/group', emptyObject({
-	catid:catid,
-	size:size,
-	paginate:paginate,
-	page:page
-}),'POST');
+export const group = (post) => fetch('v1/group', emptyObject(post),'POST');
 
 export const mall = (post) => fetch('v1/goods', emptyObject(post),'POST');
 
@@ -96,6 +91,7 @@ export const brand = (post) => fetch('v1/brand',emptyObject(post),'POST');
 
 export const order = (post) => fetch('v1/order',emptyObject(post),'POST');
 
+export const favorite = (post) => fetch('v1/favorite',emptyObject(post),'POST');
 
 /**
  *
@@ -111,7 +107,6 @@ export const order = (post) => fetch('v1/order',emptyObject(post),'POST');
  */
 export const postOrder = (post) => {
 	post.action ='add';
-	console.log(post)
 	return order(post)
 };
 

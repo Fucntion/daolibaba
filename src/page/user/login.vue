@@ -19,7 +19,7 @@
           <i class="iconfont icon-weibo wb" @click="wbGet()" ></i>
         </div>
       </div>
-      
+
   </div>
 </template>
 
@@ -46,8 +46,9 @@ export default {
   computed: {},
 
   created() {
-    this.$root.utils.alertMsg('已经登录');
+
     if(this.$root.utils.getStore('access-token')){
+      this.$root.mint.alertMsg('已经登录');
       this.$router.push({
         path:'/'
       })
@@ -95,7 +96,7 @@ export default {
           let token = res.body.data;
           this.$root.mint.alertMsg("登录成功");
           setStore("access-token", token.access_token);
-         
+
 
           if (!body.data["wx_pub_openid"] && this.$root.isWX) {
             this.getWxOpenIdAuthUrl();

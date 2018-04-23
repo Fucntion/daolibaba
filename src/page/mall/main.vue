@@ -2,7 +2,7 @@
 <template>
   <div>
       <head-box head-title="岛里巴巴" signinUp="true">
-        <span slot='logo' class="head_logo" ><i class="iconfont icon-sousuo"></i></span>
+        <router-link to="/search" slot='logo' class="head_logo" ><i class="iconfont icon-sousuo"></i></router-link>
       </head-box>
       <ad-box :ads="ads" :h="200"></ad-box>
       <nav-box :navs="navs" >
@@ -19,26 +19,26 @@
           <router-link to="/brand" class="brand" src="@/assets/img/pic/brand.jpg" ></router-link>
         </div>
       </div>
-      <slip-box title="秒杀" morelink="#">
-          <div slot="list"  class="list">
-              <div v-for="kill in kills" class="slip-item item">
-                  <img  class="thumb" :src="kill.thumb||'http://placehold.it/100/ccc'" />
-                  <div class="info">
-                    <span class="price font12">￥{{kill.price}}</span>
-                    <span class="initial_price font10">${{kill.marketprice}}</span>
-                  </div>
-              </div>
-          </div>
-      </slip-box>
+      <!--<slip-box title="秒杀" morelink="#">-->
+          <!--<div slot="list"  class="list">-->
+              <!--<div v-for="kill in kills" class="slip-item item">-->
+                  <!--<img  class="thumb" :src="kill.thumb||'http://placehold.it/100/ccc'" />-->
+                  <!--<div class="info">-->
+                    <!--<span class="price font12">￥{{kill.price}}</span>-->
+                    <!--<span class="initial_price font10">${{kill.marketprice}}</span>-->
+                  <!--</div>-->
+              <!--</div>-->
+          <!--</div>-->
+      <!--</slip-box>-->
       <slip-box class="margin10-r"  title="团购" morelink="#">
           <div slot="list"  class="list">
-              <div v-for="kill in groups" class="slip-item item">
-                  <img  class="thumb" :src="kill.thumb||'http://placehold.it/100/ccc'" />
+              <router-link :to="'/mall/detail/'+group.goods.id" v-for="group in groups" class="slip-item item">
+                  <img  class="thumb" :src="group.goods.thumb||'http://placehold.it/100/ccc'" />
                   <div class="info">
-                    <span class="price font12">￥{{kill.price}}</span>
-                    <span class="initial_price font10">${{kill.marketprice}}</span>
+                    <span class="price font12">￥{{group.price}}</span>
+                    <span class="initial_price font10">${{group.goods.price}}</span>
                   </div>
-              </div>
+              </router-link>
           </div>
       </slip-box>
       <ad-box :ads="ads" :h="123"></ad-box>
@@ -104,24 +104,27 @@ export default {
           }
       })
     },
-    getKill(){
-      /**
-       * 获取秒杀列表
-       * @param {栏目id} catid
-       * @param {数量} size
-       * @param {是否分页} paginate
-       * @param {指定页数} page
-       */
-      let mise = kill(null,10)
-      mise.then((res) => {
-          let body = res.body;
-          if (body.code === 1) {
-              this.kills = res.body.data
-          }
-      })
-    },
+    // getKill(){
+    //   /**
+    //    * 获取秒杀列表
+    //    * @param {栏目id} catid
+    //    * @param {数量} size
+    //    * @param {是否分页} paginate
+    //    * @param {指定页数} page
+    //    */
+    //   let mise = kill(null,10)
+    //   mise.then((res) => {
+    //       let body = res.body;
+    //       if (body.code === 1) {
+    //           this.kills = res.body.data
+    //       }
+    //   })
+    // },
     getGroup(){
-      let mise = group(null,10)
+      //别选错了
+      let mise = group({
+        with:'goods'
+      })
       mise.then((res) => {
           let body = res.body;
           if (body.code === 1) {
@@ -152,7 +155,7 @@ export default {
   created(){
     this.getAd()
     this.getNav()
-    this.getKill()
+    // this.getKill()
     this.getMall()
     this.getGroup()
   }

@@ -41,7 +41,7 @@ const clubDetail = r => require.ensure([], () => r(require('../page/club/detail'
 
 const my = r => require.ensure([], () => r(require('../page/user/my')))
 const profile = r => require.ensure([], () => r(require('../page/user/profile')))
-
+const favorite = r => require.ensure([], () => r(require('../page/user/favorite')))
 
 const reg = r => require.ensure([], () => r(require('../page/user/register')))
 const login = r => require.ensure([], () => r(require('../page/user/login')))
@@ -57,6 +57,14 @@ const orderMain = r => require.ensure([], () => r(require('../page/order/main'))
 const myOrder = r => require.ensure([], () => r(require('../page/order/my')))
 const orderDetail = r => require.ensure([], () => r(require('../page/order/detail')))
 
+const searchIndex = r => require.ensure([], () => r(require('../page/search/index')))
+const searchFull = r => require.ensure([], () => r(require('../page/search/full')))
+const searchResult = r => require.ensure([], () => r(require('../page/search/result')))
+// const resultMall = r => require.ensure([], () => r(require('../page/search/result/mall')))
+// const resultCompany = r => require.ensure([], () => r(require('../page/search/result/company')))
+// const resultInfo = r => require.ensure([], () => r(require('../page/search/result/info')))
+// const resultClub = r => require.ensure([], () => r(require('../page/search/result/club')))
+
 export default new Router({
   routes: [
     {
@@ -67,6 +75,20 @@ export default new Router({
       path: '/',
       name: 'home',
       redirect: '/mall'
+    },
+    {
+      path:'/search',
+      component:searchIndex,
+      children:[
+        {
+          path:'',
+          component:searchFull,
+        },
+      ]
+    },
+    {
+      path:'/r',
+      component:searchResult
     },
     {
       path: '/auth',
@@ -216,6 +238,10 @@ export default new Router({
     {
       path: '/cart',
       component: cart,
+    },
+    {
+      path:'/favorite',
+      component:favorite
     },
     {
       path: '/my',

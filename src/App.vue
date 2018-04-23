@@ -18,9 +18,7 @@ export default {
     };
   },
 
-	created(){
-		this.directRightUrl()
-	},
+
   components: {},
 
   computed: {
@@ -28,6 +26,16 @@ export default {
 				'maksk','maskzIndex'
 		]),
 	},
+
+  created(){
+    this.directRightUrl()
+    if(this.$root.isWX){
+      this.$root.utils.getWxConfig()
+    }else{
+      this.$root.mint.alertMsg('建议用微信浏览器打开');
+    }
+
+  },
 
 
   methods: {
@@ -42,7 +50,7 @@ export default {
                 window.location.replace(newHref);
             }
 				}
-				
+
 	}
 }
 
@@ -52,7 +60,7 @@ export default {
 @import './assets/style/app.less';
 .router-fade-enter-active, .router-fade-leave-active {
 	  	transition: opacity .3s;
-	} 
+	}
 	.router-fade-enter, .router-fade-leave-active {
 	  	opacity: 0;
 	}

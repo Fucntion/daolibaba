@@ -37,8 +37,8 @@ export default {
     },
     //清空所有商品
     clearProduct:function(){
-        setStore("ConfirmOrder",null);
-        setStore("ShoppingCart",null);
+        setStore("ConfirmOrder",'');
+        setStore("ShoppingCart",'');
     }
 };
 

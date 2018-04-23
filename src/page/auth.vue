@@ -7,6 +7,7 @@
 
 <script>
 import {getWXopenId,snsLogin} from '../service/getData';
+import {getStore,setStore} from "../util/utils";
 
 export default {
   data () {
@@ -16,7 +17,7 @@ export default {
   },
 
 created(){
-    
+
     this.snsConfig.code = this.$root.utils.getUrlValueByKey('code');
     this.snsConfig.channel = this.$root.utils.getUrlValueByKey('type');
     this.snsConfig.state = this.$root.utils.getUrlValueByKey('state');
@@ -35,17 +36,18 @@ created(){
   methods: {
 
       getToken() {
-          
+
             snsLogin(this.snsConfig).then((response) => {
                 let body = response.body;
                 if (body.code === 1) {
-                    this.$root.utils.setStore('access-token', body.data['access-token']);
-                    this.$root.utils.setStore('token_expire', body.data['token_expire']);
-                    this.$root.utils.setStore('wx_pub_openid', body.data['wx_pub_openid']);
-                    if (!body.data['wx_pub_openid'] && this.$root.isWX) { 
+                    setStore('access-token', body.data['access-token']);
+                    setStore('token_expire', body.data['token_expire']);
+                    setStore('wx_pub_openid', body.data['wx_pub_openid']);
+
+                    if (!body.data['wx_pub_openid'] && this.$root.isWX) {
                         this.getOpenUrl();
                     } else {
-                        this.getUserInfo()
+
                         if(body.data['is_bind_phone']){
                             this.$router.push({path:'/bindPhone'});
                         }
@@ -59,6 +61,11 @@ created(){
                             });
                         }
                     }
+                }else{
+                  this.$root.mint.alertMsg(body.data.msg||'登录失败');
+                  this.$router.push({
+                    path:'/login'
+                  })
                 }
             });
         },
@@ -70,7 +77,7 @@ created(){
                 }
             });
         },
-        
+
         //获取微信openid
         getWXopenId(){
 
@@ -78,7 +85,7 @@ created(){
                 let body = response.body;
                 if (body.code === 1) {
                     //这里存起来，其他地方可以用vuex和本地储存一起来用的
-                    this.$root.setStore('wx_pub_openid', body.data);
+                    setStore('wx_pub_openid', body.data);
 
                     let forward = sessionStorage.getItem("forward");
                     console.log(forward);

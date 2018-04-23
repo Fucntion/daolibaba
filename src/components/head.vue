@@ -2,12 +2,13 @@
 <template>
   <div>
       <div v-if="fixed" style="height: 0.9662rem;"></div>
-      <header id='head_top' v-bind:class="[fixed?'fixed':'',plain?'plain':'']">
-        <slot name='logo'></slot>
-        <slot name='search'></slot>
+      <header id='head_top' v-bind:class="[fixed?'fixed':'',plain?'plain':'',justify?'justify':'']">
+
         <section class="head_goback" v-if="goBack" @click="$router.go(-1)">
             <i class="iconfont icon-fanhui"></i>
         </section>
+        <slot name='logo'></slot>
+        <slot name='search'></slot>
         <router-link :to="userInfo? '/my':'/my/login'" v-if='signinUp' class="head_login">
             <svg class="user_avatar" v-if="userInfo">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
@@ -42,7 +43,7 @@ export default {
       quickMenu:false
     };
   },
-  props: ["signinUp", "headTitle", "goBack", "fixed",'quick','plain'],
+  props: ["signinUp", "headTitle", "goBack", "fixed",'quick','plain','justify'],
 
   components: {},
   mounted() {
@@ -130,6 +131,9 @@ export default {
   &.plain{
     border-bottom: none;
     background: none;
+  }
+  &.justify{
+    justify-content: flex-start;
   }
 }
 </style>

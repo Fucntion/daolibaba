@@ -25,17 +25,17 @@
       </router-link>
 
     </section>
-    <slip-box title="秒杀" morelink="#">
-      <div slot="list" class="list">
-        <div v-for="kill in kills" class="slip-item item">
-          <img class="thumb" :src="kill.thumb||'http://placehold.it/100/ccc'"/>
-          <div class="info">
-            <span class="price font12">￥{{kill.price}}</span>
-            <span class="initial_price font10">${{kill.marketprice}}</span>
-          </div>
-        </div>
-      </div>
-    </slip-box>
+    <!--<slip-box title="秒杀" morelink="#">-->
+      <!--<div slot="list" class="list">-->
+        <!--<div v-for="kill in kills" class="slip-item item">-->
+          <!--<img class="thumb" :src="kill.thumb||'http://placehold.it/100/ccc'"/>-->
+          <!--<div class="info">-->
+            <!--<span class="price font12">￥{{kill.price}}</span>-->
+            <!--<span class="initial_price font10">${{kill.marketprice}}</span>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</slip-box>-->
     <slip-box class="margin10-r" title="新品推荐">
       <div slot="list" class="list">
         <div v-for="kill in topMalls" class="slip-item item">

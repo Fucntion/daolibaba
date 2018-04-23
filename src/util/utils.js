@@ -39,8 +39,8 @@ export const cloneObj = obj => {
         newobj = JSON.parse(str); //还原
     } else {
         for(var i in obj){
-            newobj[i] = typeof obj[i] === 'object' ? 
-            cloneObj(obj[i]) : obj[i]; 
+            newobj[i] = typeof obj[i] === 'object' ?
+            cloneObj(obj[i]) : obj[i];
         }
     }
     return newobj;
@@ -79,7 +79,7 @@ export const loadMore = (element, callback) => {
        	oldScrollTop = document.body.scrollTop;
        	moveEnd();
     },{passive: true})
-    
+
     const moveEnd = () => {
         requestFram = requestAnimationFrame(() => {
             if (document.body.scrollTop != oldScrollTop) {
@@ -124,7 +124,7 @@ export const showBack = callback => {
         oldScrollTop = document.body.scrollTop;
         moveEnd();
     },{passive: true})
-    
+
     const moveEnd = () => {
         requestFram = requestAnimationFrame(() => {
             if (document.body.scrollTop != oldScrollTop) {
@@ -176,7 +176,7 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
 
     //获取dom样式
     const attrStyle = attr => {
-        if (attr === "opacity") { 
+        if (attr === "opacity") {
             return Math.round(getStyle(element, attr, 'float') * 100);
         } else {
             return getStyle(element, attr);
@@ -218,7 +218,7 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
             let speedBase = 0; //目标点需要减去的基础值，三种运动状态的值都不同
             let intervalTime; //将目标值分为多少步执行，数值越大，步长越小，运动时间越长
             switch(mode){
-                case 'ease-out': 
+                case 'ease-out':
                     speedBase = iCurrent;
                     intervalTime = duration*5/400;
                     break;
@@ -233,7 +233,7 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
                     break;
                 default:
                     speedBase = iCurrent;
-                    intervalTime = duration*5/400; 
+                    intervalTime = duration*5/400;
             }
             if (mode !== 'ease-in') {
                 iSpeed = (target[attr] - speedBase) / intervalTime;
@@ -241,8 +241,8 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
             }
             //判断是否达步长之内的误差距离，如果到达说明到达目标点
             switch(mode){
-                case 'ease-out': 
-                    status = iCurrent != target[attr]; 
+                case 'ease-out':
+                    status = iCurrent != target[attr];
                     break;
                 case 'linear':
                     status = Math.abs(Math.abs(iCurrent) - Math.abs(target[attr])) > Math.abs(iSpeed);
@@ -251,11 +251,11 @@ export const animate = (element, target, duration = 400, mode = 'ease-out', call
                     status = Math.abs(Math.abs(iCurrent) - Math.abs(target[attr])) > Math.abs(iSpeed);
                     break;
                 default:
-                    status = iCurrent != target[attr]; 
+                    status = iCurrent != target[attr];
             }
 
             if (status) {
-                flag = false; 
+                flag = false;
                 //opacity 和 scrollTop 需要特殊处理
                 if (attr === "opacity") {
                     element.style.filter = "alpha(opacity:" + (iCurrent + iSpeed) + ")";
@@ -291,7 +291,7 @@ const   emptyObject = obj => {
 }
 
 /**
- * 
+ *
  * @param {合并支付订单号} out_trade_no 一个合并支付订单号和多个真实订单对应，用来和第三方支付对接。支付状态和这个关联，支付成功后回调修改各个子订单状态即可
  * @param {支付渠道} channel 支付渠道 wx_pub  union wx_mini ali wx_app
  */
@@ -300,7 +300,7 @@ export const unifiedPay = function(out_trade_no,channel='wx_pub'){
     console.log(out_trade_no,channel)
 
     let post = {channel:channel,out_trade_no:out_trade_no} ;
-    
+
     let ag = navigator.userAgent,
     ua = ag.toLowerCase();
     let isWX = (ua.indexOf('micromessenger') !== -1);
@@ -328,7 +328,7 @@ export const unifiedPay = function(out_trade_no,channel='wx_pub'){
                 signType: payInfo.signType,    // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                 paySign: payInfo.paySign,      // 支付签名
                 success: function (res) {
-                    
+
                 }
                 // complete: function () {
                 //     _this.mint.confim('支付成功').then(action => {
@@ -339,24 +339,71 @@ export const unifiedPay = function(out_trade_no,channel='wx_pub'){
         }
 
     })
-    
+
 }
 
 export const getWxConfig = () => {
-    
+
     let mise = getJsSign({
         url: location.href.split('#')[0]
     });
-    
+
     mise.then((res) => {
 
         if (res.body.code === 1) {
             res.body.data.debug = process.env.NODE_ENV === 'production' ? false : true;
             res.body.data.jsApiList = ['chooseImage','previewImage','uploadImage', 'openLocation',
-                'getLocation', 'chooseWXPay'];
+                'getLocation', 'chooseWXPay','onMenuShareTimeline','onMenuShareAppMessage'];
             wx.config(res.body.data);
+            wx.ready(function () {
+              //分享到朋友圈"
+              wx.onMenuShareTimeline({
+                title: '岛里巴巴-海南专业批发采购服务平台',
+                link: location.href, // 分享链接
+                imgUrl: 'https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/share_logo.png', // 分享图标
+                success: function () {
+                  // console.log('分享到朋友圈成功')
+                },
+                cancel: function () {
+                  // console.log('分享到朋友圈失败')
+                }
+              });
+              //分享给朋友
+              wx.onMenuShareAppMessage({
+                title: '岛里巴巴-海南专业批发采购服务平台',
+                link: location.href, // 分享链接
+                imgUrl: 'https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/share_logo.png', // 分享图标
+                desc: '省事省力省心', // 分享描述
+                success: function () {
+                  // console.log('分享到朋友成功')
+                },
+                cancel: function () {
+                  // console.log('分享到朋友失败')
+                }
+              });
+            })
         }
     })
+}
+
+export const formatDuring = (mss) => {
+
+  var hours = parseInt(mss/(1000 * 60 * 60));
+  var minutes = parseInt((mss%(1000 * 60 * 60))/(1000 * 60));
+  var seconds = parseInt((mss % (1000 * 60))/1000);
+  var ss = parseInt((mss%(1000))/10);//获取秒后两位
+
+  if(hours<10)ss ='0'+hours;
+  if(minutes<10)minutes ='0'+minutes;
+  if(seconds<10)seconds ='0'+seconds;
+  if(ss<10)ss ='0'+ss;
+
+  return  {
+    h:hours,
+    m:minutes,
+    s:seconds,
+    ss:ss
+  }
 }
 
 
@@ -374,5 +421,6 @@ export default {
     cloneObj,
     unifiedPay,
     getWxConfig,
-    getUrlValueByKey
+    getUrlValueByKey,
+    formatDuring
 }

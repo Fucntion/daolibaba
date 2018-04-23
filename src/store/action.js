@@ -24,5 +24,5 @@ export default {
     }).then(res=>{
       commit(SET_AREA,res.body.data)
     })
-  }
+  },
 }

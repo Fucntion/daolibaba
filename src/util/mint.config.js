@@ -1,16 +1,16 @@
 import { MessageBox, Toast, Indicator } from 'mint-ui';
- 
+
 export default {
     alertMsg(msg) {
         Toast({
             message: msg,
-            duration: 3000
+            duration: 2000
         });
     },
     messagesBox(msg, success) {
         Toast({
             message: msg,
-            duration: 33000,
+            duration: 2000,
             iconClass: !success ? 'iconfont icon-tipssuccess' : 'iconfont icon-cuowuhttp'
         });
     },

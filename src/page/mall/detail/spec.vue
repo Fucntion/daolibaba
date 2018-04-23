@@ -127,8 +127,16 @@ export default {
         return
       }
 
+      let max = 0;
+      if(this.mall.group&&this.mall.group.limit>0){
+        max = this.mall.group.limit
+      }
+
       let mall = {
         mallid:this.selectMall.id,
+        group:this.mall.group,
+        max:max,
+        min:0,
         goodsid:this.mall.id,
         title:this.mall.title,
         price:this.selectMall.price,
@@ -142,6 +150,8 @@ export default {
           id:this.mall.company.user_id
         },
       };
+
+      console.log(mall);
 
       cart.addProduct(mall);
 
@@ -170,9 +180,17 @@ export default {
       //把选中的放进去了
       let tempObj = {company:this.mall.company.company,id:this.mall.company.id,malls:[]};
 
+      let max = 0;
+      if(this.mall.group&&this.mall.group.limit>0){
+        max = this.mall.group.limit
+      }
+
       let mall = {
         mallid:this.selectMall.id,
         goodsid:this.mall.id,
+        group:this.mall.group,
+        max:max,
+        min:0,
         title:this.mall.title,
         price:this.selectMall.price,
         thumb:this.mall.thumb,
@@ -300,9 +318,15 @@ export default {
     },
 
     add: function() {
+
       if(!this.selectMall.id){
         this.$root.mint.alertMsg('请选择规格')
         return
+      }
+
+      if(this.mall.group&&this.num>this.mall.group.limit-1){
+        this.$root.mint.alertMsg('已达到团购限购数量');
+        return;
       }
 
       if(this.num<this.selectMall.stock){
@@ -311,9 +335,13 @@ export default {
 
     },
     subtract: function() {
+
       if(!this.selectMall.id){
         this.$root.mint.alertMsg('请选择规格')
         return
+      }
+      if(this.num==1){
+        this.$root.mint.alertMsg('不能再少了');
       }
       if (this.num > 0) {
         this.num--;

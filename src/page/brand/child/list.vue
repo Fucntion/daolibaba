@@ -55,6 +55,7 @@
   .wrap {
     position: fixed;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     top: 40px;
     bottom: 0px;
     width: 100%;

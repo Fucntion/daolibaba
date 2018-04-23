@@ -25,10 +25,11 @@
       </div>
     </div>
     <div class="my-order margin15-r" v-if="userInfo">
-      <div class="order"><i class="iconfont icon-fukuan"></i><span class="key">待付款</span></div>
-      <div class="order"><i class="iconfont icon-ziyuan"></i><span class="key">待收货</span></div>
-      <div class="order"><i class="iconfont icon-daipingjia20"></i><span class="key">待评价</span></div>
-      <div class="order"><i class="iconfont icon-icondd2"></i><span class="key">所有订单</span></div>
+      <!--0=>'待付款',1=>'待发货',2=>'待收货',3=>'待评价',4=>'退款/售后',-1=>'为订单失败'-->
+      <router-link to="/order?status=0" class="order"><i class="iconfont icon-fukuan"></i><span class="key">待付款</span></router-link>
+      <router-link to="/order?status=2" class="order"><i class="iconfont icon-ziyuan"></i><span class="key">待收货</span></router-link>
+      <router-link to="/order?status=3" class="order"><i class="iconfont icon-daipingjia20"></i><span class="key">待评价</span></router-link>
+      <router-link to="/order?status=4" class="order"><i class="iconfont icon-icondd2"></i><span class="key">退款/售后</span></router-link>
     </div>
     <div class="my-assets " v-if="userInfo">
       <div class="assets"><span class="value">342</span><span class="key">可用余额</span></div>
@@ -39,7 +40,7 @@
     <div class="my-lnks margin15-r" v-if="userInfo">
       <div class="lnks"><span class="value">342</span><span class="key">我的评论</span></div>
       <div class="lnks"><span class="value">342</span><span class="key">关注的店铺</span></div>
-      <div class="lnks"><span class="value">342</span><span class="key">收藏的商品</span></div>
+      <router-link to="/favorite" class="lnks"><span class="value">342</span><span class="key">收藏的商品</span></router-link>
       <div class="lnks"><span class="value">342</span><span class="key">浏览记录</span></div>
     </div>
     <slip-box class="margin10-r" title="为您推荐">

@@ -26,7 +26,7 @@ export default function (request, next) {
                 case 20005:
                     sessionStorage.setItem('forward', window.location.href);
                     mint.alertMsg('需要登录');
-                    location.href = '/#/login'
+                    location.href = '/?#/login'
                     break;
                 default:
                     mint.alertMsg(response.body.msg);
