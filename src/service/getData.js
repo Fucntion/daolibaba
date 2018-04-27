@@ -63,10 +63,6 @@ export const mall = (post) => fetch('v1/goods', emptyObject(post),'POST');
 export const info = (post) => fetch('v1/info', emptyObject(post),'POST');
 
 
-
-
-
-
 export const club = (post) => fetch('v1/club', emptyObject(post),'POST');
 
 export const city = (post) => fetch('v1/city', emptyObject(post),'POST');
@@ -126,7 +122,9 @@ export const getWXopenId = (post) => fetch('v1/member/getWXopenId',emptyObject(p
  * 获取用户信息
  */
 
-export const getUser = () => fetch('v1/member');
+export const getUser = (post) => fetch('v1/member',emptyObject(post),'POST');
+
+
 
 /**
  * 注册
@@ -162,7 +160,12 @@ export const sendSms = (phone,type)=>fetch('v1/tool/sendSms',{
  * @params code, mobile, validate_token
  */
 
+
+
 export const smsLogin = (post) => fetch('v1/login/app_mobile', {}, 'POST');
+
+export const search = (post) => fetch('v1/search', emptyObject(post), 'POST');
+
 
 
 // /**

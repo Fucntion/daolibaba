@@ -50,7 +50,7 @@
 
     <div class="block">
       <div class="head">
-        <div class="title">必逛</div>
+        <div class="title"> 必逛 </div>
       </div>
       <div class="content">
         <div class="row1 row">
@@ -111,7 +111,7 @@
     <ad-box :ads="ads2" :h="123"></ad-box>
     <div class="block">
       <div class="head">
-        <div class="title">品牌推荐</div>
+        <div class="title"> 品牌推荐 </div>
       </div>
       <div class="content">
         <div class="row1 row">

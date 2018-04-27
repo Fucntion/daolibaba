@@ -6,9 +6,14 @@
       <!--<i class="iconfont icon-previewright"-->
          <!--:class="['accChevron', { 'open_menu': isDisplay, 'close_menu': !isDisplay }]" ></i>-->
     </div>
-    <ul :class="['accList', { 'maxHeight': isDisplay }]">
-      <li class="accListItem" v-for="item in list">
+    <ul :class="['accList', { 'maxHeight': isDisplay }]" v-if="isPost">
+      <li class="accListItem" v-for="item in list"  >
         <router-link :to="'/info/post?catid='+item.id"><span>{{ item.title}}</span></router-link>
+      </li>
+    </ul>
+    <ul v-else :class="['accList', { 'maxHeight': isDisplay }]" >
+      <li class="accListItem" v-for="item in list">
+        <router-link :to="'/info/list?catid='+item.id"><span>{{ item.title}}</span></router-link>
       </li>
     </ul>
   </nav>
@@ -22,6 +27,12 @@
       }
     },
     props: {
+      isPost:{
+        type:Boolean,
+        default(){
+          return false
+        }
+      },
       title: {
         type: Object,
         default(){

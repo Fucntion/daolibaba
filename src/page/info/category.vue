@@ -5,6 +5,7 @@
     <head-box head-title="发布资讯-选择分类" go-back="true"></head-box>
     <!-- 列表 -->
     <accordion
+      :isPost="isPost"
       v-for="(item,index) in cats"
       :key="item.id"
       :title="item"
@@ -26,6 +27,11 @@
     data(){
       return {
         cats:[]
+      }
+    },
+    computed:{
+      isPost(){
+        return this.$route.query.isPost?true:null
       }
     },
     created(){

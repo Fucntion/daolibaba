@@ -33,8 +33,8 @@ export default {
   data() {
     return {
       openUrl: {},
-      phone: 15607683921, //null,
-      password: 3779010, //null,
+      phone: null,
+      password: null,
       captcha: null
     };
   },
@@ -47,18 +47,18 @@ export default {
 
   created() {
 
-    if(this.$root.utils.getStore('access-token')){
-      this.$root.mint.alertMsg('已经登录');
-      this.$router.push({
-        path:'/'
-      })
-    }
+    // if(this.$root.utils.getStore('access-token')){
+    //   this.$root.mint.alertMsg('已经登录');
+    //   this.$router.push({
+    //     path:'/'
+    //   })
+    // }
     this.getOpenUrl();
   },
   methods: {
     getOpenUrl() {
       this.$http
-        .post("/v1/member/getAuthUrl", { channel: "wap_all" })
+        .post("/fun/v1/member/getAuthUrl", { channel: "wap_all" })
         .then(response => {
           let body = response.body;
           if (body.code === 1) {

@@ -1,28 +1,63 @@
 <template>
   <div>
-    <head-box class="head block" :fixed="true" :plain="true" go-back="true" >
+    <head-box class="head block" :fixed="true"  go-back="true" >
         <div slot='search' class="wordbox">
           <input class="word" v-model="word" />
-
         </div>
-      <div slot="edit"><button>搜索</button></div>
+      <div slot="edit" @click="toSearch()"><button>搜索</button></div>
     </head-box>
+
+    <div class="list-wrap padding10-r block" v-if="rt.length>0">
+      <router-link class="item-wrap club-item" v-for="(club,idx) in rt" v-if="type=='club'">
+        <img class="thumb" :src="club.thumb" />
+      <div class="info">
+        <h4>{{club.title}}</h4>
+        <span>{{club.stores}}个商铺</span>
+      </div>
+      </router-link>
+
+      <router-link :to="'/info/'+info.id" class="item-wrap info-item" v-for="(info,idx) in rt" v-if="type=='info'">
+        <div class="info">
+          <h4>{{info.title}}</h4>
+          <span class="font12">{{info.hits}}人看过</span>
+        </div>
+        <div>{{info.create_time}}</div>
+      </router-link>
+
+      <router-link :to="'/mall/detail/'+goods.id" class="item-wrap mall-item" v-for="(goods,idx) in rt" v-if="type=='mall'">
+        <img class="thumb" :src="goods.thumb" />
+        <div class="info">
+          <h4>{{goods.title}}</h4>
+          <span class="price">￥{{goods.price}}</span>
+          <span class="sales">浏览{{goods.hits}}次,售出{{goods.sales}}个</span>
+        </div>
+      </router-link>
+      <div :to="'/company/'+company.user_id" class="item-wrap company-item" v-for="(company,idx) in rt" v-if="type=='company'">
+        <img class="thumb" :src="company.thumb" />
+        <div class="info">
+          <h4>{{company.company}}</h4>
+          <span>{{company.hits}}人进店</span>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
 
 <script>
   import headBox from '../../components/head';
-  import rtClub from './result/club';
-  import rtCompany from './result/company';
-  import rtInfo from './result/info';
-  import rtMall from './result/mall';
-  
+  import {search} from '../../service/getData';
+  // import rtClub from './result/club';
+  // import rtCompany from './result/company';
+  // import rtInfo from './result/info';
+  // import rtMall from './result/mall';
+
   export default {
     data () {
       return {
         type:'mall',
-        word:''
+        word:'',
+        rt:[]
       };
     },
     created(){
@@ -33,17 +68,35 @@
       if(this.$route.query.word){
         this.word = this.$route.query.word
       }
+
+      this.toSearch()
+
+
     },
+  // ,rtClub,rtCompany,rtMall,rtInfo
     components: {headBox},
 
     computed: {},
 
-    methods: {}
+    methods: {
+      toSearch(){
+        search({
+          type:this.type,
+          word:this.word
+        }).then(res=>{
+          if(res.body.code==1){
+            this.rt = res.body.data
+          }
+        })
+      }
+    }
   }
 
 </script>
 <style lang='less' scoped>
+
 .head{
+
   justify-content:flex-start;
   .wordbox{
     flex: 1;
@@ -68,4 +121,35 @@
     border-radius: 4px;
   }
 }
+
+  .list-wrap{
+
+    .item-wrap{
+      padding:10px;
+      border-bottom: 1px solid #e7e7e7;
+      font-size: 14px;
+      display: flex;
+      &:last-child{
+        border-bottom: none;
+      }
+      .thumb{
+        width: 60px;
+        height: 60px;
+        margin-right: 10px;
+      }
+      .info{
+        flex: 1;
+          .sales{
+      color: #666666;
+      }
+      }
+    }
+  }
+
+  .info-item{
+    .info{
+      /*display: flex;*/
+      /*justify-content: space-between;*/
+    }
+  }
 </style>

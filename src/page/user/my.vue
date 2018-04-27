@@ -2,7 +2,7 @@
 <template>
   <div>
     <head-box head-title="个人中心" noquick="true" goBack="true">
-      <i slot="edit" class="iconfont icon-more"></i>
+      <!--<i slot="edit" class="iconfont icon-more"></i>-->
     </head-box>
     <div class="header-wrap padding10">
       <div class="my-header">
@@ -14,7 +14,7 @@
           <div class="info">
             <div class="line nickname">昵称:{{userInfo.nickname}}</div>
             <div class="line account">通信证: {{userInfo.phone}}</div>
-            <div class="line point">积分0</div>
+            <div class="line point">积分 {{userInfo.pionts_num}}</div>
           </div>
         </div>
         <router-link v-if="userInfo" :to="'/my/profile'" class="edit-btn">编辑<i class="iconfont icon-fabu"></i>
@@ -32,16 +32,16 @@
       <router-link to="/order?status=4" class="order"><i class="iconfont icon-icondd2"></i><span class="key">退款/售后</span></router-link>
     </div>
     <div class="my-assets " v-if="userInfo">
-      <div class="assets"><span class="value">342</span><span class="key">可用余额</span></div>
-      <div class="assets"><span class="value">342</span><span class="key">冻结余额</span></div>
-      <div class="assets"><span class="value">342</span><span class="key">积分</span></div>
+      <div class="assets"><span class="value">{{userInfo.cashing_money}}</span><span class="key">可用余额</span></div>
+      <div class="assets"><span class="value">{{userInfo.freeze_money}}</span><span class="key">冻结余额</span></div>
+      <div class="assets"><span class="value">{{userInfo.pionts_num}}</span><span class="key">积分</span></div>
       <div class="assets"><i class="iconfont icon-zhanghuzichan"></i><span>我的财富</span></div>
     </div>
     <div class="my-lnks margin15-r" v-if="userInfo">
-      <div class="lnks"><span class="value">342</span><span class="key">我的评论</span></div>
-      <div class="lnks"><span class="value">342</span><span class="key">关注的店铺</span></div>
-      <router-link to="/favorite" class="lnks"><span class="value">342</span><span class="key">收藏的商品</span></router-link>
-      <div class="lnks"><span class="value">342</span><span class="key">浏览记录</span></div>
+      <div class="lnks"><span class="value">{{userInfo.commentCount}}</span><span class="key">我的评论</span></div>
+      <div class="lnks"><span class="value">{{userInfo.favoriteCompanyCount}}</span><span class="key">关注的店铺</span></div>
+      <router-link to="/favorite" class="lnks"><span class="value">{{userInfo.favoriteMallCount}}</span><span class="key">收藏的商品</span></router-link>
+      <div class="lnks"><span class="value">{{userInfo.infoCount}}</span><span class="key">发布资讯</span></div>
     </div>
     <slip-box class="margin10-r" title="为您推荐">
       <div slot="list">
@@ -60,7 +60,7 @@
   import headBox from "@/components/head";
   import footBox from "@/components/foot";
   import slipBox from "@/components/slip";
-  import {mall} from "@/service/getData";
+  import {mall,getUser} from "../../service/getData";
   import mallList from "../mall/common/list";
 
   import {mapState, mapActions} from "vuex";
@@ -68,7 +68,8 @@
   export default {
     data() {
       return {
-        malls: []
+        malls: [],
+        userInfo:{}
       };
     },
 
@@ -80,11 +81,11 @@
     },
 
     computed: {
-      ...mapState(["userInfo"])
+
     },
 
     methods: {
-      ...mapActions(["getUserInfo"]),
+
       getMall() {
         let mise = mall({
           size: 20,
@@ -99,6 +100,14 @@
       }
     },
     created() {
+      getUser({
+        action:'ext'
+      }).then(res=>{
+        console.log(res.body)
+        if(res.body.code==1){
+          this.userInfo = res.body.data
+        }
+      })
       this.getMall();
     }
   };
@@ -221,12 +230,15 @@
       position: absolute;
       right: 10px;
       top: 10px;
+
       color: #e7e7e7;
       height: 20px;
       line-height: 20px;
 
       .icon-fabu {
         font-size: 16px;
+
+
       }
     }
   }

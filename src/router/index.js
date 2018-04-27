@@ -204,7 +204,7 @@ export default new Router({
           component: infoCategory,
         },
         {
-          path: 'list',
+          path: 'list/:catid',
           component: infoList,
         },
         {

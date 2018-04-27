@@ -4,7 +4,7 @@
       <select class="type" v-model="type">
         <option value="mall">商品</option>
         <option value="company">公司</option>
-        <option value="info">同城资讯</option>
+        <option value="info">岛里资讯</option>
         <option value="club">商圈</option>
       </select>
       <input placeholder="关键词" class="word" v-model="word" />

@@ -5,6 +5,7 @@
     <head-box head-title="发布资讯" go-back="true"></head-box>
     <mt-field label="标题*" placeholder="简介描述问题" v-model="title"></mt-field>
     <mt-field label="联系方式" placeholder="联系方式" type="tel" v-model="link"></mt-field>
+    <mt-field label="收费" placeholder="无需收费则填0" type="tel" v-model="money"></mt-field>
     <div  style="width:100%;" class="weui-uploader__bd filebox mint-cell padding10-c">
       <ul class="weui-uploader__files" id="uploaderFiles">
         <img class="weui-uploader__file" :src="item" v-for="(item,index) in localIds" :key="index" />
@@ -44,6 +45,7 @@
     },
     methods: {
       sub() {
+        let self = this
         info({
           action: 'add',
           title:this.title,
@@ -53,12 +55,13 @@
           money:this.money
         }).then(res=>{
           if(res.body.code==1){
-            this.$root.mint.MessageBox('发布成功',false);
+            this.$root.mint.messagesBox('发布成功',false);
             this.$router.push({
               path:'/info'
             })
           }
         })
+
       },
       /**
        * 得到图片的base64数据，可以用img标签显示. (此接口仅在 iOS WKWebview 下提供，用于兼容 iOS WKWebview 不支持 localId 直接显示图片的问题)
