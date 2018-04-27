@@ -29,6 +29,7 @@ const cart = r => require.ensure([], () => r(require('../page/mall/cart')))
 
 const info = r => require.ensure([], () => r(require('../page/info/index')))
 const infoMain = r => require.ensure([], () => r(require('../page/info/main')))
+const infoCategory = r => require.ensure([], () => r(require('../page/info/category')))
 const infoList = r => require.ensure([], () => r(require('../page/info/list')))
 const infoDetail = r => require.ensure([], () => r(require('../page/info/detail')))
 const infoPost = r => require.ensure([], () => r(require('../page/info/post')))
@@ -199,8 +200,8 @@ export default new Router({
           component: infoMain
         },
         {
-          path: 'detail/:id',
-          component: infoDetail,
+          path: 'category',
+          component: infoCategory,
         },
         {
           path: 'list',
@@ -209,7 +210,12 @@ export default new Router({
         {
           path: 'post',
           component: infoPost,
-        }
+        },
+        {
+          path: ':id',
+          component: infoDetail,
+        },
+
       ]
     },
 

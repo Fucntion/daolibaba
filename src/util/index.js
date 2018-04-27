@@ -3,10 +3,11 @@ import mint from './mint.config';
 import utils from './utils';
 import interceptorsConfig from './interceptors.config';
 import wx from 'weixin-js-sdk';
+window.wx = wx;
 import filter from './filter';
 
 
-/** 
+/**
  *  DatetimePicker 注册在 components.index.js中    一时间竟不知道注册在哪里比较合适
 */
 export default {

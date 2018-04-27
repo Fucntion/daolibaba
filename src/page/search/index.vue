@@ -1,6 +1,6 @@
 <template>
  <div>
-   <head-box :go-back="true" :head-title="搜索"></head-box>
+   <head-box :go-back="true" head-title="搜索" ></head-box>
    <transition name="router-fade" mode="out-in">
      <router-view></router-view>
    </transition>

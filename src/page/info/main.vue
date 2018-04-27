@@ -3,10 +3,10 @@
   <div>
       <head-box head-title="同城资讯" :fixed="1">
         <span slot='search'><i class="iconfont icon-sousuo"></i></span>
-        <span slot='edit' class="edit" >发布<i class="iconfont icon-fabu"></i></span>
+        <router-link to="/info/category?isPost=1" slot='edit' class="edit" >发布<i class="iconfont icon-fabu"></i></router-link>
       </head-box>
       <nav-box :navs="navs">
-        <router-link slot="all" to="'/info/category'" class="item">
+        <router-link slot="all" to="/info/category" class="item">
           <i class="iconfont icon-suoyou"></i>
           <span>所有分类</span>
         </router-link>
@@ -105,7 +105,13 @@ export default {
       })
     },
    getInfo(){
-        let newMise = info(0,10,'itemid,create_time,title','create_time desc')
+
+        let newMise = info({
+          catid:0,
+          size:10,
+          field:'itemid,create_time,title',
+          order:'create_time desc'
+        });
         newMise.then((res) => {
             let body = res.body;
             if (body.code === 1) {

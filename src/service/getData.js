@@ -59,14 +59,12 @@ export const group = (post) => fetch('v1/group', emptyObject(post),'POST');
 
 export const mall = (post) => fetch('v1/goods', emptyObject(post),'POST');
 
-export const info = (catid,size,field,order,paginate,page) => fetch('v1/info', emptyObject({
-	catid:catid,
-	size:size,
-	field:field,
-	order:order,
-	paginate:paginate,
-	page:page
-}),'POST');
+
+export const info = (post) => fetch('v1/info', emptyObject(post),'POST');
+
+
+
+
 
 
 export const club = (post) => fetch('v1/club', emptyObject(post),'POST');

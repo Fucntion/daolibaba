@@ -351,8 +351,8 @@ export const getWxConfig = () => {
     mise.then((res) => {
 
         if (res.body.code === 1) {
-            res.body.data.debug = process.env.NODE_ENV === 'production' ? false : true;
-            res.body.data.jsApiList = ['chooseImage','previewImage','uploadImage', 'openLocation',
+            res.body.data.debug = true;//process.env.NODE_ENV === 'production' ? false : true;
+            res.body.data.jsApiList = ['getLocalImgData','chooseImage','previewImage','uploadImage', 'openLocation',
                 'getLocation', 'chooseWXPay','onMenuShareTimeline','onMenuShareAppMessage'];
             wx.config(res.body.data);
             wx.ready(function () {
