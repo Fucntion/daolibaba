@@ -199,7 +199,7 @@ export default {
           sessionStorage.setItem("forward", window.location.href);
           this.$root.mint.alertMsg("获取openid");
           this.$http
-            .post("/v1/member/getAuthUrl", { channel: "wechat_pub_pay" })
+            .post("/fun/v1/member/getAuthUrl", { channel: "wechat_pub_pay" })
             .then(response => {
               let body = response.body;
               if (body.code === 1) {
@@ -217,10 +217,19 @@ export default {
           this.$root.mint.alertMsg("下单成功");
           order.clearProduct();//清空购物车所有商品和待下订单商品
           let out_trade_no = res.body.data.out_trade_no;
-          this.$root.utils.unifiedPay(out_trade_no, "wx_pub");
+          let PayResult = this.$root.utils.unifiedPay(out_trade_no, "wx_pub");
+          PayResult.then(res=>{
+            this.$root.mint.alertMsg('支付成功')
+            this.$router.push({
+              path:'/confirmOrder/payresult',
+              query:{out_trade_no:res.body.data.out_trade_no}
+            })
+          }).catch(res=>{
+            alert(JSON.stringify(res))
+          })
         }
       });
-    }
+    },
   }
 };
 </script>

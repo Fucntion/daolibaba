@@ -85,6 +85,8 @@ export const brand = (post) => fetch('v1/brand',emptyObject(post),'POST');
 
 export const order = (post) => fetch('v1/order',emptyObject(post),'POST');
 
+
+
 export const favorite = (post) => fetch('v1/favorite',emptyObject(post),'POST');
 
 /**
@@ -107,6 +109,9 @@ export const postOrder = (post) => {
 
 
 export const pay = (post) => fetch('v1/pay',emptyObject(post),'POST');
+
+export const payAgin = (post) => fetch('v1/pay/again',emptyObject(post),'POST');
+
 
 
 export const getJsSign = (post) => fetch('v1/tool/getJsSign',emptyObject(post),'POST');

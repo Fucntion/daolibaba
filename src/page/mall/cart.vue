@@ -172,7 +172,7 @@
         let orderCompany = [];
         //把选中的放进去了
         this.companyList.map(function (company) {
-          let tempObj = {company: company.title, id: company.id, malls: []}
+          let tempObj = {company: company.title, seller_id: company.id, malls: []}
           company.malls.map(function (mall) {
             if (mall.select) {
               tempObj.malls.push(mall)

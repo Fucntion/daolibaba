@@ -178,7 +178,7 @@ export default {
       let orderCompany = [];
 
       //把选中的放进去了
-      let tempObj = {company:this.mall.company.company,id:this.mall.company.id,malls:[]};
+      let tempObj = {company:this.mall.company.company,seller_id:this.mall.company.user_id,malls:[]};
 
       let max = 0;
       if(this.mall.group&&this.mall.group.limit>0){
@@ -224,20 +224,20 @@ export default {
 
       //存到vuex
       //这里传的是一个单数组
-      this.selectMall['selectSpec'] = this.selectSpecs;//给商品加规格信息
-      this.selectMall['number'] = this.num
-
-      //公司名和id   产品数组=》【产品信息（商品价格，运费模板id，规格信息'，货品信息（id，缩略图，名字）】
-      this.SET_ORDERINFO({
-        company:this.goods.company,
-          goods:this.goods,
-          malls:[this.selectMall]
-        })
-
-
-      this.$router.push({
-        path:'/confirmOrder'
-      })
+      // this.selectMall['selectSpec'] = this.selectSpecs;//给商品加规格信息
+      // this.selectMall['number'] = this.num
+      //
+      // //公司名和id   产品数组=》【产品信息（商品价格，运费模板id，规格信息'，货品信息（id，缩略图，名字）】
+      // this.SET_ORDERINFO({
+      //   company:this.goods.company,
+      //     goods:this.goods,
+      //     malls:[this.selectMall]
+      //   })
+      //
+      //
+      // this.$router.push({
+      //   path:'/confirmOrder'
+      // })
 
 
 

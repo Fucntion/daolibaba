@@ -9,7 +9,7 @@
         </section>
         <slot name='logo'></slot>
         <slot name='search'></slot>
-        <router-link :to="userInfo? '/my':'/my/login'" v-if='signinUp' class="head_login">
+        <router-link :to="userInfo? '/my':'/login'" v-if='signinUp' class="head_login">
             <svg class="user_avatar" v-if="userInfo">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
             </svg>
@@ -52,7 +52,7 @@ export default {
 
   },
   created(){
-    this.getUserInfo();
+    // this.getUserInfo();
   },
 
   computed: {

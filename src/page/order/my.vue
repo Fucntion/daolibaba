@@ -4,18 +4,19 @@
   <div class="order-wrap">
     <!--0=>'待付款',1=>'待发货',2=>'待收货',3=>'待评价',4=>'退款/售后',-1=>'为订单失败'-->
     <mt-navbar v-model="status" >
-      <mt-tab-item  id="999">全部</mt-tab-item>
-      <mt-tab-item  id="0">待付款</mt-tab-item>
-      <mt-tab-item  id="1">待发货</mt-tab-item>
-      <mt-tab-item  id="2">待收货</mt-tab-item>
-      <mt-tab-item  id="3">待评价</mt-tab-item>
-      <mt-tab-item  id="4">退款/售后</mt-tab-item>
-      <mt-tab-item  id="-1">失败</mt-tab-item>
+      <mt-tab-item id="999">全部</mt-tab-item>
+      <mt-tab-item id="0">待付款</mt-tab-item>
+      <mt-tab-item id="1">待发货</mt-tab-item>
+      <mt-tab-item id="2">待收货</mt-tab-item>
+      <mt-tab-item id="4">待评价</mt-tab-item>
+      <!--<mt-tab-item id="5">已评价</mt-tab-item>-->
+      <mt-tab-item id="6">退款/售后</mt-tab-item>
+      <!--<mt-tab-item id="-1">失败</mt-tab-item>-->
     </mt-navbar>
 
     <!-- tab-container -->
     <div class="list-wrap">
-      <mt-loadmore :bottom-method="getOrders" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+      <mt-loadmore :bottom-method="getOrders" :autoFill="false" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
         <order-item class="item"
                     v-for="(order,idx) in orders"
                     :key="idx"
@@ -31,7 +32,7 @@
   export default {
   data () {
     return {
-      status: '999',
+      status: 9999,
       orders:[],
       end: false,
       page:1,
@@ -42,14 +43,18 @@
     components:{orderItem},
     watch:{
       status(newVal,oldVal){
+
         this.orders = [];
         this.page =1;
-        this.getOrders(newVal)
+        //排除掉初始化
+        if(oldVal!=999){
+          this.getOrders()
+        }
+
       }
     },
   created(){
       this.status = this.$route.query.status;
-
   },
   computed: {},
   mounted(){
@@ -64,21 +69,30 @@
     handleBottomChange(status) {
       this.bottomStatus = status;
     },
+
     getOrders() {
       let post = {
-        size: 20,
+        size: 10,
         paginate:true,
 
         page:this.page
       };
-      if(status!=999){
-        post.status = status
+
+      if(this.status!=999){
+        post.status = this.status
       }
+
+
       order(post).then(res => {
+        this.$refs.loadmore.onBottomLoaded();
         if (res.body.code == 1) {
           this.page++;
           this.orders = this.orders.concat(res.body.data.data)
-          this.$refs.loadmore.onBottomLoaded();
+          if(this.orders.length<1){
+            this.bottomStatus = true;
+            return;
+          }
+
         }
       })
     },

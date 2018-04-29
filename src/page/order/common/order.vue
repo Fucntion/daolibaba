@@ -33,11 +33,18 @@
           <div class="number info-line">x{{mall.number}}</div>
         </div>
       </div>
+      <a href="http://m.kuaidi100.com" class="send font14">
+        快递/物流: <em>{{order.send_type}}</em>  单号: <em class="send_no">{{order.send_no}}</em>
+      </a>
       <div class="total font14">
         共<em class="totalNumber">2</em>件商品,合计<span class="amount">¥ <em class="int">{{order.amount|cutPrice(0)}}</em>{{order.amount|cutPrice(1)}}</span>元（含运费￥0.00）
       </div>
+
       <div class="control">
-        <mt-button size="small" @click="delMall('all')">确认收货</mt-button>
+        <mt-button v-if="order.status==0" size="small" @click="doPayAgain()">立即付款</mt-button>
+        <!--<mt-button v-if="order.status==1" size="small" @click="delMall('all')">提醒发货</mt-button>-->
+        <mt-button v-if="order.status==2" size="small" @click="checkSend()">确认收货</mt-button>
+        <mt-button v-if="order.status==4" size="small" @click="goScore()">去评价</mt-button>
       </div>
     </div>
 
@@ -45,6 +52,7 @@
 </template>
 
 <script>
+  import {payAgin,order} from '../../../service/getData';
   export default {
     name: "order",
     data(){
@@ -52,7 +60,92 @@
 
       }
     },
-    props:['order']
+    props:['order'],
+    methods:{
+      goScore(){
+        this.$router.push({
+          path:'/order/score',
+          query:{
+            id:this.order.id,
+          }
+        })
+      },
+      doPayAgain(){
+
+        if (this.$root.isWX) {
+
+          let openid = this.$root.utils.getStore("wx_pub_openid");
+          if (!openid) {
+            sessionStorage.setItem("forward", window.location.href);
+            this.$root.mint.alertMsg("获取openid");
+            this.$http
+              .post("/fun/v1/member/getAuthUrl", { channel: "wechat_pub_pay" })
+              .then(response => {
+                let body = response.body;
+                if (body.code === 1) {
+                  window.location.href = body.data;
+
+                }
+              });
+          }
+        }
+
+        let post = {channel: 'wx_pub', trade_no:this.order.trade_no};
+
+        let ag = navigator.userAgent,
+          ua = ag.toLowerCase();
+        let isWX = (ua.indexOf('micromessenger') !== -1);
+
+        if (isWX) {
+          let openid = localStorage.getItem("wx_pub_openid");
+          if (!openid) {
+            alert('openid缺失');
+          }
+          post.openid = openid;
+        }
+        let _self = this;
+
+        payAgin(post).then(res => {
+
+          let body = res.body;
+          if (body.code === 1) {
+            //下单成功
+            let payInfo = res.body.data;
+
+            wx.chooseWXPay({
+              timestamp: payInfo.timeStamp,  // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+              nonceStr: payInfo.nonceStr,    // 支付签名随机串，不长于 32 位
+              package: payInfo.package,      // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+              signType: payInfo.signType,    // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+              paySign: payInfo.paySign,      // 支付签名
+              success: function (res) {
+                _self.$root.mint.messagesBox('支付成功',false);
+              },
+              complete: function (res) {
+                  location.reload()
+              },
+              fail(res){
+                _self.$root.mint.messagesBox('支付失败',false);
+              }
+            });
+          }
+        })
+
+
+      },
+      checkSend(){
+          order({
+            id:this.order.id,
+
+            action:'checkSend'
+          }).then(res=>{
+            if(res.body.code==1){
+              this.$root.mint.messagesBox('操作成功',false);
+              location.reload();
+            }
+          })
+      }
+    }
   }
 </script>
 
@@ -126,10 +219,23 @@
         }
       }
     }
+    .send{
+      display: block;
+      text-align: right;
+      color: #666666;
+      padding: 4px 10px;
+      font-size: 12px;
+      .em{
+        color: #333333;
+      }
+      .send_no{
+        text-decoration: underline;
+      }
+    }
     .total{
       text-align: right;
       color: #666666;
-      padding: 10px 0;
+      padding: 0 0 10px 0;
       font-size: 12px;
       border-bottom: 0.0242rem solid @defaultBorderColor;
       .amount{

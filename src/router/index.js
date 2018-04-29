@@ -49,12 +49,16 @@ const login = r => require.ensure([], () => r(require('../page/user/login')))
 const auth = r => require.ensure([], () => r(require('../page/auth')))
 const bindPhone = r => require.ensure([], () => r(require('../page/user/bindPhone')))
 
+
+const ConfirmIndex = r => require.ensure([], () => r(require('../page/confirmorder/index')))
 const orderConfirm = r => require.ensure([], () => r(require('../page/confirmorder/confirm')))
+const orderPayResult = r => require.ensure([], () => r(require('../page/confirmorder/result')))
 const addressAdd = r => require.ensure([], () => r(require('../page/confirmorder/address/add')))
 const addressChoose = r => require.ensure([], () => r(require('../page/confirmorder/address/choose')))
 const addressSearch = r => require.ensure([], () => r(require('../page/confirmorder/address/search')))
 
 const orderMain = r => require.ensure([], () => r(require('../page/order/main')))
+const myScore = r => require.ensure([], () => r(require('../page/order/score')))
 const myOrder = r => require.ensure([], () => r(require('../page/order/my')))
 const orderDetail = r => require.ensure([], () => r(require('../page/order/detail')))
 
@@ -97,8 +101,16 @@ export default new Router({
     },
     {
       path: '/confirmOrder',
-      component: orderConfirm,//不写在前面就匹配成/order/:id了
+      component: ConfirmIndex,//不写在前面就匹配成/order/:id了
       children: [
+        {
+          path:'',
+          component:orderConfirm
+        },
+        {
+          path:'payresult',
+          component:orderPayResult
+        },
         {
           path: 'chooseAddress',
           component: addressChoose,
@@ -125,6 +137,10 @@ export default new Router({
         {
           path: '',
           component: myOrder//默认是订单列表
+        },
+        {
+          path:'score',
+          component:myScore
         },
         {
           path: ':id',

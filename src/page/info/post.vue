@@ -24,7 +24,7 @@
 <script>
   import headBox from '../../components/head'
   import {info} from "../../service/getData"
-
+  import { mapState, mapActions } from "vuex";
   export default {
     name: 'Fold',
     components: {
@@ -41,9 +41,10 @@
       }
     },
     created() {
-
+      this.getUserInfo();
     },
     methods: {
+      ...mapActions(["getUserInfo"]),
       sub() {
         let self = this
         info({
