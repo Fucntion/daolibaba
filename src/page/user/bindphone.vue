@@ -9,20 +9,21 @@
         </mt-field>
         <div class="margin15"><mt-button @click="bindPhone" class="sub" size="large" type="primary">绑定</mt-button></div>
       </div>
-      
+
   </div>
 </template>
 
 <script>
 import headBox from "@/components/head";
+import {sendSms,bindPhone,getUser} from "../../service/getData";
 
-import { sendSms,bindPhone} from "@/service/getData";
 import { mapState, mapActions } from "vuex";
 import { MessageBox } from 'mint-ui';
 export default {
   data() {
     return {
       phone: null,
+      userInfo:null,
       captcha: null
     };
   },
@@ -32,7 +33,7 @@ export default {
   },
 
   computed: {
-      ...mapState(["userInfo"])
+
   },
 
   methods: {
@@ -40,20 +41,20 @@ export default {
 
         if(this.userInfo.phone){
             MessageBox.confirm('当前用户已绑定手机,是否覆盖?').then(action => {
-                
+              sendSms(this.phone,"bingphone")
             }).catch(action=>{});
         }
 
-        sendSms(this.phone,"bingphone")
+
     },
     bindPhone(){
 
         if(this.userInfo.phone){
             MessageBox.confirm('当前用户已绑定手机,是否覆盖?').then(action => {
-                
+
             });
         }
-        
+
         bindPhone(this.phone,this.captcha)
         .then(res=>{
             if(res.body.code==1){
@@ -66,7 +67,12 @@ export default {
     }
   },
   created() {
-      
+    getUser().then(res=>{
+      console.log(res.body)
+      if(res.body.code==1){
+        this.userInfo = res.body.data
+      }
+    })
   }
 };
 </script>

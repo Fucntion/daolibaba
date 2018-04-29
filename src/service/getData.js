@@ -146,7 +146,7 @@ export const login = (post) => fetch('v1/member/login',emptyObject(post),'POST')
  * 获取收货地址
  */
 
-export const address = (post) => fetch('v1/member/address',emptyObject(post),'POST');
+export const address = (post) => fetch('v1/address',emptyObject(post),'POST');
 
 
 export const bindPhone = (phone,code) => fetch('v1/member/bindPhone',{

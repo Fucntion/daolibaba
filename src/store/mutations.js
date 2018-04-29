@@ -27,11 +27,9 @@ export default {
 		state.address.puth(address)
 	},
 	[CHOOSE_ADDRESS](state, {
-		address,
-		index
+		address
 	}) {
 		state.chooseAddress = address;
-		state.addressIndex = index;
 	},
 	[DEL_ADDRESS](state,index){
 		delete state.address[index]

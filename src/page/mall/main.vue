@@ -30,9 +30,9 @@
               <!--</div>-->
           <!--</div>-->
       <!--</slip-box>-->
-      <slip-box class="margin10-r"  title="团购" morelink="#">
+      <slip-box class="margin10-r"  title="团购">
           <div slot="list"  class="list">
-              <router-link :to="'/mall/detail/'+group.goods.id" v-for="group in groups" class="slip-item item">
+              <router-link style="padding-right:6px;" :to="'/mall/detail/'+group.goods.id" v-for="group in groups" class="slip-item item">
                   <img  class="thumb" :src="group.goods.thumb||'http://placehold.it/100/ccc'" />
                   <div class="info">
                     <span class="price font12">￥{{group.price}}</span>

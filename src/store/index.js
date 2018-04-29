@@ -14,9 +14,7 @@ const state = {
 	mask:false,
 	maskzIndex:0,
 	address:[],
-	newAddress:{},
 	chooseAddress:{},
-	addressIndex:0,
   defaultProvienceId:22,
   defaultCityId:3145
 }

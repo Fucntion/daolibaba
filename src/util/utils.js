@@ -139,7 +139,7 @@ export const getWxConfig = () => {
     if (res.body.code === 1) {
       res.body.data.debug = process.env.NODE_ENV === 'production' ? false : true;
       res.body.data.jsApiList = ['getLocalImgData', 'chooseImage', 'previewImage', 'uploadImage', 'openLocation',
-        'getLocation', 'chooseWXPay', 'onMenuShareTimeline', 'onMenuShareAppMessage'];
+        'getLocation', 'chooseWXPay', 'onMenuShareTimeline', 'onMenuShareAppMessage','openAddress'];
       wx.config(res.body.data);
       wx.ready(function () {
         //分享到朋友圈"

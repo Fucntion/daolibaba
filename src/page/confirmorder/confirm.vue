@@ -2,16 +2,19 @@
 <template>
   <div>
        <head-box :goBack="true" :head-title="title"  ></head-box>
-        <router-link :to='{path:"/confirmOrder/chooseAddress"}'>
-          <div class="address">
+        <router-link :to='{path:"/address",query:{select:true}}'>
+          <div class="address" v-if="chooseAddress.id">
             <div class="icon"><i class="iconfont icon-address"></i></div>
             <div class="detail">
               <div class="info-line link">
-                <span>收货人:{{chooseAddress.truename}}</span><span>{{chooseAddress.mobile||chooseAddress.telephone}}</span>
+                <span>收货人:{{chooseAddress.link}}</span><span>{{chooseAddress.tel}}</span>
               </div>
-              <div class="info-line fulladdress"><span>收货地址:{{chooseAddress.address}}</span></div>
+              <div class="info-line fulladdress"><span>收货地址:{{chooseAddress.provience}} {{chooseAddress.city}} {{chooseAddress.area}} {{chooseAddress.detail}}</span></div>
             </div>
             <div class="icon"><i class="iconfont icon-previewright"></i></div>
+          </div>
+          <div class="address no-address" v-else >
+            <mt-button type="primary">新增收货地址</mt-button>
           </div>
         </router-link>
       <div class="orderbox">
@@ -61,7 +64,7 @@
                   <small><span id="totalBackMoney">合计总额: <span class="priceJs" > ¥ <em class="int">{{totalAmount+totalFee|cutPrice(0)}}</em>{{totalAmount+totalFee|cutPrice(1)}}</span> 元</span></small>
                   <!-- 立减¥179.52 -->
               </p>
-              <div @click="sendOrder()" class="buy buyJs" :class="{disabled:isSend}" >提交订单
+              <div @click="sendOrder()" class="buy buyJs" :class="{disabled:!isSend}" >提交订单
                   <!-- <em  id="totalNum">({{total.totalNumber}}件)</em> -->
               </div>
           </div>
@@ -87,14 +90,22 @@ export default {
       totalFee: 0,
       totalNumber: order.totalNumber,
       buyer: order.buyer,
-      malls: []
+      malls: [],
     };
   },
 
   components: { headBox },
 
   computed: {
+    isSend(){
+      if(this.chooseAddress.id&&this.totalAmount>0){
+        return true;
+      }else{
+        return false;
+      }
+    },
     ...mapState(["chooseAddress", "userInfo"])
+
   },
   created() {
     this.initAddress();
@@ -105,9 +116,9 @@ export default {
     ...mapMutations(["CHOOSE_ADDRESS", "getUserInfo"]),
     computedFare: function() {
       var _self = this;
-      if (!this.chooseAddress.id) {
-        // this.$root.mint.alertMsg('请选择收货地址');默认选择
-      }
+      // if (!this.chooseAddress.id) {
+      //   this.$root.mint.alertMsg('请选择收货地址');//默认选择
+      // }
 
       this.companyList.map(function(c) {
         let tempFareTotal = 0;
@@ -174,15 +185,27 @@ export default {
       return mall.fee;
     },
     async initAddress() {
-      let mise = address();
-      mise.then(res => {
+      if(this.chooseAddress.id){
+        return ;//如果有默认的地址
+      }
+      address({
+        action:'getDefault'
+      }).then(res => {
         if (res.body.code == 1) {
-          let addressArr = res.body.data;
-          this.CHOOSE_ADDRESS({ address: addressArr[0], index: 0 });
+          let address = res.body.data;
+
+          this.CHOOSE_ADDRESS({ address:address});
+
+
         }
       });
     },
     sendOrder() {
+
+      if(!this.isSend){
+        this.$root.mint.alertMsg('订单异常,请选择收货地址或者检查价格');
+        return;
+      }
 
       let _self = this,
         post = {
@@ -225,7 +248,10 @@ export default {
               query:{out_trade_no:res.body.data.out_trade_no}
             })
           }).catch(res=>{
-            alert(JSON.stringify(res))
+            this.$router.push({
+              path:'/confirmOrder/payresult',
+              query:{out_trade_no:res.body.data.out_trade_no}
+            })
           })
         }
       });
@@ -236,6 +262,18 @@ export default {
 <style lang='less' scoped>
 
 @import "../../assets/style/base.less";
+.no-address{
+
+  text-align: center;
+  button{
+    margin: 10px auto;
+    font-size: 14px;
+    height: 36px;
+    padding: 0 20px;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
 .address {
   display: flex;
   padding: 10px 0;

@@ -51,9 +51,9 @@
             <span><i class="iconfont icon-renzhengguanli" :class="{'active':mall.company.is_club}"></i>同城导购</span>
           </div>
         </div>
-        <div class="go">
+        <router-link :to="'/store/'+mall.company.user_id" class="go">
           <mt-button size="small" type="primary" plain>进入店铺</mt-button>
-        </div>
+        </router-link>
       </div>
       <div class="score">
         <span>产品描述<em>{{mall.company.score1}}</em></span>

@@ -35,6 +35,7 @@ const infoDetail = r => require.ensure([], () => r(require('../page/info/detail'
 const infoPost = r => require.ensure([], () => r(require('../page/info/post')))
 
 const club = r => require.ensure([], () => r(require('../page/club/index')))
+const clubTop = r => require.ensure([], () => r(require('../page/club/Top')))
 const clubMain = r => require.ensure([], () => r(require('../page/club/main')))
 const clubArea = r => require.ensure([], () => r(require('../page/club/child/area')))
 const clubList = r => require.ensure([], () => r(require('../page/club/list')))
@@ -53,9 +54,13 @@ const bindPhone = r => require.ensure([], () => r(require('../page/user/bindPhon
 const ConfirmIndex = r => require.ensure([], () => r(require('../page/confirmorder/index')))
 const orderConfirm = r => require.ensure([], () => r(require('../page/confirmorder/confirm')))
 const orderPayResult = r => require.ensure([], () => r(require('../page/confirmorder/result')))
-const addressAdd = r => require.ensure([], () => r(require('../page/confirmorder/address/add')))
-const addressChoose = r => require.ensure([], () => r(require('../page/confirmorder/address/choose')))
-const addressSearch = r => require.ensure([], () => r(require('../page/confirmorder/address/search')))
+
+
+const addressIndex = r => require.ensure([], () => r(require('../page/address/index')))
+const addressList = r => require.ensure([], () => r(require('../page/address/list')))
+const addressChoose = r => require.ensure([], () => r(require('../page/address/choose')))
+const addressAdd = r => require.ensure([], () => r(require('../page/address/add')))
+const addressEdit = r => require.ensure([], () => r(require('../page/address/edit')))
 
 const orderMain = r => require.ensure([], () => r(require('../page/order/main')))
 const myScore = r => require.ensure([], () => r(require('../page/order/score')))
@@ -111,25 +116,9 @@ export default new Router({
           path:'payresult',
           component:orderPayResult
         },
-        {
-          path: 'chooseAddress',
-          component: addressChoose,
-          children: [
-            {
-              path: 'addAddress',
-              component: addressAdd,
-              children: [
-                {
-                  path: 'serachAddress',
-                  component: addressSearch
-                }
-              ]
-            }
-          ]
-        }
-
       ]
     },
+
     {
       path: '/order',
       component: orderMain,
@@ -244,6 +233,10 @@ export default new Router({
           component: clubMain
         },
         {
+          path:'top',
+          component:clubTop
+        },
+        {
           path: 'area',
           component: clubArea,
         },
@@ -298,6 +291,28 @@ export default new Router({
           component: storeShow,
         }
 
+      ]
+    },
+    {
+      path: '/address',
+      component: addressIndex,
+      children: [
+        {
+          path:'',
+          component:addressList
+        },
+        {
+          path:'choose',
+          component:addressChoose
+        },
+        {
+          path: 'add',
+          component: addressAdd,
+        },
+        {
+          path: ':id',
+          component: addressEdit,
+        },
       ]
     }
 

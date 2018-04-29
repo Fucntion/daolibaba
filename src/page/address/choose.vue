@@ -4,14 +4,22 @@
 </template>
 
 <script>
-export default {
+  import {address} from "../../service/getData";
+
+  export default {
   data () {
     return {
     };
   },
 
   components: {},
+  created(){
+    address({
 
+    }).then(res=>{
+
+    })
+  },
   computed: {},
 
 
