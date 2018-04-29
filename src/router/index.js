@@ -75,6 +75,12 @@ const searchResult = r => require.ensure([], () => r(require('../page/search/res
 // const resultInfo = r => require.ensure([], () => r(require('../page/search/result/info')))
 // const resultClub = r => require.ensure([], () => r(require('../page/search/result/club')))
 
+
+const sellerIndex = r => require.ensure([], () => r(require('../page/seller/index')))
+const sellerMain = r => require.ensure([], () => r(require('../page/seller/main')))
+const sellerReg = r => require.ensure([], () => r(require('../page/seller/reg')))
+
+
 export default new Router({
   routes: [
     {
@@ -313,6 +319,20 @@ export default new Router({
           path: ':id',
           component: addressEdit,
         },
+      ]
+    },
+    {
+      path:'/seller',
+      component:sellerIndex,
+      children:[
+        {
+          path:'',
+          component:sellerMain
+        },
+        {
+          path:'reg',
+          component:sellerReg
+        }
       ]
     }
 

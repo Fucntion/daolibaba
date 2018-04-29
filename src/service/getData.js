@@ -149,6 +149,9 @@ export const login = (post) => fetch('v1/member/login',emptyObject(post),'POST')
 export const address = (post) => fetch('v1/address',emptyObject(post),'POST');
 
 
+export const apply = (post) => fetch('v1/apply',emptyObject(post),'POST');
+
+
 export const bindPhone = (phone,code) => fetch('v1/member/bindPhone',{
 	phone:phone,
 	code:code

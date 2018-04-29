@@ -43,6 +43,19 @@
       <router-link to="/favorite" class="lnks"><span class="value">{{userInfo.favoriteMallCount}}</span><span class="key">收藏的商品</span></router-link>
       <div class="lnks"><span class="value">{{userInfo.infoCount}}</span><span class="key">发布资讯</span></div>
     </div>
+
+    <div class="my-assets" v-if="userInfo.co_id">
+      <div class="assets"><span class="value">{{userInfo.cashing_money}}</span><span class="key">七天内订单</span></div>
+      <div class="assets"><span class="value">{{userInfo.freeze_money}}</span><span class="key">七天内成交额</span></div>
+      <div class="assets"><span class="value">{{userInfo.pionts_num}}</span><span class="key">七天内访客</span></div>
+      <div class="assets"><i class="iconfont icon-zhanghuzichan"></i><span>我的财富</span></div>
+    </div>
+    <router-link to="/seller/reg" class="my-assets" v-if="userInfo&&!userInfo.co_id">
+      <mt-button type="primary" size="large" class="goSeller">成为商户</mt-button>
+
+    </router-link>
+
+
     <slip-box class="margin10-r" title="为您推荐">
       <div slot="list">
         <mall-list :lists="malls"></mall-list>
@@ -114,7 +127,17 @@
 </script>
 <style lang='less' scoped>
   @import "../../assets/style/base.less";
-
+  .goSeller{
+    margin: 0 auto;
+    width: 50%;
+    background: -webkit-linear-gradient(left, #eb3c3c, #ff7459);
+    background: linear-gradient(90deg, #eb3c3c, #ff7459);
+    border: 1px solid #e7e7e7;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+    margin-top: 20px;
+  }
   .my-order {
     display: flex;
     height: 72px;

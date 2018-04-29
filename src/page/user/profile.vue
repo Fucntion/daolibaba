@@ -6,8 +6,6 @@
       <mt-cell title="头像"  > <img style="width: 44px;margin: 10px 0" :src="userInfo.headimgurl" /></mt-cell>
       <mt-cell title="昵称" :value="userInfo.nickname"></mt-cell>
       <mt-cell title="手机号码" to="/bindPhone"  :value="userInfo.phone||'点击绑定'"></mt-cell>
-
-
       <mt-cell to="/address" title="收货地址管理"></mt-cell>
       <!--<mt-cell title="标题" label="描述信息" is-link></mt-cell>-->
       <!--<mt-cell title="标题" label="描述信息" is-link></mt-cell>-->
