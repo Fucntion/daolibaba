@@ -77,7 +77,8 @@ const searchResult = r => require.ensure([], () => r(require('../page/search/res
 
 
 const sellerIndex = r => require.ensure([], () => r(require('../page/seller/index')))
-const sellerMain = r => require.ensure([], () => r(require('../page/seller/main')))
+const sellerMallIndex = r => require.ensure([], () => r(require('../page/seller/mall/index')))
+const sellerMall = r => require.ensure([], () => r(require('../page/seller/mall/mall')))
 const sellerReg = r => require.ensure([], () => r(require('../page/seller/reg')))
 
 
@@ -327,7 +328,11 @@ export default new Router({
       children:[
         {
           path:'',
-          component:sellerMain
+          component:sellerMallIndex,
+        },
+        {
+          path:'mall/:id',
+          component:sellerMall
         },
         {
           path:'reg',

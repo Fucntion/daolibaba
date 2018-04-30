@@ -48,7 +48,7 @@
       <div class="assets"><span class="value">{{userInfo.cashing_money}}</span><span class="key">七天内订单</span></div>
       <div class="assets"><span class="value">{{userInfo.freeze_money}}</span><span class="key">七天内成交额</span></div>
       <div class="assets"><span class="value">{{userInfo.pionts_num}}</span><span class="key">七天内访客</span></div>
-      <div class="assets"><i class="iconfont icon-zhanghuzichan"></i><span>我的财富</span></div>
+      <router-link to="/seller" class="assets"><i class="iconfont icon-zhanghuzichan"></i><span>店铺管理</span></router-link>
     </div>
     <router-link to="/seller/reg" class="my-assets" v-if="userInfo&&!userInfo.co_id">
       <mt-button type="primary" size="large" class="goSeller">成为商户</mt-button>

@@ -67,16 +67,7 @@ export const club = (post) => fetch('v1/club', emptyObject(post),'POST');
 
 export const city = (post) => fetch('v1/city', emptyObject(post),'POST');
 
-/**
- *
- * @param {商家id} itemid
- * @param {列表数量} size
- * @param {指定返回的字段} field
- * @param {排序} order
- * @param {分页} paginate
- * @param {指定页面} page
- * @param {每个商铺返回的商品数量} mallSize
- */
+
 export const company = (post) => fetch('v1/company',emptyObject(post),'POST');
 
 
@@ -130,7 +121,6 @@ export const getWXopenId = (post) => fetch('v1/member/getWXopenId',emptyObject(p
 export const getUser = (post) => fetch('v1/member',emptyObject(post),'POST');
 
 
-
 /**
  * 注册
  */
@@ -168,11 +158,13 @@ export const sendSms = (phone,type)=>fetch('v1/tool/sendSms',{
  * @params code, mobile, validate_token
  */
 
-
-
 export const smsLogin = (post) => fetch('v1/login/app_mobile', {}, 'POST');
 
 export const search = (post) => fetch('v1/search', emptyObject(post), 'POST');
+
+export const selerMall = (post) => fetch('seller/mall', emptyObject(post), 'POST');
+
+
 
 
 

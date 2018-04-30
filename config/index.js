@@ -17,6 +17,13 @@ module.exports = {
         pathRewrite: {
           '^/fun/v1': ''
         }
+      },
+      '/fun/seller': {
+        target: 'http://api.o2o.com/seller',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/fun/seller': ''
+        }
       }
     },
 
@@ -28,7 +35,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */

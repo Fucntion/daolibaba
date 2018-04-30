@@ -10,7 +10,7 @@ export default {
     return {
         content:null
     }
-   
+
   },
   components: {},
 
@@ -22,12 +22,12 @@ export default {
   methods: {
 
       closeAttrBox:function(){
-        
+
         this.$emit('close');
       },
       getInfo() {
       let mise = mall({
-        id: this.$route.params.id,easy:1
+        id: this.$route.params.id,easy:1,with:'content'
       });
 
       mise.then(res => {
@@ -37,7 +37,7 @@ export default {
         }
       });
     }
-      
+
   }
 };
 </script>
@@ -47,10 +47,10 @@ export default {
   width: 100%;
   overflow-x: hidden;
   img{
-    width: 100%; 
+    width: 100%;
   }
- 
-} 
+
+}
 
 
 
