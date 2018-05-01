@@ -9,6 +9,7 @@
 
 <script>
 import {mapState, mapMutations} from 'vuex'
+import wx from 'weixin-js-sdk';
 export default {
 	name: 'App',
   data () {
@@ -30,7 +31,37 @@ export default {
   created(){
     this.directRightUrl()
     if(this.$root.isWX){
-      this.$root.utils.getWxConfig()
+      this.$root.utils.getWxConfig().then(res=>{
+
+        // wx.ready(function () {
+        //   //分享到朋友圈"
+        //   wx.onMenuShareTimeline({
+        //     title: '岛里巴巴-海南专业批发采购服务平台',
+        //     link: location.href, // 分享链接
+        //     imgUrl: 'https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/share_logo.png', // 分享图标
+        //     success: function () {
+        //       // console.log('分享到朋友圈成功')
+        //     },
+        //     cancel: function () {
+        //       // console.log('分享到朋友圈失败')
+        //     }
+        //   });
+        //   //分享给朋友
+        //   wx.onMenuShareAppMessage({
+        //     title: '岛里巴巴-海南专业批发采购服务平台',
+        //     link: location.href, // 分享链接
+        //     imgUrl: 'https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/share_logo.png', // 分享图标
+        //     desc: '省事省力省心', // 分享描述
+        //     success: function () {
+        //       // console.log('分享到朋友成功')
+        //     },
+        //     cancel: function () {
+        //       // console.log('分享到朋友失败')
+        //     }
+        //   });
+        // })
+
+      })
     }else{
       this.$root.mint.alertMsg('建议用微信浏览器打开');
     }

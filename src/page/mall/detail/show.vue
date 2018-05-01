@@ -103,6 +103,7 @@
   import CommMask from '../../../components/CommMask';
   import timerBox from  './timer';
   // v-bind:style="{'height':200+'px'}"
+  import wx from 'weixin-js-sdk';
   export default {
     name: "show",
     data() {
@@ -170,6 +171,8 @@
         this.specType = type ? type : 'buy'
       },
       getInfo() {
+
+        let _self = this;
         let mise = mall({
           id: this.$route.params.id,
           with:'content',
@@ -180,6 +183,35 @@
           let body = res.body;
           if (body.code === 1) {
             this.mall = res.body.data;
+
+            wx.ready(function () {
+              //分享到朋友圈"
+              wx.onMenuShareTimeline({
+                title: _self.mall.title||'岛里巴巴',
+                link: location.href, // 分享链接
+                imgUrl: _self.mall.thumb, // 分享图标
+                success: function () {
+                  // console.log('分享到朋友圈成功')
+                },
+                cancel: function () {
+                  // console.log('分享到朋友圈失败')
+                }
+              });
+              //分享给朋友
+              wx.onMenuShareAppMessage({
+                title: _self.mall.title||'岛里巴巴',
+                link: location.href, // 分享链接
+                imgUrl: _self.mall.thumb, // 分享图标
+                desc: '海南一手货源尽在岛里巴巴', // 分享描述
+                success: function () {
+                  // console.log('分享到朋友成功')
+                },
+                cancel: function () {
+                  // console.log('分享到朋友失败')
+                }
+              });
+            })
+
           }
         });
       },

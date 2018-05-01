@@ -1,9 +1,7 @@
 <!--  -->
 <template>
   <div>
-      <head-box head-title="岛里巴巴" signinUp="true">
-        <router-link to="/search" slot='logo' class="head_logo" ><i class="iconfont icon-sousuo"></i></router-link>
-      </head-box>
+    <router-link to="/search" slot='logo' class="search-box" ><div class="input font14">搜索企业/商品</div><i class="iconfont icon-sousuo"></i></router-link>
       <ad-box :ads="ads" :h="200"></ad-box>
       <nav-box :navs="navs" >
         <router-link slot="all" to="/mall/category" class="item">
@@ -60,7 +58,6 @@ import navBox from '../../components/nav'
 import slipBox from '@/components/slip'
 import {ad,category,kill,mall,group} from '../../service/getData'
 import mallList from './common/list'
-
 export default {
   data () {
     return {
@@ -164,6 +161,28 @@ export default {
 </script>
 
 <style lang='less' scoped>
+  .search-box{
+    display: flex;
+    position: absolute;
+    top: 15px;
+    left: 10%;
+    width: 80%;
+    box-sizing: border-box;
+    padding: 0 10px;
+    z-index: 3;
+    height: 36px;
+    line-height: 36px;
+    opacity: 0.8;
+    border-radius: 4px;
+    background: white;
+    .input{
+      flex: 1;
+      /*height: 28px;*/
+      border-radius: 4px;
+      border-radius: 4px;
+    }
+  }
+
 .all-huoyuan{
    display: flex;
   .all-mall{
@@ -195,6 +214,9 @@ export default {
 
 
 }
+
+
+
 .router-slid-enter-active,
 .router-slid-leave-active {
   transition: all 0.4s;

@@ -3,7 +3,7 @@ import fetch from '../util/fetch'
 
 function emptyObject(obj){
 	for (var prop in obj) {
-		if (obj[prop] === '' || obj[prop] === undefined || obj[prop] === null || obj[prop] === 'undefined') {
+		if (obj[prop] === '' || obj[prop] === undefined || obj[prop] === null|| obj[prop] === 'null' || obj[prop] === 'undefined') {
 			delete obj[prop];
 		}
 	}

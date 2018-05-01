@@ -8,7 +8,20 @@
     <mt-field label="收费" placeholder="无需收费则填0" type="tel" v-model="money"></mt-field>
     <div  style="width:100%;" class="weui-uploader__bd filebox mint-cell padding10-c">
       <ul class="weui-uploader__files" id="uploaderFiles">
-        <img class="weui-uploader__file" :src="item" v-for="(item,index) in localIds" :key="index" />
+        <!--<div class="weui-uploader__file__box" @click="del()">-->
+          <!--<img class="weui-uploader__file"  src="https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/all-mall.jpg"  />-->
+          <!--&lt;!&ndash;<img class="weui-uploader__file"  :src="item"  />&ndash;&gt;-->
+
+          <!--<i class="iconfont icon-shanchu"></i>-->
+          <!--<div class="mask"></div>-->
+        <!--</div>-->
+
+        <div class="weui-uploader__file__box" @click="del(index)"  v-for="(item,index) in localIds" :key="index">
+          <!--<img class="weui-uploader__file"  src="https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/all-mall.jpg"  />-->
+          <img class="weui-uploader__file"  :src="item"  />
+          <i class="iconfont icon-shanchu"></i>
+        </div>
+        <!--<mt-progress :value="20" :bar-height="5"></mt-progress>-->
       </ul>
 
       <div class="weui-uploader__input-box">
@@ -18,6 +31,9 @@
     <mt-field label="内容*" placeholder="内容" type="textarea" v-model="content"></mt-field>
 
     <div class="padding15" @click="sub()" > <mt-button type="primary" size="large">发布</mt-button></div>
+    <!--<div>-->
+      <!--<p v-for="(info,idx) in tip" :key="idx">{{info}}</p>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -25,6 +41,7 @@
   import headBox from '../../components/head'
   import {info} from "../../service/getData"
   import { mapState, mapActions } from "vuex";
+  import store from '../../store';
   export default {
     name: 'Fold',
     components: {
@@ -37,7 +54,8 @@
         content: null,
         pics: [],
         money: 0,
-        localIds:[]
+        localIds:[],
+        tip:[]
       }
     },
     created() {
@@ -45,6 +63,11 @@
     },
     methods: {
       ...mapActions(["getUserInfo"]),
+      del(idx){
+          this.pics.splice(idx,1);
+          this.localIds.splice(idx,1)
+      },
+
       sub() {
         let self = this
         info({
@@ -104,7 +127,8 @@
             }else{
               _self.localIds = localIds.slice(0);//浅拷贝赋值，不然到上传那里总是没图片
             }
-
+            _self.$root.mint.loading('图片上传中');
+            store.commit('SHOW_MASK',999999999);
             //创建缩略图
             _self.syncUpload(localIds)
 
@@ -113,12 +137,14 @@
       },
       syncUpload(localIds) {
         let _self = this,localId = localIds.pop();
+        _self.tip.push('图片长度'+localIds.length)
         // var tmpl ='<li class="weui-uploader__file" style="background-image:url('+localId+')"></li>';
         if (!localId) {
           this.$root.mint.alertMsg('lcoalId参数缺失');
           return;
         }
-        this.$root.wx.uploadImage({
+
+        let upload_task = this.$root.wx.uploadImage({
           localId: localId.toString(),
           isShowProgressTips: 0,
           success: function (res) {
@@ -127,6 +153,10 @@
             _self.pics.push(serverId);
             if (localIds.length > 0) {
               _self.syncUpload(localIds);
+            }
+            if(localIds.length==0){
+              _self.$root.mint.close();
+              store.commit('CLOSE_MASK')
             }
 
           },
@@ -140,6 +170,7 @@
 
         // upload_task.onProgressUpdate((res) => {
         //    console.log('上传进度', res.progress)
+        //   _self.tip.push('上传进度'+res.progress)
         // })
       },
 
@@ -150,5 +181,28 @@
 </script>
 
 <style lang="less" scoped>
-
+  .weui-uploader__file__box{
+    position: relative;
+    float: left;
+    margin:6px 6px 0 0;
+    .mask{
+      position: absolute;
+      bottom: 0;
+      top: 50%;
+      background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.8));
+      z-index: 2;
+    }
+    img{
+      padding: 0;
+      margin: 0;
+    }
+  }
+.icon-shanchu{
+  font-size: 18px;
+  color: white;
+  position: absolute;
+  bottom:4px;
+  right: 4px;
+  z-index: 3;
+}
 </style>

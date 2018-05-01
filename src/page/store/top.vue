@@ -3,25 +3,7 @@
   <head-box head-title="精品商家" go-back="true"></head-box>
   <div class="top-company-list padding15-r">
     <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
-    <companyBox class="padding10-c" :company="company" v-for="company in topCompny" :key="company.id"></companyBox>
+
 </div>
 </div>
 </template>

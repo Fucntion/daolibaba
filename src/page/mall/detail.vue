@@ -22,6 +22,7 @@
 import headBox from '@/components/head'
 import { mall } from "../../service/getData";
 
+
 export default {
   data() {
     return {
@@ -44,22 +45,11 @@ export default {
   mounted() {
     this.$nextTick(function() {});
   },
-  created() {},
-  methods: {
-    getInfo() {
-      let mise = mall({
-        id: 2,
-        with: "pic,content",
-        field: "id,title,price,marketprice,thumb"
-      });
+  created() {
 
-      mise.then(res => {
-        let body = res.body;
-        if (body.code === 1) {
-          this.mall = res.body.data;
-        }
-      });
-    }
+  },
+  methods: {
+
   }
 };
 </script>

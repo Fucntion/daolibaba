@@ -3,7 +3,7 @@
   <head-box go-back="true" head-title="热门商圈"></head-box>
   <div class="hot-club-list">
     <mt-loadmore :bottom-method="getClubs" :autoFill="false" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
-      <div class="club" v-for="(club,idx1) in clubs" :key="idx1">
+      <router-link :to="'/club/'+club.id" class="club" v-for="(club,idx1) in clubs" :key="idx1">
         <div class="info">
           <img class="thumb" :src="club.thumb" />
           <div class="title">
@@ -19,7 +19,7 @@
           </router-link>
 
         </div>
-      </div>
+      </router-link>
     </mt-loadmore>
   </div>
 

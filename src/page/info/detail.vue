@@ -79,6 +79,7 @@
   import headBox from '../../components/head';
   import {info} from "../../service/getData";
   import slipBox from '../../components/slip';
+  import wx from 'weixin-js-sdk';
   export default {
     data () {
       return {
@@ -161,7 +162,7 @@
       },
     },
     created(){
-
+      let _self = this;
       //基础信息
       info({
         id:this.$route.params.id,
@@ -169,6 +170,36 @@
       }).then(res=>{
         if(res.body.code==1){
           this.info = res.body.data
+
+          wx.ready(function () {
+            //分享到朋友圈"
+            wx.onMenuShareTimeline({
+              title: _self.info.title||'岛里巴巴',
+              link: location.href, // 分享链接
+              imgUrl: 'https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/share_logo.png', // 分享图标
+              success: function () {
+                // console.log('分享到朋友圈成功')
+              },
+              cancel: function () {
+                // console.log('分享到朋友圈失败')
+              }
+            });
+            //分享给朋友
+            wx.onMenuShareAppMessage({
+              title: _self.info.title||'岛里巴巴',
+              link: location.href, // 分享链接
+              imgUrl: 'https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/share_logo.png', // 分享图标
+              desc: '岛里巴巴同城资讯', // 分享描述
+              success: function () {
+                // console.log('分享到朋友成功')
+              },
+              cancel: function () {
+                // console.log('分享到朋友失败')
+              }
+            });
+          })
+
+
         }
       })
 

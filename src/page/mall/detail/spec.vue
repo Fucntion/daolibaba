@@ -168,10 +168,15 @@ export default {
     //立即购买,其实就是模拟多个订单一样额。。不过是一个店铺一个店家而已。
     toConfirmOrder(){
 
-      if(this.selectSpecs.length<1||this.num<1){
-        this.$root.mint.messagesBox('必须选择规格',true);
-        return;
+      if(!this.selectMall.id){
+        this.$root.mint.alertMsg('请选择规格')
+        return
       }
+
+      // if(this.selectSpecs.length<1||this.num<1){
+      //   this.$root.mint.messagesBox('必须选择规格',true);
+      //   return;
+      // }
 
       this.closeSpecBox()
 

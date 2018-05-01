@@ -22,6 +22,7 @@ const brandList = r => require.ensure([], () => r(require('../page/brand/child/l
 //店铺
 const store = r => require.ensure([], () => r(require('../page/store/index')))
 const storeShow = r => require.ensure([], () => r(require('../page/store/show')))
+const storeType = r => require.ensure([], () => r(require('../page/store/child/type')))
 const storeTop = r => require.ensure([], () => r(require('../page/store/top')))
 
 
@@ -29,6 +30,7 @@ const cart = r => require.ensure([], () => r(require('../page/mall/cart')))
 
 const info = r => require.ensure([], () => r(require('../page/info/index')))
 const infoMain = r => require.ensure([], () => r(require('../page/info/main')))
+const infoSelf = r => require.ensure([], () => r(require('../page/info/my')))
 const infoCategory = r => require.ensure([], () => r(require('../page/info/category')))
 const infoList = r => require.ensure([], () => r(require('../page/info/list')))
 const infoDetail = r => require.ensure([], () => r(require('../page/info/detail')))
@@ -212,6 +214,10 @@ export default new Router({
           component: infoMain
         },
         {
+          path:'my',
+          component:infoSelf
+        },
+        {
           path: 'category',
           component: infoCategory,
         },
@@ -296,6 +302,11 @@ export default new Router({
         {
           path: ':id',
           component: storeShow,
+
+        },
+        {
+          path:':id/type/:type',
+          component:storeType
         }
 
       ]

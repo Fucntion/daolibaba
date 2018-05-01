@@ -107,14 +107,14 @@ export const unifiedPay = function (out_trade_no, channel = 'wx_pub') {
           signType: payInfo.signType,    // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
           paySign: payInfo.paySign,      // 支付签名
           success: function (res) {
-            resolve(res);
+
           },
           complete: function (res) {
-
+            reject(res);
 
           },
           fail(res){
-            reject(res);
+
           }
         });
       }
@@ -130,47 +130,33 @@ export const unifiedPay = function (out_trade_no, channel = 'wx_pub') {
 
 export const getWxConfig = () => {
 
-  let mise = getJsSign({
-    url: location.href.split('#')[0]
-  });
+  let wxConfigPromise = new Promise(function (resolve, reject) {
 
-  mise.then((res) => {
+    let mise = getJsSign({
+      url: location.href.split('#')[0]
+    });
 
-    if (res.body.code === 1) {
-      res.body.data.debug = process.env.NODE_ENV === 'production' ? false : true;
-      res.body.data.jsApiList = ['getLocalImgData', 'chooseImage', 'previewImage', 'uploadImage', 'openLocation',
-        'getLocation', 'chooseWXPay', 'onMenuShareTimeline', 'onMenuShareAppMessage','openAddress'];
-      wx.config(res.body.data);
-      wx.ready(function () {
-        //分享到朋友圈"
-        wx.onMenuShareTimeline({
-          title: '岛里巴巴-海南专业批发采购服务平台',
-          link: location.href, // 分享链接
-          imgUrl: 'https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/share_logo.png', // 分享图标
-          success: function () {
-            // console.log('分享到朋友圈成功')
-          },
-          cancel: function () {
-            // console.log('分享到朋友圈失败')
-          }
-        });
-        //分享给朋友
-        wx.onMenuShareAppMessage({
-          title: '岛里巴巴-海南专业批发采购服务平台',
-          link: location.href, // 分享链接
-          imgUrl: 'https://daolibaba2018.oss-cn-shenzhen.aliyuncs.com/share_logo.png', // 分享图标
-          desc: '省事省力省心', // 分享描述
-          success: function () {
-            // console.log('分享到朋友成功')
-          },
-          cancel: function () {
-            // console.log('分享到朋友失败')
-          }
-        });
-      })
-    }
+    mise.then((res) => {
+
+      if (res.body.code === 1) {
+        res.body.data.debug = process.env.NODE_ENV === 'production' ? false : true;
+        res.body.data.jsApiList = ['getLocalImgData', 'chooseImage', 'previewImage', 'uploadImage', 'openLocation',
+          'getLocation', 'chooseWXPay', 'onMenuShareTimeline', 'onMenuShareAppMessage','openAddress'];
+        wx.config(res.body.data);
+        resolve(res);
+      }
+      reject(res)
+
+    })
+
+
   })
+
+  return wxConfigPromise;
+
 }
+
+
 
 export const formatDuring = (mss) => {
 

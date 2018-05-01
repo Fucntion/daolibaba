@@ -9,7 +9,7 @@
             <dl class="info">
                 <dd class="name info-line"><span ><strong>{{item.title}}</strong></span></dd>
                 <dd class="price info-line">￥{{item.price}}</dd>
-                <dd class="count info-line"><span class="count-order">总共成交{{item.sales}}笔</span><span class="count-comment">{{item.comments}}条评价</span></dd>
+                <dd class="count info-line"><span class="count-order">总共售出{{item.sales}}{{item.unit}}</span><span class="count-comment">{{item.comments}}条评价</span></dd>
                 <dd><span>{{item.company}}</span></dd>
             </dl>
         </router-link>

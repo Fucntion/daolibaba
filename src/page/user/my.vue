@@ -41,14 +41,14 @@
       <div class="lnks"><span class="value">{{userInfo.commentCount}}</span><span class="key">我的评论</span></div>
       <div class="lnks"><span class="value">{{userInfo.favoriteCompanyCount}}</span><span class="key">关注的店铺</span></div>
       <router-link to="/favorite" class="lnks"><span class="value">{{userInfo.favoriteMallCount}}</span><span class="key">收藏的商品</span></router-link>
-      <div class="lnks"><span class="value">{{userInfo.infoCount}}</span><span class="key">发布资讯</span></div>
+      <router-link to="/info/my" class="lnks"><span class="value">{{userInfo.infoCount}}</span><span class="key">发布资讯</span></router-link>
     </div>
 
     <div class="my-assets" v-if="userInfo.co_id">
       <div class="assets"><span class="value">{{userInfo.cashing_money}}</span><span class="key">七天内订单</span></div>
       <div class="assets"><span class="value">{{userInfo.freeze_money}}</span><span class="key">七天内成交额</span></div>
       <div class="assets"><span class="value">{{userInfo.pionts_num}}</span><span class="key">七天内访客</span></div>
-      <router-link to="/seller" class="assets"><i class="iconfont icon-zhanghuzichan"></i><span>店铺管理</span></router-link>
+      <router-link to="/seller" class="assets"><i class="iconfont icon-shangjia"></i><span>店铺管理</span></router-link>
     </div>
     <router-link to="/seller/reg" class="my-assets" v-if="userInfo&&!userInfo.co_id">
       <mt-button type="primary" size="large" class="goSeller">成为商户</mt-button>

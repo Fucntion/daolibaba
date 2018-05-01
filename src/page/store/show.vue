@@ -48,6 +48,13 @@ import {search} from "../../service/getData";
       </div>
     </slip-box>
 
+    <div @click="openCoType()" class="fixed cotype">商品分类</div>
+    <mt-popup
+      v-model="popupVisible"
+      position="bottom" class="type-box">
+      <mt-cell  title="所有类别"  :to="{path:'/store/'+company.user_id+'/type/null',query:{typeTitle:'所有类别'}}" :key="idx"></mt-cell>
+      <mt-cell  :title="type.title" v-for="(type,idx) in company.type" :to="{path:'/store/'+company.user_id+'/type/'+type.id,query:{typeTitle:type.title}}" :key="idx"></mt-cell>
+    </mt-popup>
   </div>
 </template>
 
@@ -56,7 +63,7 @@ import {search} from "../../service/getData";
   import slipBox from '../../components/slip';
   import mallList from "../mall/common/list";
   import {company,mall} from "../../service/getData";
-
+  import wx from 'weixin-js-sdk';
   export default {
     name: "show",
     data() {
@@ -64,11 +71,15 @@ import {search} from "../../service/getData";
         company: null,
         word: null,
         allMalls:[],
-        page:1
+        page:1,
+        popupVisible:false
       }
     },
     components: {headBox,slipBox,mallList},
     methods: {
+      openCoType(){
+        this.popupVisible = true
+      },
       getMall() {
         let mise = mall({
           size: 20,
@@ -88,12 +99,43 @@ import {search} from "../../service/getData";
       }
     },
     created() {
+      let _self = this;
       company({
         user_id: this.$route.params.id,
         mallsize: 20
       }).then(res => {
         if (res.body.code == 1) {
           this.company = res.body.data
+
+          wx.ready(function () {
+            //分享到朋友圈"
+            wx.onMenuShareTimeline({
+              title: _self.company.company||'岛里巴巴',
+              link: location.href, // 分享链接
+              imgUrl: _self.company.thumb, // 分享图标
+              success: function () {
+                // console.log('分享到朋友圈成功')
+              },
+              cancel: function () {
+                // console.log('分享到朋友圈失败')
+              }
+            });
+            //分享给朋友
+            wx.onMenuShareAppMessage({
+              title: _self.company.company||'岛里巴巴',
+              link: location.href, // 分享链接
+              imgUrl: _self.company.thumb, // 分享图标
+              desc: '分享一个好店给你', // 分享描述
+              success: function () {
+                // console.log('分享到朋友成功')
+              },
+              cancel: function () {
+                // console.log('分享到朋友失败')
+              }
+            });
+          })
+
+
         }
       })
       this.getMall()
@@ -197,6 +239,21 @@ import {search} from "../../service/getData";
     em {
       color: #333333;
     }
+  }
+
+  .cotype{
+    position: fixed;
+    bottom: 0;
+    background: white;
+    z-index: 2;
+    width: 100%;
+    font-size: 14px;
+    height: 44px;
+    text-align: center;
+    line-height: 44px;
+  }
+  .type-box{
+    width: 100%;
   }
 
 </style>
