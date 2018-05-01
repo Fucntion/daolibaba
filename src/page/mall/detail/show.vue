@@ -172,6 +172,7 @@
       getInfo() {
         let mise = mall({
           id: this.$route.params.id,
+          with:'content',
           field: "id,title,price,marketprice,thumb,pic1,pic2,pic3,pic4,sales,comments,unit,fare_id,user_id,city_id"
         });
 

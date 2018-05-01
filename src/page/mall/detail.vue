@@ -49,7 +49,7 @@ export default {
     getInfo() {
       let mise = mall({
         id: 2,
-        with: "pic",
+        with: "pic,content",
         field: "id,title,price,marketprice,thumb"
       });
 
