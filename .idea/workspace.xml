@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="923ebe7d-3318-4233-af79-f208a322dfd8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/page/seller/components/foot.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/page/seller/mall/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/page/seller/mall/mall.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page/mall/detail/info.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/mall/detail/info.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page/seller/main.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page/user/my.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/user/my.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/getData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/getData.js" afterDir="false" />
-    </list>
+    <list default="true" id="923ebe7d-3318-4233-af79-f208a322dfd8" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -351,16 +339,15 @@
       <workItem from="1525011478486" duration="307000" />
       <workItem from="1525011979096" duration="20647000" />
       <workItem from="1525060618178" duration="20000" />
-      <workItem from="1525061595360" duration="5747000" />
+      <workItem from="1525061595360" duration="6351000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="166882000" />
+    <option name="totallyTimeSpent" value="167486000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13489583" />
       <window_info anchor="bottom" id="TODO" order="6" />
