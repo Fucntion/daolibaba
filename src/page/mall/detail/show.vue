@@ -75,7 +75,7 @@
     <div style="height:1.2077rem;"></div>
     <div class="fixBar">
       <div class="feature">
-        <div class="kefu">
+        <div @click="kefu()" class="kefu">
           <i class="iconfont icon-kefu"></i><span>联系客服</span>
         </div>
         <div class="favorite" @click="addFavorite()" v-if="!mall.favorite">
@@ -92,6 +92,20 @@
       </div>
 
     </div>
+
+    <mt-popup v-if="mall.company"
+      v-model="popupVisible"
+      position="bottom" class="kefu-box">
+      <mt-cell  title="联系电话" >
+        <a v-if="mall.company.telephone" :href="'tel://'+mall.company.telephone">{{mall.company.telephone}}</a>
+        <span v-else>暂无</span>
+      </mt-cell>
+      <mt-cell  title="邮箱" >
+        <a v-if="mall.company.email" :href="'mailto://'+mall.company.email">{{mall.company.email}}</a>
+        <span v-else>暂无</span>
+      </mt-cell>
+    </mt-popup>
+
 
   </div>
 </template>
@@ -113,6 +127,7 @@
         showAttrBox: false,
         num: 0,
         specType: null,
+        popupVisible:false
       };
     },
 
@@ -144,7 +159,9 @@
       this.getInfo();
     },
     methods: {
-
+      kefu(){
+        this.popupVisible = true
+      },
       getPriceLimit(arr){
         arr.sort(function(x,y){
           return x.price-y.price;
@@ -268,7 +285,7 @@
       width: 100%;
       box-sizing: border-box;
       padding-right: 240px;
-      padding-top: 8px;
+      padding-top: 4px;
       .kefu, .favorite {
         flex: 1;
         span {
@@ -503,6 +520,9 @@
     span{
       color: #e4393c !important;
     }
+  }
+  .kefu-box{
+    width: 100%;
   }
 
 </style>

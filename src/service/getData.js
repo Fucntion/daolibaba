@@ -59,6 +59,9 @@ export const group = (post) => fetch('v1/group', emptyObject(post),'POST');
 
 export const mall = (post) => fetch('v1/goods', emptyObject(post),'POST');
 
+export const score = (post) => fetch('v1/score', emptyObject(post),'POST');
+
+export const http = (url,post) => fetch(url, emptyObject(post),'POST');
 
 export const info = (post) => fetch('v1/info', emptyObject(post),'POST');
 
@@ -76,6 +79,7 @@ export const brand = (post) => fetch('v1/brand',emptyObject(post),'POST');
 
 export const order = (post) => fetch('v1/order',emptyObject(post),'POST');
 
+export const purchaser = (post) => fetch('v1/order/purchaser',emptyObject(post),'POST');
 
 
 export const favorite = (post) => fetch('v1/favorite',emptyObject(post),'POST');
@@ -119,6 +123,12 @@ export const getWXopenId = (post) => fetch('v1/member/getWXopenId',emptyObject(p
  */
 
 export const getUser = (post) => fetch('v1/member',emptyObject(post),'POST');
+
+
+export const changeInfo = (post) => fetch('v1/member/changeInfo',emptyObject(post),'POST');
+
+
+
 
 
 /**

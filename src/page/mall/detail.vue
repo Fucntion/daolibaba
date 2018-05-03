@@ -6,7 +6,7 @@
         <div slot="tab" class="tab">
           <router-link :to="'show'" class="tab-item" :class="{'active':activeIndx=='show'}">简介</router-link>
           <router-link :to="'info'" class="tab-item" :class="{'active':activeIndx=='info'}">详情</router-link>
-          <!-- <router-link :to="'comment'" class="tab-item" :class="{'active':activeIndx=='comment'}">评论</router-link> -->
+           <router-link :to="'score'" class="tab-item" :class="{'active':activeIndx=='score'}">评论</router-link>
         </div>
       </head-box>
     <transition name="router-fade" mode="out-in">
@@ -38,7 +38,7 @@ export default {
     activeIndx(){
       var path = this.$route.path,rt='show';
       if(path.indexOf('info')>-1)rt='info'
-      if(path.indexOf('comment')>-1)rt='comment'
+      if(path.indexOf('score')>-1)rt='score'
       return rt
     }
   },

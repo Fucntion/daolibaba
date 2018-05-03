@@ -6,33 +6,43 @@
         <router-link :to="'/compay/'+order.seller" class="company">{{order.seller_name}}</router-link>
         <i class="iconfont icon-previewright"></i>
       </div>
-      <div class="mall selected" v-for="(mall,idx) in order.purchaser">
+      <div class="mall selected" v-for="(purchaser,idx) in order.purchaser">
 
-        <img class="thumb" :src="mall.thumb"/>
+        <img class="thumb" :src="purchaser.thumb"/>
         <div class="info">
           <div class="name">
-            <span class="font14">{{mall.title}}</span>
+            <span class="font14">{{purchaser.title}}</span>
           </div>
           <div class="info_line specinfo">
             <span class="font12">类型:{{order.module.name}}订单</span>
           </div>
           <div class="info_line specinfo">
-          <span class="font12"><span></span><span v-for="(spec,index) in mall.mallSpec">{{spec.title}}:{{spec.val}}; </span></span>
+          <span class="font12"><span></span><span v-for="(spec,index) in purchaser.mallSpec">{{spec.title}}:{{spec.val}}; </span></span>
         </div>
+          <div style="text-align: right">
+
+          </div>
+
           <!--<div class="info_line specinfo">-->
-            <!--<span class="font12">数量{{mall.number}}</span>-->
+            <!--<span class="font12">数量{{purchaser.number}}</span>-->
           <!--</div>-->
-          <!--<div class="info_line specinfo" v-if="mall.group">-->
-            <!--<span class="font12">每人限购{{mall.group.limit}}件</span>-->
+          <!--<div class="info_line specinfo" v-if="purchaser.group">-->
+            <!--<span class="font12">每人限购{{purchaser.group.limit}}件</span>-->
           <!--</div>-->
 
         </div>
         <div class="pircenumber">
-          <div class="price info-line">￥{{mall.price}}</div>
-          <div class="marketprice info-line">￥{{mall.price}}</div>
-          <div class="number info-line">x{{mall.number}}</div>
+          <div class="price info-line">￥{{purchaser.price}}</div>
+          <div class="marketprice info-line">￥{{purchaser.price}}</div>
+          <div class="number info-line">x{{purchaser.number}}</div>
+
         </div>
+       <div class="padding10-r scorebox" v-if="order.status==4">
+         <mt-button v-if="!purchaser.score_id"  size="small" @click="goScore(purchaser.id)">去评价</mt-button>
+         <mt-button v-else  size="small" class="isComment" @click="goScore(purchaser.id)">已评价</mt-button>
+       </div>
       </div>
+
       <a href="http://m.kuaidi100.com" class="send font14">
         快递/物流: <em>{{order.send_type}}</em>  单号: <em class="send_no">{{order.send_no}}</em>
       </a>
@@ -44,7 +54,7 @@
         <mt-button v-if="order.status==0" size="small" @click="doPayAgain()">立即付款</mt-button>
         <!--<mt-button v-if="order.status==1" size="small" @click="delMall('all')">提醒发货</mt-button>-->
         <mt-button v-if="order.status==2" size="small" @click="checkSend()">确认收货</mt-button>
-        <mt-button v-if="order.status==4" size="small" @click="goScore()">去评价</mt-button>
+
       </div>
     </div>
 
@@ -62,11 +72,11 @@
     },
     props:['order'],
     methods:{
-      goScore(){
+      goScore(purchaserId){
         this.$router.push({
           path:'/order/score',
           query:{
-            id:this.order.id,
+            id:purchaserId
           }
         })
       },
@@ -202,7 +212,7 @@
       .mall {
         z-index: 1;
         position: relative;
-        min-height: 1.8116rem;
+        min-height: 100px;
         padding: 0.2899rem 80px 0.3623rem 100px;
         background: #f8f8f8;
         margin-bottom: 2px;
@@ -259,7 +269,7 @@
       height: 1.8116rem;
     }
     .info {
-
+      padding: 0 10px 0 0;
       .info_line {
         display: flex;
         margin-top: 0.2415rem;
@@ -318,6 +328,14 @@
 
     }
   }
-
+.scorebox{
+  text-align: right;position: absolute;width: 70px;height:28px;right: 10px;bottom: 0;z-index: 2;
+  button{
+    font-size: 12px;width: 60px;height:28px;line-height: 28px;
+    &.isComment{
+      background: #e7e7e7;
+    }
+  }
+}
 
 </style>

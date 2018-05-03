@@ -14,7 +14,7 @@ const mallList = r => require.ensure([], () => r(require('../page/mall/list')))
 const mallDetail = r => require.ensure([], () => r(require('../page/mall/detail')))
 const mallDetailShow = r => require.ensure([], () => r(require('../page/mall/detail/show')))
 const mallDetailInfo = r => require.ensure([], () => r(require('../page/mall/detail/info')))
-const mallDetailComment = r => require.ensure([], () => r(require('../page/mall/detail/comment')))
+const mallDetailScore = r => require.ensure([], () => r(require('../page/mall/detail/score')))
 //品牌
 const brand = r => require.ensure([], () => r(require('../page/brand/brand')))
 const brandType = r => require.ensure([], () => r(require('../page/brand/child/type')))
@@ -197,8 +197,8 @@ export default new Router({
               component: mallDetailInfo,
             },
             {
-              path: 'comment',
-              component: mallDetailComment
+              path: 'score',
+              component: mallDetailScore
             },
 
           ]

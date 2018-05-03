@@ -41,8 +41,8 @@
     ...mapMutations(["CHOOSE_ADDRESS"]),
     select(addr){
 
-      if(this.isSelect&&getStore('ConfirmOrder')!=''){
-        console.log(addr)
+      if(this.isSelect){
+
         this.CHOOSE_ADDRESS({ address:addr});
         this.$router.push({
           path:'/confirmOrder'
@@ -87,11 +87,14 @@
   },
   components: {headBox},
   created(){
+    if(this.$route.query.select){
+      sessionStorage.setItem('select',1);
+    }
     this.getAddr()
   },
   computed: {
     isSelect(){
-      return this.$route.query.select
+      return this.$route.query.select||sessionStorage.getItem('select')
     }
   },
 

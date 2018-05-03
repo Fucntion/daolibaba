@@ -28,8 +28,8 @@
       <!--0=>'待付款',1=>'待发货',2=>'待收货',3=>'待评价',4=>'退款/售后',-1=>'为订单失败'-->
       <router-link to="/order?status=0" class="order"><i class="iconfont icon-fukuan"></i><span class="key">待付款</span></router-link>
       <router-link to="/order?status=2" class="order"><i class="iconfont icon-ziyuan"></i><span class="key">待收货</span></router-link>
-      <router-link to="/order?status=3" class="order"><i class="iconfont icon-daipingjia20"></i><span class="key">待评价</span></router-link>
-      <router-link to="/order?status=4" class="order"><i class="iconfont icon-icondd2"></i><span class="key">退款/售后</span></router-link>
+      <router-link to="/order?status=4" class="order"><i class="iconfont icon-daipingjia20"></i><span class="key">待评价</span></router-link>
+      <router-link to="/order?status=6" class="order"><i class="iconfont icon-icondd2"></i><span class="key">退款/售后</span></router-link>
     </div>
     <div class="my-assets " v-if="userInfo">
       <div class="assets"><span class="value">{{userInfo.cashing_money}}</span><span class="key">可用余额</span></div>
