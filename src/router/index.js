@@ -71,6 +71,7 @@ const orderDetail = r => require.ensure([], () => r(require('../page/order/detai
 
 const searchIndex = r => require.ensure([], () => r(require('../page/search/index')))
 const searchFull = r => require.ensure([], () => r(require('../page/search/full')))
+const searchMall = r => require.ensure([], () => r(require('../page/search/mall')))
 const searchResult = r => require.ensure([], () => r(require('../page/search/result')))
 // const resultMall = r => require.ensure([], () => r(require('../page/search/result/mall')))
 // const resultCompany = r => require.ensure([], () => r(require('../page/search/result/company')))
@@ -103,6 +104,10 @@ export default new Router({
           path:'',
           component:searchFull,
         },
+        {
+          path:'mall',
+          component:searchMall
+        }
       ]
     },
     {

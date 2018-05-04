@@ -51,8 +51,8 @@
                      :style="{backgroundImage:'url('+pic.url+')'}" v-for="(pic,idx) in info.pic"></div>
                </div>
               <div class="desc">
-                <span class="keyword px12">{{info.title|cutstr(20)}}..</span>
-                <span class="inputtime">{{info.create_time}}</span>
+                <span class="keyword font12">{{info.con.content|cutstr(20)}}..</span>
+                <span class="inputtime font12">{{info.create_time}}</span>
               </div>
             </div>
           </router-link>
@@ -134,7 +134,7 @@
         let hotMise = info({
           // catid: 0,
           size: 10,
-          with:'user,pic',
+          with:'user,pic,con',
           field: 'id,create_time,title,user_id',
           order: 'create_time desc'
         })

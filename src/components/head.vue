@@ -1,7 +1,8 @@
 <!--  -->
 <template>
   <div>
-      <div v-if="fixed&&!plain" style="height: 0.9662rem;"></div>
+
+      <div v-if="fixed&&!plain" style="height: 1.0628rem;"></div>
       <header id='head_top' v-bind:class="[fixed?'fixed':'',plain?'plain':'',justify?'justify':'']">
 
         <section class="head_goback" v-if="goBack" @click="$router.go(-1)">

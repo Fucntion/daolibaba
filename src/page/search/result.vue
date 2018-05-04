@@ -4,10 +4,14 @@
         <div slot='search' class="wordbox">
           <input class="word" v-model="word" />
         </div>
-      <div slot="edit" @click="toSearch()"><button>搜索</button></div>
+      <div slot="edit" @click="refreshSearch()"><button>搜索</button></div>
     </head-box>
 
     <div class="list-wrap padding10-r block" v-if="rt.length>0">
+
+      <mt-loadmore :bottom-method="toSearch" :autoFill="false" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+
+
       <router-link class="item-wrap club-item" v-for="(club,idx) in rt" v-if="type=='club'">
         <img class="thumb" :src="club.thumb" />
       <div class="info">
@@ -32,13 +36,14 @@
           <span class="sales">浏览{{goods.hits}}次,售出{{goods.sales}}个</span>
         </div>
       </router-link>
-      <div :to="'/company/'+company.user_id" class="item-wrap company-item" v-for="(company,idx) in rt" v-if="type=='company'">
+      <router-link :to="'/company/'+company.user_id" class="item-wrap company-item" v-for="(company,idx) in rt" v-if="type=='company'">
         <img class="thumb" :src="company.thumb" />
         <div class="info">
           <h4>{{company.company}}</h4>
           <span>{{company.hits}}人进店</span>
         </div>
-      </div>
+      </router-link>
+      </mt-loadmore>
     </div>
 
   </div>
@@ -57,7 +62,10 @@
       return {
         type:'mall',
         word:'',
-        rt:[]
+        rt:[],
+        page:1,
+        allLoaded: false,
+        bottomStatus: '',
       };
     },
     created(){
@@ -79,13 +87,25 @@
     computed: {},
 
     methods: {
+      handleBottomChange(status) {
+        this.bottomStatus = status;
+      },
+      refreshSearch(){
+        this.page=1;
+        this.rt = [];
+        this.toSearch()
+      },
       toSearch(){
         search({
           type:this.type,
-          word:this.word
+          word:this.word,
+          page:this.page
         }).then(res=>{
           if(res.body.code==1){
-            this.rt = res.body.data
+
+            this.page++;
+            this.rt = this.rt.concat(res.body.data.data)
+            this.$refs.loadmore.onBottomLoaded();
           }
         })
       }

@@ -54,6 +54,7 @@
         content: null,
         pics: [],
         money: 0,
+
         localIds:[],
         tip:[]
       }
@@ -75,6 +76,7 @@
           title:this.title,
           content:this.content,
           pics:this.pics,
+          link:this.link,
           catid:this.$route.query.catid,
           money:this.money
         }).then(res=>{

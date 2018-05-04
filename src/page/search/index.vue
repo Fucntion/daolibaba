@@ -1,6 +1,6 @@
 <template>
  <div>
-   <head-box :go-back="true" head-title="搜索" ></head-box>
+
    <transition name="router-fade" mode="out-in">
      <router-view></router-view>
    </transition>
@@ -8,14 +8,14 @@
  </div>
 </template>
 <script>
-  import headBox from '../../components/head';
+
   export default {
     data () {
       return {
       };
     },
 
-    components: {headBox},
+    components: {},
 
     computed: {},
 

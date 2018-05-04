@@ -1,5 +1,6 @@
 <template>
 <div class="search-wrap">
+  <head-box :go-back="true" head-title="站内搜索" ></head-box>
     <div class="box padding15 block">
       <select class="type" v-model="type">
         <option value="mall">商品</option>
@@ -14,7 +15,7 @@
 </template>
 
 <script>
-
+  import headBox from '../../components/head';
     export default {
         name: "full",
       data(){
@@ -23,6 +24,7 @@
             word:''
           }
       },
+      components:{headBox},
       methods:{
         toSearch(){
 

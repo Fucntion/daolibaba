@@ -7,7 +7,7 @@
                 <img :src="item.thumb" class="thumb" />
             </div>
             <dl class="info">
-                <dd class="name info-line"><span ><strong>{{item.title}}</strong></span></dd>
+                <dd class="name info-line"><span ><strong>{{item.title|cutstr(30)}}</strong></span></dd>
                 <dd class="price info-line">￥{{item.price}}</dd>
                 <dd class="count info-line"><span class="count-order">总共售出{{item.sales}}{{item.unit||'件'}}</span><span class="count-comment">{{item.comments}}条评价</span></dd>
                 <dd><span>{{item.company}}</span></dd>
@@ -19,8 +19,11 @@
 
 <script>
 export default {
+  name:'mallList',
   data() {
-    return {};
+    return {
+
+    };
   },
     props:['lists'],
   components: {},
@@ -34,4 +37,7 @@ export default {
 .info-line{
   margin-bottom: 4px !important;
 }
+  .thumb{
+    margin-top: 4px;
+  }
 </style>

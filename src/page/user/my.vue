@@ -57,9 +57,11 @@
 
 
     <slip-box class="margin10-r" title="为您推荐">
+      <mt-loadmore :bottom-method="getOrders" :autoFill="false" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
       <div slot="list">
         <mall-list :lists="malls"></mall-list>
       </div>
+      </mt-loadmore>
     </slip-box>
 
     <foot-box active="my"></foot-box>

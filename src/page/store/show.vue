@@ -1,6 +1,7 @@
 import {search} from "../../service/getData";
+import {search} from "../../service/getData";
 <template>
-  <div class="wrap">
+  <div class="wrap" :class="{'fiexd':searchVisible}">
     <head-box class="box" go-back="true"  plain="true">
       <div slot="search" style="flex: 1">
         <input placeholder="本店铺搜索" class="word" v-model="word"/>
@@ -48,11 +49,28 @@ import {search} from "../../service/getData";
       </div>
     </slip-box>
 
+    <mt-popup
+      v-model="searchVisible"
+      position="bottom" class="research-result-box">
+      <head-box head-title="本店搜索结果" >
+        <section slot="search"  class="head_goback"  @click="closeSearchPop()">
+          <i class="iconfont icon-fanhui"></i>
+        </section>
+      </head-box>
+      <mt-loadmore :bottom-method="toSearch" :autoFill="false" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+      <mall-list :lists="rt"></mall-list>
+        <mall-list :lists="rt"></mall-list>
+        <mall-list :lists="rt"></mall-list>
+        <mall-list :lists="rt"></mall-list>
+        <mall-list :lists="rt"></mall-list>
+      </mt-loadmore>
+    </mt-popup>
+
     <div @click="openCoType()" class="fixed cotype">商品分类</div>
     <mt-popup
       v-model="popupVisible"
       position="bottom" class="type-box">
-      <mt-cell  title="所有类别"  :to="{path:'/store/'+company.user_id+'/type/null',query:{typeTitle:'所有类别'}}" :key="idx"></mt-cell>
+      <mt-cell  title="所有类别"  :to="{path:'/store/'+company.user_id+'/type/null',query:{typeTitle:'所有类别'}}" ></mt-cell>
       <mt-cell  :title="type.title" v-for="(type,idx) in company.type" :to="{path:'/store/'+company.user_id+'/type/'+type.id,query:{typeTitle:type.title}}" :key="idx"></mt-cell>
     </mt-popup>
   </div>
@@ -64,19 +82,57 @@ import {search} from "../../service/getData";
   import mallList from "../mall/common/list";
   import {company,mall} from "../../service/getData";
   import wx from 'weixin-js-sdk';
+  import Mall from "../search/item/club";
+  import {search} from "../../service/getData";
+
   export default {
     name: "show",
     data() {
       return {
+        word:'',
         company: null,
         word: null,
         allMalls:[],
+        searchVisible:false,
         page:1,
+        rt:[],
+        allLoaded: false,
+        bottomStatus: '',
+        page2:1,
         popupVisible:false
       }
     },
-    components: {headBox,slipBox,mallList},
+    components: {Mall, headBox,slipBox,mallList},
     methods: {
+      closeSearchPop(){
+        this.searchVisible = false;
+      },
+      refreshSearch(){
+        this.page2=1;
+        this.rt = [];
+        this.toSearch()
+      },
+      toSearch(){
+        this.searchVisible = true;
+        if(this.word.length<1)return
+        search({
+          type:'mall',
+          word:this.word,
+          page:this.page2,
+          sellerId:this.company.user_id
+        }).then(res=>{
+          console.log(res.body.code)
+          if(res.body.code==1){
+            this.page2++;
+            this.rt = this.rt.concat(res.body.data.data)
+
+            this.$refs.loadmore.onBottomLoaded();
+          }
+        })
+      },
+      handleBottomChange(status) {
+        this.bottomStatus = status;
+      },
       openCoType(){
         this.popupVisible = true
       },
@@ -90,9 +146,6 @@ import {search} from "../../service/getData";
           let body = res.body;
           if (body.code === 1) {
             this.page++
-            this.allMalls = this.allMalls.concat(res.body.data.data);
-            this.allMalls = this.allMalls.concat(res.body.data.data);
-            this.allMalls = this.allMalls.concat(res.body.data.data);
             this.allMalls = this.allMalls.concat(res.body.data.data);
           }
         });
@@ -161,6 +214,7 @@ import {search} from "../../service/getData";
       width: 100px;
       height: 100px;
       border-radius: 4px;
+      border: 1px solid #e7e7e7;
     }
     .title {
       margin-top: 50px;
@@ -254,6 +308,16 @@ import {search} from "../../service/getData";
   }
   .type-box{
     width: 100%;
+  }
+  .research-result-box{
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+    overflow-y: scroll;
+  }
+
+  .fiexd{
+    position: fixed;
   }
 
 </style>

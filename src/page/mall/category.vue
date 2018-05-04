@@ -1,7 +1,14 @@
 <!--  -->
 <template>
   <div>
-    <head-box :fixed="true" :goBack="true" head-title="选择分类" ></head-box>
+    <head-box :fixed="true" :goBack="true" :quick="!search" >
+      <div slot="search"  to="/search" class="search-box" >
+        <div class="search-content">
+          <i class="iconfont icon-sousuo"></i><input class="search-input" type="text" v-model="keyword" />
+        </div>
+      </div>
+      <router-link v-if="search"  slot="edit" :to="'/search/mall?keyword='+keyword+'&from=category'"><mt-button  class="search-btn" size="small" type="danger">搜索</mt-button></router-link>
+    </head-box>
 
     <div v-if="catArr.length>1" id="mallCategoryBody" class="category-viewport category-categoryNewUi">
         <div id="rootList" class="jd-category-tab">
@@ -20,14 +27,16 @@
                     <div v-for="(second,idx2) in catArr[activeFristIndex].child" :key="idx2" class="jd-category-div cur">
                         <h4>{{second.title}}</h4>
                         <ul class="jd-category-style-1">
-
                             <li v-for="(third,idx3) in second.child" :key="idx3">
-                              <a class="J_ping"  report-eventlevel="2" :id="'branch_'+third.id" href="">
+                              <!--跳转到搜索页面-->
+                              <router-link v-if="third.search" class="J_ping"  report-eventlevel="2" :id="'branch_'+third.id" :to="'/search/mall?keyword='+third.title+'&from=category'">
                                 <img :src="third.thumb" :id="third.id"><span>{{third.title}}</span>
-                              </a>
+                              </router-link>
+                              <!--跳转到关联的列表页面-->
+                              <router-link v-else class="J_ping"  report-eventlevel="2" :id="'branch_'+third.id" :to="'/mall/list?catid='+third.id+'&catname='+third.title">
+                                <img :src="third.thumb" :id="third.id"><span>{{third.title}}</span>
+                              </router-link>
                             </li>
-
-
                             <div style="clear:both"></div>
                         </ul>
                     </div>
@@ -53,12 +62,21 @@
     return {
       catArr:[],
       activeFristIndex:0,
+      keyword:'',
+
     };
   },
 
   components: {headBox},
 
-  computed: {},
+  computed: {
+    search(){
+      if(this.keyword.length>0){
+        return true
+      }
+      return  false
+    }
+  },
 
     mounted(){
       this.$nextTick(function(){
@@ -173,6 +191,60 @@
 
 </script>
 <style lang='less' scoped>
+  .search-box{
+    flex: 1;
+    margin: 0 10px;
+    .search-content{
+      height: 28px;
+      margin-top: 8px;
+      position: relative;
+      z-index: 1;
+      background: #f3f3f3;
+      border-radius: 14px;
+      /*padding-left: 28px;*/
+      .iconfont{
+        position: absolute;
+        line-height: 28px;
+        left: 4px;
+        z-index: 3;
+        /*width: 24px;*/
+        /*height: 24px;*/
+        /*top: 2px;*/
+        /*left: 2px;*/
+        /*&::before{*/
+          /*position: absolute;*/
+          /*top: 0;*/
+          /*left: 0;*/
+          /*width: 24px;*/
+          /*height: 24px;*/
+        /*}*/
+      }
+      .search-input{
+        display: block;
+        position: absolute;
+        width: 100%;
+        background: none;
+        z-index: 2;
+        padding-left: 32px;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        box-sizing: border-box;
+        border: none;
+        right: 0;
+
+          /*border: none;*/
+
+
+      }
+    }
+
+
+  }
+  .search-btn{
+    height: 26px;
+    margin-top: 9px;
+  }
 
   #mallCategoryBody{
     background: white;
