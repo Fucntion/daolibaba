@@ -1,7 +1,7 @@
 import {search} from "../../service/getData";
 import {search} from "../../service/getData";
 <template>
-  <div class="wrap" :class="{'fiexd':searchVisible}">
+  <div class="wrap" :class="{'fiexd':searchVisible}" v-if="company">
     <head-box class="box" go-back="true"  plain="true">
       <div slot="search" style="flex: 1">
         <input placeholder="本店铺搜索" class="word" v-model="word"/>

@@ -85,8 +85,12 @@ const sellerMall = r => require.ensure([], () => r(require('../page/seller/mall/
 const sellerReg = r => require.ensure([], () => r(require('../page/seller/reg')))
 const sellerOrderIndex = r => require.ensure([], () => r(require('../page/seller/order/index')))
 const sellerOrder = r => require.ensure([], () => r(require('../page/seller/order/order')))
+const sellerCashIndex = r => require.ensure([], () => r(require('../page/seller/cash/index')))
+const sellerCashWithdraw = r => require.ensure([], () => r(require('../page/seller/cash/withdraw')))
 
-export default new Router({
+
+
+const router = new Router({
   routes: [
     {
       path: '',
@@ -369,9 +373,24 @@ export default new Router({
         {
           path:'order/:id',
           component:sellerOrder
+        },
+        {
+          path:'cash',
+          component:sellerCashIndex
+        },
+        {
+          path:'withdraw',
+          component:sellerCashWithdraw
         }
       ]
     }
 
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0)
+  next()
+})
+
+export default router

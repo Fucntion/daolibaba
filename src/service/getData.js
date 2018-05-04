@@ -177,6 +177,10 @@ export const selerMall = (post) => fetch('seller/mall', emptyObject(post), 'POST
 export const sellerOrder = (post) => fetch('seller/order', emptyObject(post), 'POST');
 
 
+export const sellerAmount= (post) => fetch('seller/amount', emptyObject(post), 'POST');
+
+export const sellerWithdraw = (post) => fetch('seller/withdraw', emptyObject(post), 'POST');
+
 
 
 // /**

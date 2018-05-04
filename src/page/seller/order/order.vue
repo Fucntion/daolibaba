@@ -62,11 +62,11 @@
       <!--<mt-cell title="发货状态" :value="order.send_status"></mt-cell>-->
       <mt-cell title="快递/物流" :value="order.send_type" v-if="order.status>1"></mt-cell>
       <mt-cell title="单号" :value="order.send_no" v-if="order.status>1"></mt-cell>
-      <div @click="openExpressPop()">
+      <div @click="openExpressPop()" v-if="order.status==1">
         <mt-field label="快递/物流" placeholder="请选择快递" v-model="send_type_name"></mt-field>
       </div>
-      <mt-field label="单号" placeholder="请输入单号" type="email" v-model="send_no"></mt-field>
-      <div class="margin10-c" @click="send()">
+      <mt-field v-if="order.status==1" label="单号" placeholder="请输入单号" type="email" v-model="send_no"></mt-field>
+      <div class="margin10-c" v-if="order.status==1" @click="send()">
         <mt-button size="large" type="primary">确认发货</mt-button>
       </div>
     </div>
