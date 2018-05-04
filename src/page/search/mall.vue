@@ -54,7 +54,11 @@
       handleBottomChange(status) {
         this.bottomStatus = status;
       },
-
+      refreshSearch(){
+        this.page=1;
+        this.malls = [];
+        this.toSearch()
+      },
       doSearch(){
         if(this.keyword.length<1)return
         search({

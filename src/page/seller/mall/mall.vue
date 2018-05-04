@@ -1,6 +1,6 @@
 <template>
  <div>
-    <head-box head-title="商品管理" plain="true"  go-back="true"></head-box>
+    <head-box head-title="商品管理"  go-back="true"></head-box>
 
 
       <div class="mall" >

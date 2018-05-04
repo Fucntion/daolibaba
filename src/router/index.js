@@ -5,7 +5,7 @@ Vue.use(Router)
 
 
 const home = r => require.ensure([], () => r(require('../page/home')))
-
+const notFound = r => require.ensure([], () => r(require('../page/notfound')))
 
 const mallCategory = r => require.ensure([], () => r(require('../page/mall/category')))
 const mall = r => require.ensure([], () => r(require('../page/mall/index')))
@@ -83,13 +83,18 @@ const sellerIndex = r => require.ensure([], () => r(require('../page/seller/inde
 const sellerMallIndex = r => require.ensure([], () => r(require('../page/seller/mall/index')))
 const sellerMall = r => require.ensure([], () => r(require('../page/seller/mall/mall')))
 const sellerReg = r => require.ensure([], () => r(require('../page/seller/reg')))
-
+const sellerOrderIndex = r => require.ensure([], () => r(require('../page/seller/order/index')))
+const sellerOrder = r => require.ensure([], () => r(require('../page/seller/order/order')))
 
 export default new Router({
   routes: [
     {
       path: '',
       redirect: '/mall'
+    },
+    {
+      path:'/notfound',
+      component:notFound
     },
     {
       path: '/',
@@ -344,15 +349,26 @@ export default new Router({
       children:[
         {
           path:'',
+          redirect:'/seller/mall'
+        },{
+          path:'mall',
           component:sellerMallIndex,
         },
         {
           path:'mall/:id',
-          component:sellerMall
+          component:sellerMall//不用子路由是不想多建立一个模板文件
         },
         {
           path:'reg',
           component:sellerReg
+        },
+        {
+          path:'order',
+          component:sellerOrderIndex
+        },
+        {
+          path:'order/:id',
+          component:sellerOrder
         }
       ]
     }

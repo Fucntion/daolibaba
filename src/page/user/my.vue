@@ -57,11 +57,11 @@
 
 
     <slip-box class="margin10-r" title="为您推荐">
-      <mt-loadmore :bottom-method="getOrders" :autoFill="false" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
       <div slot="list">
+      <mt-loadmore :bottom-method="getMall" :autoFill="false" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
         <mall-list :lists="malls"></mall-list>
-      </div>
       </mt-loadmore>
+      </div>
     </slip-box>
 
     <foot-box active="my"></foot-box>
@@ -84,7 +84,10 @@
     data() {
       return {
         malls: [],
-        userInfo:{}
+        userInfo:{},
+        allLoaded: false,
+        bottomStatus: '',
+        page:1,
       };
     },
 
@@ -100,16 +103,21 @@
     },
 
     methods: {
-
+      handleBottomChange(status) {
+        this.bottomStatus = status;
+      },
       getMall() {
         let mise = mall({
           size: 20,
-          paginate: true
+          paginate: true,
+          page:this.page
         });
         mise.then(res => {
           let body = res.body;
           if (body.code === 1) {
-            this.malls = res.body.data.data;
+            this.page++
+            this.malls = this.malls.concat(res.body.data.data);
+
           }
         });
       }

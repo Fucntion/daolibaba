@@ -17,7 +17,18 @@
 
     components: {},
 
-    computed: {},
+    computed: {
+      status(newVal,oldVal){
+
+        this.orders = [];
+        this.page =1;
+        //排除掉初始化
+        if(oldVal!=999){
+          this.getOrders()
+        }
+
+      }
+    },
 
 
 

@@ -200,7 +200,6 @@
           let body = res.body;
           if (body.code === 1) {
             this.mall = res.body.data;
-
             wx.ready(function () {
               //分享到朋友圈"
               wx.onMenuShareTimeline({
@@ -228,8 +227,14 @@
                 }
               });
             })
-
           }
+
+          if(res.body.code==0&&res.body.data.errorCode==10001){
+            this.$router.push({
+              path:'/notfound'
+            })
+          }
+
         });
       },
       addFavorite(){

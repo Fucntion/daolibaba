@@ -174,6 +174,7 @@ export const search = (post) => fetch('v1/search', emptyObject(post), 'POST');
 
 export const selerMall = (post) => fetch('seller/mall', emptyObject(post), 'POST');
 
+export const sellerOrder = (post) => fetch('seller/order', emptyObject(post), 'POST');
 
 
 

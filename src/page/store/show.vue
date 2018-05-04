@@ -6,7 +6,7 @@ import {search} from "../../service/getData";
       <div slot="search" style="flex: 1">
         <input placeholder="本店铺搜索" class="word" v-model="word"/>
       </div>
-      <button slot="edit" @click="toSearch()" class="submit">搜索</button>
+      <button slot="edit" @click="refreshSearch()" class="submit">搜索</button>
     </head-box>
 
 
@@ -57,12 +57,9 @@ import {search} from "../../service/getData";
           <i class="iconfont icon-fanhui"></i>
         </section>
       </head-box>
-      <mt-loadmore :bottom-method="toSearch" :autoFill="false" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+      <mt-loadmore :bottom-method="toSearch" :autoFill="false" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore1">
       <mall-list :lists="rt"></mall-list>
-        <mall-list :lists="rt"></mall-list>
-        <mall-list :lists="rt"></mall-list>
-        <mall-list :lists="rt"></mall-list>
-        <mall-list :lists="rt"></mall-list>
+
       </mt-loadmore>
     </mt-popup>
 
@@ -125,7 +122,6 @@ import {search} from "../../service/getData";
           if(res.body.code==1){
             this.page2++;
             this.rt = this.rt.concat(res.body.data.data)
-
             this.$refs.loadmore.onBottomLoaded();
           }
         })
@@ -141,12 +137,11 @@ import {search} from "../../service/getData";
           size: 20,
           paginate:1,
           user_id:this.$route.params.id,
-          page:this.page
         }).then(res => {
           let body = res.body;
           if (body.code === 1) {
-            this.page++
-            this.allMalls = this.allMalls.concat(res.body.data.data);
+
+            this.allMalls = res.body.data.data
           }
         });
       }

@@ -4,11 +4,11 @@
   <div class="order-wrap">
     <head-box head-title="个人收藏" noquick="true" goBack="true"></head-box>
     <!--1是商品，2是公司，3是信息-->
-    <mt-navbar v-model="type" >
-      <mt-tab-item  id="1">商品</mt-tab-item>
-      <mt-tab-item  id="2">公司</mt-tab-item>
-      <mt-tab-item  id="3">同城资讯</mt-tab-item>
-    </mt-navbar>
+    <!--<mt-navbar v-model="type" >-->
+      <!--<mt-tab-item  id="1">商品</mt-tab-item>-->
+      <!--<mt-tab-item  id="2">公司</mt-tab-item>-->
+      <!--<mt-tab-item  id="3">同城资讯</mt-tab-item>-->
+    <!--</mt-navbar>-->
 
     <!-- tab-container -->
     <div class="list-wrap">
@@ -25,7 +25,7 @@
               </div>
             </div>
             <div class="control">
-              <mt-button size="small" @click="delFavorite(item.id)">取消收藏</mt-button>
+              <mt-button size="small" @click="delFavorite(item.type,item.goods_id)">取消收藏</mt-button>
             </div>
           </div >
         </div>
@@ -41,7 +41,7 @@
               </div>
             </div>
             <div class="control">
-              <mt-button size="small" @click="delFavorite(item.id)">取消收藏</mt-button>
+              <mt-button size="small" @click="delFavorite(item.type,item.company_id)">取消收藏</mt-button>
             </div>
           </div >
         </div>
@@ -57,7 +57,7 @@
               </div>
             </div>
             <div class="control">
-              <mt-button size="small" @click="delFavorite(item.id)">取消收藏</mt-button>
+              <mt-button size="small" @click="delFavorite(item.type,item.ino_id)">取消收藏</mt-button>
             </div>
           </div >
         </div>
@@ -69,6 +69,7 @@
 <script>
   import headBox from "@/components/head";
   import {favorite} from "../../service/getData";
+  import action from "../../store/action";
 
   export default {
   data () {
@@ -110,6 +111,21 @@
     handleBottomChange(status) {
       this.bottomStatus = status;
     },
+    delFavorite(type,id){
+      console.log(type,id)
+        favorite({
+          action:'del',
+          resource_id:id,
+          type:type
+        }).then(res=>{
+          if(res.body.code==1){
+            this.$root.mint.messagesBox('取消成功');
+            this.lists = [];
+            this.page =1;
+            this.getFavoriteList()
+          }
+        })
+    },
     getFavoriteList() {
 
       let post = {
@@ -140,7 +156,7 @@
   position: fixed;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  top: 90px;
+  top: 44px;
   bottom: 0px;
   width: 100%;
   .item-wrap{
