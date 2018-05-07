@@ -37,7 +37,7 @@ const infoDetail = r => require.ensure([], () => r(require('../page/info/detail'
 const infoPost = r => require.ensure([], () => r(require('../page/info/post')))
 
 const club = r => require.ensure([], () => r(require('../page/club/index')))
-const clubTop = r => require.ensure([], () => r(require('../page/club/Top')))
+const clubTop = r => require.ensure([], () => r(require('../page/club/top')))
 const clubMain = r => require.ensure([], () => r(require('../page/club/main')))
 const clubArea = r => require.ensure([], () => r(require('../page/club/child/area')))
 const clubList = r => require.ensure([], () => r(require('../page/club/list')))
@@ -50,7 +50,7 @@ const favorite = r => require.ensure([], () => r(require('../page/user/favorite'
 const reg = r => require.ensure([], () => r(require('../page/user/register')))
 const login = r => require.ensure([], () => r(require('../page/user/login')))
 const auth = r => require.ensure([], () => r(require('../page/auth')))
-const bindPhone = r => require.ensure([], () => r(require('../page/user/bindPhone')))
+const bindPhone = r => require.ensure([], () => r(require('../page/user/bindphone')))
 
 
 const ConfirmIndex = r => require.ensure([], () => r(require('../page/confirmorder/index')))
