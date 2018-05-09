@@ -1,12 +1,12 @@
 <!--  -->
 <template>
   <div>
-    <head-box head-title="同城导购" :fixed="1">
-            <router-link
-              to="/club/area"
-              slot='search' class="font12">
-                <i class="iconfont icon-address"></i>{{city.name}}
-            </router-link>
+    <head-box head-title="同城购物" :fixed="1">
+      <router-link
+        to="/club/area"
+        slot='search' class="font12">
+        <i class="iconfont icon-address"></i>{{city.name}}
+      </router-link>
       <span slot='edit' class="search">
                 <i class="iconfont icon-sousuo"></i>
             </span>
@@ -14,7 +14,7 @@
 
     <ad-box :ads="ads" :h="123"></ad-box>
     <section class="nav">
-      <router-link :to="'/club/'+club.id" v-for="club in navs" :key="club.id"  class="item">
+      <router-link :to="'/club/'+club.id" v-for="club in navs" :key="club.id" class="item">
         <img :src="club.thumb||'http://placehold.it/100/ccc'"/>
         <span>{{club.title}}</span>
       </router-link>
@@ -26,15 +26,15 @@
 
     </section>
     <!--<slip-box title="秒杀" morelink="#">-->
-      <!--<div slot="list" class="list">-->
-        <!--<div v-for="kill in kills" class="slip-item item">-->
-          <!--<img class="thumb" :src="kill.thumb||'http://placehold.it/100/ccc'"/>-->
-          <!--<div class="info">-->
-            <!--<span class="price font12">￥{{kill.price}}</span>-->
-            <!--<span class="initial_price font10">${{kill.marketprice}}</span>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
+    <!--<div slot="list" class="list">-->
+    <!--<div v-for="kill in kills" class="slip-item item">-->
+    <!--<img class="thumb" :src="kill.thumb||'http://placehold.it/100/ccc'"/>-->
+    <!--<div class="info">-->
+    <!--<span class="price font12">￥{{kill.price}}</span>-->
+    <!--<span class="initial_price font10">${{kill.marketprice}}</span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
     <!--</slip-box>-->
     <slip-box class="margin10-r" title="新品推荐">
       <div slot="list" class="list">
@@ -50,7 +50,7 @@
 
     <div class="block">
       <div class="head">
-        <div class="title"> 必逛 </div>
+        <div class="title"> 必逛</div>
       </div>
       <div class="content">
         <div class="row1 row">
@@ -111,7 +111,7 @@
     <ad-box :ads="ads2" :h="123"></ad-box>
     <div class="block">
       <div class="head">
-        <div class="title"> 品牌推荐 </div>
+        <div class="title"> 品牌推荐</div>
       </div>
       <div class="content">
         <div class="row1 row">
@@ -196,6 +196,7 @@
   import companyBox from "@/page/mall/common/company";
   import {ad, kill, mall, city, club, company} from "../../service/getData";
   import {mapState, mapActions} from "vuex";
+  import {getLocation} from "../../util/utils";
 
   export default {
     data() {
@@ -209,7 +210,7 @@
         hotInfo: [],
         topCompny: [],
         city: {},
-        citys:[]
+        citys: []
       };
     },
 
@@ -217,7 +218,7 @@
       headBox, adBox, footBox, navBox, slipBox, companyBox
     },
     computed: {
-      ...mapState(["defaultProvienceId","defaultCityId"])
+      ...mapState(["defaultProvienceId", "defaultCityId"])
     },
 
     methods: {
@@ -249,9 +250,9 @@
       },
       getClub(cityId) {
         let mise = club({
-          city_id:cityId,
-          with:'imgs',
-          size:9
+          city_id: cityId,
+          with: 'imgs',
+          size: 9
         });
         mise.then(res => {
           let body = res.body;
@@ -262,18 +263,32 @@
       },
 
       async getCity() {
-        console.log(this.$route.query)
-        //size为0代表不限制数量
 
-        let cityId = this.$route.query.city_id||this.defaultCityId;
-        let mise = city({id:cityId});
-        mise.then(res => {
-          let body = res.body;
-          if (body.code === 1) {
-            this.city = res.body.data;
-            this.getClub(this.city.id);
-          }
-        });
+
+        //通过拿到的地址，去获取服务器上的地址.如果拿不到地址，就走默认城市吧
+        getLocation().then(res => {
+          city({address: res}).then(res => {
+            let body = res.body;
+            if (body.code === 1) {
+              this.city = res.body.data;
+              this.getClub(this.city.id);
+            }
+          });
+        }).catch(res=>{
+
+          let cityId = this.$route.query.city_id || this.defaultCityId;
+          let mise = city({id: cityId});
+          mise.then(res => {
+            let body = res.body;
+            if (body.code === 1) {
+              this.city = res.body.data;
+              this.getClub(this.city.id);
+            }
+          });
+
+        })
+
+
 
       },
       getMall() {

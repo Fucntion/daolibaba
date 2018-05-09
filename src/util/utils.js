@@ -179,6 +179,36 @@ export const formatDuring = (mss) => {
 }
 
 
+export const getLocation = ()=>{
+
+  let wxLocationPromise = new Promise(function (resolve, reject) {
+
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        // 地址解析:http://lbs.qq.com/javascript_v2/guide-service.html#link-four
+        let geocoder = new qq.maps.Geocoder({
+          complete: function (result) {
+            resolve(result.detail.address)
+          }
+        })
+
+        var coord = new qq.maps.LatLng(res.latitude, res.longitude)
+        geocoder.getAddress(coord)
+      },
+      fail:function(res){
+        reject(res)
+      }
+    })
+
+
+  })
+
+  return wxLocationPromise;
+
+}
+
+
 export const getUrlValueByKey = (name) => {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
 }
@@ -192,5 +222,6 @@ export default {
   unifiedPay,
   getWxConfig,
   getUrlValueByKey,
-  formatDuring
+  formatDuring,
+  getLocation
 }
