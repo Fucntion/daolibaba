@@ -18,11 +18,11 @@
 
 
 
+
+   <div class="block padding10" v-if="info.con" v-html="info.con.content"></div>
    <div class="imgs block" slot="list">
      <img :src="pic.url" class="img" @click="preview(idx)" v-for="(pic,idx) in info.pic" />
    </div>
-   <div class="block padding10" v-if="info.con" v-html="info.con.content"></div>
-
    <!--<div class="imgs">-->
      <!--<img  />-->
    <!--</div>-->
@@ -310,14 +310,18 @@
   }
   .imgs{
     padding: 10px;
-    height: 2.4155rem;
-    white-space: nowrap;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    -webkit-overflow-scrolling: touch;
+    text-align: center;
+    /*height: 2.4155rem;*/
+    /*white-space: nowrap;*/
+    /*overflow-y: hidden;*/
+    /*overflow-x: scroll;*/
+    /*-webkit-overflow-scrolling: touch;*/
     .img{
-      margin-right: 4px;
-      height: 120px;
+      /*margin-right: 4px;*/
+      /*height: 120px;*/
+      /*width: 120px;*/
+      width: 100%;
+      display: inline-block;
     }
   }
 

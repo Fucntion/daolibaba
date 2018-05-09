@@ -242,6 +242,10 @@
         }
         .pic-box {
           margin: 0.2415rem 0;
+          overflow-y: hidden;
+          overflow-x: scroll;
+          height: 100px;
+          white-space: nowrap;
           .pic {
             display: inline-block;
             width: 25%;
