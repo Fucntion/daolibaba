@@ -26,9 +26,7 @@ function emptyObject(obj){
  * 获取广告位
  * @param {广告位id} pid
  */
-export const ad = (pid) => fetch('v1/ad', {
-	pid: pid
-},'POST');
+export const ad = (post) => fetch('v1/ad', emptyObject(post),'POST');
 
 /**
  * 获取分类

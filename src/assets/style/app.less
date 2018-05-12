@@ -27,6 +27,7 @@ body{
     .head{
     //   padding: 0;
       height: 0.628rem;
+      padding: 10px;
       display: flex;
       justify-content: space-between;//让左侧、中间、右边区分开来
       //左侧的提示
@@ -39,15 +40,18 @@ body{
       .title{
 
         .rest;
+
         width: 100%;
         font-size: 16px !important;
         line-height: 26px !important;
         text-align: center;
         &:before{
           content: url(../img/after.png);
+          margin-right: 6px;
         }
         &:after{
           content: url(../img/after.png);
+          margin-left: 6px;
         }
       }
       //右侧可能有更多的图标或者文字
@@ -67,7 +71,7 @@ body{
     //容器这里最恶心,高度根据情况写吧。先写死145px
     .content{
       .rest;
-      padding-top: 0.2415rem;
+      //padding-top: 0.2415rem;
       line-height: 1;
       //最复杂的是这里
       .list{

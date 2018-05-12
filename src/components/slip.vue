@@ -1,7 +1,7 @@
 <!--  -->
 <template>
-<div>  
-    <div class="block  padding10-r">
+<div>
+    <div class="block">
         <div class="head padding10-c">
             <div class="tip">{{title}}</div>
             <div v-if="morelink" class="more" @click="navigatetor(morelink)"><i class="iconfont icon-more"></i></div>

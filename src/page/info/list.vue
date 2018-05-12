@@ -78,7 +78,7 @@
     methods: {
       getAd() {
 
-        let mise = ad(14)
+        let mise = ad({pid:14})
         mise.then((res) => {
           let body = res.body;
           if (body.code === 1) {

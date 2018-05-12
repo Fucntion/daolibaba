@@ -39,8 +39,16 @@
               </router-link>
           </div>
       </slip-box>
-      <ad-box :ads="ads" :h="123"></ad-box>
-      <slip-box class="margin10-r"  title="猜你喜欢">
+
+      <top-box adpid="14" catid="1039" title="鲜花绿植"></top-box>
+
+    <top-box class="margin10-r" adpid="14" catid="1039" title="家用电器"></top-box>
+
+    <top-box adpid="14" catid="1039" title="家居家装"></top-box>
+
+    <top-box class="margin10-r" adpid="14" catid="1039" title="品质生活"></top-box>
+      <!--<ad-box :ads="ads" :h="123"></ad-box>-->
+      <slip-box   title="猜你喜欢">
           <div slot="list">
               <mall-list :lists="malls"></mall-list>
           </div>
@@ -53,9 +61,10 @@
 <script>
 import headBox from '../../components/head'
 import footBox from '@/components/foot'
-import adBox from '@/components/ad'
+import adBox from '../../components/ad'
 import navBox from '../../components/nav'
 import slipBox from '@/components/slip'
+import topBox from './common/top';
 import {ad,category,kill,mall,group} from '../../service/getData'
 import mallList from './common/list'
 export default {
@@ -70,7 +79,7 @@ export default {
   },
 
   components: {
-      headBox,adBox,footBox,navBox,slipBox,mallList
+      headBox,adBox,footBox,navBox,slipBox,mallList,topBox
   },
 
   computed: {},
@@ -79,8 +88,7 @@ export default {
   methods: {
     getAd(){
 
-      let mise = ad(14)
-      mise.then((res) => {
+      ad({pid:14,size:3}).then((res) => {
           let body = res.body;
           if (body.code === 1) {
               this.ads = res.body.data

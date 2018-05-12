@@ -108,7 +108,16 @@
       </div>
     </div>
 
-    <ad-box :ads="ads2" :h="123"></ad-box>
+
+
+    <mall-top class="margin10-r" adpid="14" catid="1039" title="家用电器"></mall-top>
+
+    <mall-top adpid="14" catid="1039" title="家居家装"></mall-top>
+
+    <mall-top class="margin10-r" adpid="14" catid="1039" title="品质生活"></mall-top>
+    <mall-top adpid="14" catid="1039" title="鲜花绿植"></mall-top>
+
+    <ad-box class="margin10-r" :ads="ads2" :h="123"></ad-box>
     <div class="block">
       <div class="head">
         <div class="title"> 品牌推荐</div>
@@ -188,6 +197,7 @@
 </template>
 
 <script>
+  import mallTop from '../mall/common/top';
   import headBox from "@/components/head";
   import footBox from "@/components/foot";
   import adBox from "@/components/ad";
@@ -215,7 +225,7 @@
     },
 
     components: {
-      headBox, adBox, footBox, navBox, slipBox, companyBox
+      headBox, adBox, footBox, navBox, slipBox, companyBox,mallTop
     },
     computed: {
       ...mapState(["defaultProvienceId", "defaultCityId"])
@@ -223,7 +233,7 @@
 
     methods: {
       getAd() {
-        let mise = ad(14);
+        let mise = ad({pid:14});
         mise.then(res => {
           let body = res.body;
           if (body.code === 1) {
@@ -231,7 +241,7 @@
           }
         });
 
-        let mise2 = ad(14);
+        let mise2 = ad({pid:14});
         mise2.then(res => {
           let body = res.body;
           if (body.code === 1) {
