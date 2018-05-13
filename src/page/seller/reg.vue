@@ -7,7 +7,7 @@
       <mt-field label="主体名称*" placeholder="请与营业执照一致" v-model="name"></mt-field>
       <mt-field label="联系人" placeholder="审核过程中可能会与您联系" v-model="link"></mt-field>
       <mt-field label="邮箱" placeholder="请填写有效邮箱" v-model="email"></mt-field>
-      <mt-field label="联系方式" placeholder="联系方式" type="tel" v-model="tel"></mt-field>
+      <mt-field label="联系电话" placeholder="联系方式" type="tel" v-model="tel"></mt-field>
       <mt-cell label="上传证明材料图片，包括但不限于营业执照、法人身份证照片。特殊行业请上传对应资质文件" ></mt-cell>
       <div  style="width:100%;" class="weui-uploader__bd filebox mint-cell padding10-c">
         <ul class="weui-uploader__files" id="uploaderFiles">
@@ -47,6 +47,7 @@
 <script>
   import headBox from '../../components/head';
   import {apply} from "../../service/getData";
+  import {checkMobile,isEmail} from "../../util/utils";
 
   export default {
     name: 'sellerReg',
@@ -65,6 +66,11 @@
         apply:null
       }
     },
+    computed:{
+      validatePhone(){
+        return checkMobile(this.phone)
+      }
+    },
     created() {
       apply().then(res=>{
         if(res.body.code==1){
@@ -76,6 +82,27 @@
     methods: {
 
       sub() {
+
+        if(!this.name||!this.link||!this.email||!this.tel){
+          this.$root.mint.alertMsg('所有信息必填');
+          return ;
+        }
+
+        if(!this.validatePhone){
+          this.$root.mint.alertMsg('手机号码格式不对')
+          return false;
+        }
+
+        if(!isEmail(this.email)){
+          this.$root.mint.alertMsg('邮箱格式不对')
+          return false;
+        }
+
+
+        if(this.pics.length<1){
+          this.$root.mint.alertMsg('请上传不少于一张照片');
+          return ;
+        }
 
         apply({
           action: 'add',
@@ -89,7 +116,9 @@
             this.$root.mint.messagesBox('申请提交成功',false);
             setTimeout(function(){
               location.reload();
-            },1500)
+            },100)
+          }else{
+            this.$root.mint.alertMsg(res.body.msg);
           }
         })
 

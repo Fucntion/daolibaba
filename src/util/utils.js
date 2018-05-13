@@ -56,6 +56,11 @@ export const checkMobile = (phone) => {
   return true
 }
 
+function isEmail(str){
+  var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+  return reg.test(str);
+}
+
 
 const defaultProvienceId = 22;
 const defaultCityId = 266;//数据库里面海南的名字

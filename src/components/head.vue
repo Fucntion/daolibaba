@@ -55,6 +55,9 @@ export default {
   created(){
     // this.getUserInfo();
   },
+  mounted(){
+    document.title = this.headTitle?this.headTitle:'岛里巴巴-海南批发采购平台';
+  },
 
   computed: {
     ...mapState(["userInfo"])

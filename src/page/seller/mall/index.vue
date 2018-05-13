@@ -20,7 +20,7 @@ import {search} from "../../../service/getData";
             <mt-button size="small" @click="changeStatus('up',mall.id,mall)" v-if="mall.status!=3" type="danger">上架
             </mt-button>
             <mt-button size="small" @click="changeStatus('down',mall.id,mall)" v-else type="danger">下架</mt-button>
-            <router-link :to="'seller/mall/'+mall.id">
+            <router-link :to="'/seller/mall/'+mall.id">
               <mt-button size="small" type="primary">详细信息</mt-button>
             </router-link>
           </div>
