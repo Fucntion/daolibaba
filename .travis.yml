@@ -1,5 +1,0 @@
-sudo: false
-language: node_js
-
-after_success:
-  - ssh root@120.79.86.180  "/root/env/travis-dl-server"
