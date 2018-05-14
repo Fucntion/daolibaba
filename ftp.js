@@ -52,14 +52,14 @@ c.on('ready', function () {
             }
 
         });
-        var tpath = path.resolve(__dirname, '..') + "/daolibaba/dist";
+        var tpath = path.resolve(__dirname, '..') + "/daolibaba-client/dist";
 
         walk(tpath, function (err, results) {
             if (err) throw err;
             results.forEach(function (filename) {
                 (function (filename) {
                     'use strict';
-                    var spath = filename.replace(/E:\\working\\daolibaba\\dist\\/g, "");
+                    var spath = filename.replace(/E:\\daolibaba\\daolibaba-client\\dist\\/g, "");
 
                     c.put(filename, spath, function (err) {
                         if (err) throw err;
